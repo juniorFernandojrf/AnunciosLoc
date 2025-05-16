@@ -1,4 +1,6 @@
 package com.AnunciosLoc.AnunciosLoc.controllers;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +13,8 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.AnunciosLoc.AnunciosLoc.bd.anuncio.AnuncioRepository;
+import com.AnunciosLoc.AnunciosLoc.bd.local.Local;
+import com.AnunciosLoc.AnunciosLoc.bd.local.LocalRepository;
 import com.AnunciosLoc.AnunciosLoc.bd.user.User;
 import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
 import com.AnunciosLoc.AnunciosLoc.utils.GeoLocationDTO;
@@ -30,30 +34,62 @@ public class AnunciosEndPoint {
 
     @Autowired
     private final AnuncioRepository anuncioRepository;
+    @Autowired
+    private final UserRepository userRepository;
 
-    
-    public AnunciosEndPoint(AnuncioRepository anuncioRepository) {
+    @Autowired
+    private final LocalRepository localizacaoRepository;
+
+    public AnunciosEndPoint(
+            AnuncioRepository anuncioRepository,
+            UserRepository userRepository,
+            LocalRepository localizacaoRepository) {
         this.anuncioRepository = anuncioRepository;
+        this.userRepository = userRepository;
+        this.localizacaoRepository = localizacaoRepository;
     }
-    
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AddAnuncioRequest")
     @ResponsePayload
     public AddAnuncioResponse addAnuncio(@RequestPayload AddAnuncioRequest request) {
         AddAnuncioResponse response = new AddAnuncioResponse();
+
         try {
-            // Construir o Anuncio com os dados do request
             Anuncio anuncio = new Anuncio();
             anuncio.setTitulo(request.getBody().getTitulo());
-            // anuncio.getLocal();
-            anuncio.setBloquear(request.getBody().getBloquear());
+
+            // anuncio.setBloquear(request.getBody().getBloquear());
             anuncio.setDescricao(request.getBody().getDescricao());
             anuncio.setDataexpiracao(request.getBody().getDataexpiracao());
 
+            anuncio.setBloquear("false"); // evitar o erro
             anuncioRepository.save(anuncio);
-            response.setMensagem("Anuncio Publicado com sucesso.");
+
+            // Captura e associa User e Local
+            Long userId = request.getBody().getUserId(); // ou getIdUser(), getIdUsuario(), etc.
+            Long localId = request.getBody().getLocalId(); // ou getIdLocal(), etc.
+
+            // ...
+            Optional<User> userOpt = userRepository.findById(userId);
+            Optional<Local> localOpt = localizacaoRepository.findById(localId);
+
+            if (!userOpt.isPresent() || !localOpt.isPresent()) {
+                response.setMensagem("Usuário ou Localização não encontrados.");
+                response.setStatus(false);
+                return response;
+            }
+
+            anuncio.setUser(userOpt.get());
+            anuncio.setLocalizacao(localOpt.get());
+
+            anuncioRepository.save(anuncio);
+            response.setMensagem("Anúncio publicado com sucesso.");
             response.setStatus(true);
+            response.setUserId(userId.intValue());
+            response.setLocalId(localId.intValue());
+
         } catch (Exception e) {
-            response.setMensagem("Erro ao publiacar o anuncio: " + e.getMessage());;
+            response.setMensagem("Erro ao publicar o anúncio: " + e.getMessage());
             response.setStatus(false);
         }
 
@@ -74,19 +110,43 @@ public class AnunciosEndPoint {
                 return response;
             }
 
-            response.setMensagem("Anúncios listados com sucesso.");
-            response.setEstado(true);
-
             for (Anuncio anuncio : anuncios) {
                 AnuncioType item = new AnuncioType();
+                item.setId(anuncio.getId().intValue());
                 item.setTitulo(anuncio.getTitulo());
                 item.setDescricao(anuncio.getDescricao());
-                item.setDataexpiracao(anuncio.getDataexpiracao());
-                item.setBloquear(anuncio.equals(anuncio.getBloquear()));
-                item.setId(anuncio.getId().intValue());
+                item.setDataexpiracao(anuncio.getDataexpiracao().toString());
 
-                response.getAnuncios().add(item); // ← Adiciona o item na lista de resposta
+                // --- User ---
+                User user = anuncio.getUser();
+                if (user != null) {
+                    UserType userType = new UserType();
+                    userType.setId(user.getId().intValue());
+                    userType.setNome(user.getUsername()); // ou user.getName()
+                    userType.setEmail(user.getEmail());
+                    // adicione outros campos conforme sua definição do UserType
+
+                    item.setUsuario(userType);
+                }
+
+                // --- Localização ---
+                Local local = anuncio.getLocalizacao();
+                if (local != null) {
+                    LocalType localType = new LocalType();
+                    localType.setId(local.getId().intValue());
+                    localType.setNome(local.getNome()); // ou local.getDescricao()
+                    localType.setLatitude(local.getLatitude());
+                    localType.setLongitude(local.getLongitude());
+                    // adicione outros campos conforme sua definição do LocalType
+
+                    item.setLocal(localType);
+                }
+
+                response.getAnuncios().add(item);
             }
+
+            response.setMensagem("Anúncios listados com sucesso.");
+            response.setEstado(true);
 
         } catch (Exception e) {
             response.setMensagem("Erro ao listar os anúncios: " + e.getMessage());
@@ -95,43 +155,34 @@ public class AnunciosEndPoint {
 
         return response;
     }
-    @PayloadRoot(namespace = "http://anuncios.soap.xml", localPart = "RemoveAnuncioRequest")
-    @ResponsePayload
-    public RemoveAnuncioResponse removerAnuncio(@RequestPayload RemoveAnuncioRequest request) {
-        RemoveAnuncioResponse response = new RemoveAnuncioResponse();
 
-        // Verificação do Body
-        if (request == null || request.getBody() == null ) {
-            response.setMensagem("Requisição inválida: body ou ID está nulo.");
+   @PayloadRoot(namespace = NAMESPACE_URI, localPart = "RemoveAnuncioRequest")
+@ResponsePayload
+public RemoveAnuncioResponse removeAnuncio(@RequestPayload RemoveAnuncioRequest request) {
+    RemoveAnuncioResponse response = new RemoveAnuncioResponse();
+
+    long anuncioId = request.getBody().getId();
+    long userId = request.getBody().getUserId();
+
+    Optional<Anuncio> anuncioOptional = anuncioRepository.findById(anuncioId);
+
+    if (anuncioOptional.isPresent()) {
+        Anuncio anuncio = anuncioOptional.get();
+
+        if (anuncio.getUser().getId() == userId) {
+            anuncioRepository.delete(anuncio);
+            response.setMensagem("Anúncio removido com sucesso!");
+            response.setStatus(true);
+        } else {
+            response.setMensagem("Você não tem permissão para remover este anúncio.");
             response.setStatus(false);
-            response.setId(0); // Opcional
-            return response;
         }
-
-        Long id = request.getBody().getId();
-
-        try {
-            Optional<Anuncio> anuncioOpt = anuncioRepository.findById(id);
-
-            if (anuncioOpt.isPresent()) {
-                anuncioRepository.deleteById(id);
-                response.setMensagem("Anúncio removido com sucesso.");
-                response.setStatus(true);
-                response.setId(id.intValue());
-            } else {
-                response.setMensagem("Anúncio com ID " + id + " não encontrado.");
-                response.setStatus(false);
-                response.setId(id.intValue());
-            }
-
-        } catch (Exception e) {
-            response.setMensagem("Erro ao remover anúncio: " + e.getMessage());
-            response.setStatus(false);
-            response.setId(0); // Opcional
-            e.printStackTrace();
-        }
-
-        return response;
+    } else {
+        response.setMensagem("Anúncio não encontrado.");
+        response.setStatus(false);
     }
-    
+
+    return response;
+}
+
 }

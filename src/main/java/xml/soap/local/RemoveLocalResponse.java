@@ -6,7 +6,7 @@
 //
 
 
-package xml.soap;
+package xml.soap.local;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,7 +25,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="reference" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="mensagem" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -36,36 +38,72 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "reference"
+    "mensagem",
+    "status",
+    "id"
 })
-@XmlRootElement(name = "DeleteDockRequest")
-public class DeleteDockRequest {
+@XmlRootElement(name = "RemoveLocalResponse")
+public class RemoveLocalResponse {
 
     @XmlElement(required = true)
-    protected String reference;
+    protected String mensagem;
+    protected boolean status;
+    protected int id;
 
     /**
-     * Obtém o valor da propriedade reference.
+     * Obtém o valor da propriedade mensagem.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getReference() {
-        return reference;
+    public String getMensagem() {
+        return mensagem;
     }
 
     /**
-     * Define o valor da propriedade reference.
+     * Define o valor da propriedade mensagem.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setReference(String value) {
-        this.reference = value;
+    public void setMensagem(String value) {
+        this.mensagem = value;
+    }
+
+    /**
+     * Obtém o valor da propriedade status.
+     * 
+     */
+    public boolean isStatus() {
+        return status;
+    }
+
+    /**
+     * Define o valor da propriedade status.
+     * 
+     */
+    public void setStatus(boolean value) {
+        this.status = value;
+    }
+
+    /**
+     * Obtém o valor da propriedade id.
+     * 
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Define o valor da propriedade id.
+     * 
+     */
+    public void setId(int value) {
+        this.id = value;
     }
 
 }

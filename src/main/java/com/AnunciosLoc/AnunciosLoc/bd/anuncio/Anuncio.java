@@ -12,6 +12,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "anuncio")
@@ -23,22 +24,27 @@ import java.io.Serializable;
 public class Anuncio implements Serializable{
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "titulo", nullable = false)
-    protected String titulo;
-    @Column(name = "descricao", nullable = false)
-    protected String descricao;
-    @Column(name = "dataexpiracao", nullable = false)
-    protected String dataexpiracao;
-    @Column(name = "bloquear", nullable = false)
-    protected String bloquear;
-    // @ManyToOne
-    // @JoinColumn(name = "autor", nullable = false)
-    // protected User autor;
-    // @ManyToOne
-    // @JoinColumn(name = "local", nullable = true)
-    // protected Local local;
 
+    @Column(nullable = false)
+    private String titulo;
+
+    @Column(nullable = false)
+    private String descricao;
+
+    @Column(name = "dataexpiracao", nullable = false)
+    private String dataexpiracao;
+
+    @Column(nullable = false)
+    protected String bloquear;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "local_id")
+    private Local localizacao;
+    
 }

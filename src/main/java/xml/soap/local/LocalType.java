@@ -6,7 +6,7 @@
 //
 
 
-package xml.soap.user;
+package xml.soap.local;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -15,20 +15,19 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de ChegadaType complex type.
+ * <p>Classe Java de LocalType complex type.
  * 
  * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
  * 
  * <pre>
- * &lt;complexType name="ChegadaType"&gt;
+ * &lt;complexType name="LocalType"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="estacao" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
+ *         &lt;element name="nome" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="latitude" type="{http://www.w3.org/2001/XMLSchema}double"/&gt;
  *         &lt;element name="longitude" type="{http://www.w3.org/2001/XMLSchema}double"/&gt;
- *         &lt;element name="data" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="bonus" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -38,45 +37,58 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ChegadaType", propOrder = {
-    "estacao",
+@XmlType(name = "LocalType", propOrder = {
+    "id",
+    "nome",
     "latitude",
-    "longitude",
-    "data",
-    "bonus"
+    "longitude"
 })
-public class ChegadaType {
+public class LocalType {
 
+    protected long id;
     @XmlElement(required = true)
-    protected String estacao;
+    protected String nome;
     protected double latitude;
     protected double longitude;
-    @XmlElement(required = true)
-    protected String data;
-    protected int bonus;
 
     /**
-     * Obtém o valor da propriedade estacao.
+     * Obtém o valor da propriedade id.
+     * 
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * Define o valor da propriedade id.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
+    }
+
+    /**
+     * Obtém o valor da propriedade nome.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getEstacao() {
-        return estacao;
+    public String getNome() {
+        return nome;
     }
 
     /**
-     * Define o valor da propriedade estacao.
+     * Define o valor da propriedade nome.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setEstacao(String value) {
-        this.estacao = value;
+    public void setNome(String value) {
+        this.nome = value;
     }
 
     /**
@@ -109,46 +121,6 @@ public class ChegadaType {
      */
     public void setLongitude(double value) {
         this.longitude = value;
-    }
-
-    /**
-     * Obtém o valor da propriedade data.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getData() {
-        return data;
-    }
-
-    /**
-     * Define o valor da propriedade data.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setData(String value) {
-        this.data = value;
-    }
-
-    /**
-     * Obtém o valor da propriedade bonus.
-     * 
-     */
-    public int getBonus() {
-        return bonus;
-    }
-
-    /**
-     * Define o valor da propriedade bonus.
-     * 
-     */
-    public void setBonus(int value) {
-        this.bonus = value;
     }
 
 }

@@ -16,8 +16,7 @@ import org.springframework.xml.xsd.XsdSchema;
 @Configuration
 public class WebServiceConfig extends WsConfigurerAdapter {
 
-
-    @Bean
+   @Bean
     ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(ApplicationContext contexto) {
         MessageDispatcherServlet servlet = new MessageDispatcherServlet();
         servlet.setApplicationContext(contexto);
@@ -25,7 +24,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return new ServletRegistrationBean<MessageDispatcherServlet>(servlet, "/ws/*");
     }
 
-    @Bean(name = "user")
+  @Bean(name = "user")
     DefaultWsdl11Definition userWsdlDefinition ( XsdSchema  userSchema ) {
         DefaultWsdl11Definition wsdl11def = new DefaultWsdl11Definition();
 
@@ -54,11 +53,28 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return wsdl11def;
     }
 
-    @Bean
+   @Bean
     XsdSchema anunciosSchema () {
         return new SimpleXsdSchema(new ClassPathResource("xsd/anuncios_schema.xsd") );
     }
 
+    // --- Local ---
+    @Bean(name = "local")
+    DefaultWsdl11Definition localWsdlDefinition(XsdSchema localSchema) {
+        DefaultWsdl11Definition wsdl = new DefaultWsdl11Definition();
+        wsdl.setPortTypeName("ApiSoapHttpBikeSharedLocal");
+        wsdl.setLocationUri("/ws");
+        wsdl.setTargetNamespace("http://local.soap.xml");
+        wsdl.setSchema(localSchema);
+        return wsdl;
+    }
+
+    @Bean
+    XsdSchema localSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("xsd/local_schema.xsd"));
+    }
+
+    // --- Station ---
     @Bean(name = "station")
     DefaultWsdl11Definition estacaoWsdlDefinition (XsdSchema stationSchema) {
         DefaultWsdl11Definition wsdl11def = new DefaultWsdl11Definition();
@@ -94,3 +110,11 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     }
 
 }
+
+
+
+
+
+
+
+

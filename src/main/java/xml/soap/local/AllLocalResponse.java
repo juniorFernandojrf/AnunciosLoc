@@ -6,8 +6,10 @@
 //
 
 
-package xml.soap.station;
+package xml.soap.local;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -25,9 +27,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="estado" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
  *         &lt;element name="mensagem" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="stateCode" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
+ *         &lt;element name="local" type="{http://local.soap.xml}LocalType" maxOccurs="unbounded" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -38,33 +40,17 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "estado",
     "mensagem",
-    "stateCode"
+    "status",
+    "local"
 })
-@XmlRootElement(name = "DownBikeResponse")
-public class DownBikeResponse {
+@XmlRootElement(name = "AllLocalResponse")
+public class AllLocalResponse {
 
-    protected boolean estado;
     @XmlElement(required = true)
     protected String mensagem;
-    protected int stateCode;
-
-    /**
-     * Obtém o valor da propriedade estado.
-     * 
-     */
-    public boolean isEstado() {
-        return estado;
-    }
-
-    /**
-     * Define o valor da propriedade estado.
-     * 
-     */
-    public void setEstado(boolean value) {
-        this.estado = value;
-    }
+    protected boolean status;
+    protected List<LocalType> local;
 
     /**
      * Obtém o valor da propriedade mensagem.
@@ -91,19 +77,48 @@ public class DownBikeResponse {
     }
 
     /**
-     * Obtém o valor da propriedade stateCode.
+     * Obtém o valor da propriedade status.
      * 
      */
-    public int getStateCode() {
-        return stateCode;
+    public boolean isStatus() {
+        return status;
     }
 
     /**
-     * Define o valor da propriedade stateCode.
+     * Define o valor da propriedade status.
      * 
      */
-    public void setStateCode(int value) {
-        this.stateCode = value;
+    public void setStatus(boolean value) {
+        this.status = value;
+    }
+
+    /**
+     * Gets the value of the local property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the local property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getLocal().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link LocalType }
+     * 
+     * 
+     */
+    public List<LocalType> getLocal() {
+        if (local == null) {
+            local = new ArrayList<LocalType>();
+        }
+        return this.local;
     }
 
 }

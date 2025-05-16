@@ -46,8 +46,8 @@ public class User implements Serializable{
     @Column(name = "telefone")
     protected String telefone; 
 
-    // @OneToMany(mappedBy = "autor")
-    // private List<Anuncio> anuncios;
+    @OneToMany(mappedBy = "user")
+    private List<Anuncio> anuncios;
 
     public void setAuthToken(Object object) {
         throw new UnsupportedOperationException("Unimplemented method 'setAuthToken'");

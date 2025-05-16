@@ -6,7 +6,7 @@
 //
 
 
-package xml.soap;
+package xml.soap.local;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="reference" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="Header" type="{http://local.soap.xml}HeaderType"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -36,36 +36,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "reference"
+    "header"
 })
-@XmlRootElement(name = "DeleteDockRequest")
-public class DeleteDockRequest {
+@XmlRootElement(name = "AllLocalRequest")
+public class AllLocalRequest {
 
-    @XmlElement(required = true)
-    protected String reference;
+    @XmlElement(name = "Header", required = true)
+    protected HeaderType header;
 
     /**
-     * Obtém o valor da propriedade reference.
+     * Obtém o valor da propriedade header.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link HeaderType }
      *     
      */
-    public String getReference() {
-        return reference;
+    public HeaderType getHeader() {
+        return header;
     }
 
     /**
-     * Define o valor da propriedade reference.
+     * Define o valor da propriedade header.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link HeaderType }
      *     
      */
-    public void setReference(String value) {
-        this.reference = value;
+    public void setHeader(HeaderType value) {
+        this.header = value;
     }
 
 }

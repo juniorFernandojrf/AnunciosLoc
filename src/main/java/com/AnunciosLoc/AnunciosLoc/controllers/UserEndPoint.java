@@ -27,7 +27,6 @@ public class UserEndPoint {
         this.userRepository = userRepository;
     }
 
-
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AddUserRequest")
     @ResponsePayload
     public AddUserResponse addUser(@RequestPayload AddUserRequest request) {
@@ -56,54 +55,51 @@ public class UserEndPoint {
 
         return response;
     }
-    
-@PayloadRoot(namespace = NAMESPACE_URI, localPart = "LoginRequest")
-@ResponsePayload
-public UserResponse login(@RequestPayload LoginRequest request) {
-    System.out.println("Entrando no serviço de login");
 
-    UserResponse response = new UserResponse();
-    Optional<User> userOpt = userRepository.findByEmailAndPassword(
-        request.getEmail(), request.getPassword()
-    );
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "LoginRequest")
+    @ResponsePayload
+    public UserResponse login(@RequestPayload LoginRequest request) {
+        System.out.println("Entrando no serviço de login");
 
-    if (userOpt.isPresent()) {
-        User user = userOpt.get();
-        response.setEstado(true);
-        response.setMensagem("Login realizado com sucesso.");
-        response.setStateCode(1);
-        response.setId(user.getId());
-        response.setCiclistaId(user.getId()); // ou outro campo relacionado
-    } else {
-        response.setEstado(false);
-        response.setMensagem("Credenciais inválidas.");
-        response.setStateCode(0);
-        response.setId(0);
-        response.setCiclistaId(0);
-    }
-    return response;
-}
+        UserResponse response = new UserResponse();
+        Optional<User> userOpt = userRepository.findByEmailAndPassword(
+                request.getEmail(), request.getPassword());
 
-@PayloadRoot(namespace = NAMESPACE_URI, localPart = "LogoutRequest")
-@ResponsePayload
-public LogoutResponse logout (@RequestPayload LogoutRequest request) {
-    System.out.println("Entrando no serviço de logout");
-
-    LogoutResponse response = new LogoutResponse();
-
-    Optional<User> userOpt = Optional.ofNullable(userRepository.findByEmail(request.getEmail()));
-
-    if (userOpt.isPresent()) {
-        // Aqui você pode adicionar lógica para encerrar sessão, remover token, etc.
-        response.setEstado(true);
-        response.setMensagem("Logout realizado com sucesso.");
-    } else {
-        response.setEstado(false);
-        response.setMensagem("Usuário não encontrado.");
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            response.setEstado(true);
+            response.setMensagem("Login realizado com sucesso.");
+            response.setStateCode(1);
+            response.setId(user.getId());
+            response.setCiclistaId(user.getId()); // ou outro campo relacionado
+        } else {
+            response.setEstado(false);
+            response.setMensagem("Credenciais inválidas.");
+            response.setStateCode(0);
+            response.setId(0);
+            response.setCiclistaId(0);
+        }
+        return response;
     }
 
-    return response;
-}
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "LogoutRequest")
+    @ResponsePayload
+    public LogoutResponse logout(@RequestPayload LogoutRequest request) {
+        System.out.println("Entrando no serviço de logout");
 
+        LogoutResponse response = new LogoutResponse();
 
+        Optional<User> userOpt = Optional.ofNullable(userRepository.findByEmail(request.getEmail()));
+
+        if (userOpt.isPresent()) {
+            // Aqui você pode adicionar lógica para encerrar sessão, remover token, etc.
+            response.setEstado(true);
+            response.setMensagem("Logout realizado com sucesso.");
+        } else {
+            response.setEstado(false);
+            response.setMensagem("Usuário não encontrado.");
+        }
+
+        return response;
+    }
 }

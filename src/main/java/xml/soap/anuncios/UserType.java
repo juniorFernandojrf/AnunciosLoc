@@ -6,28 +6,27 @@
 //
 
 
-package xml.soap.station;
+package xml.soap.anuncios;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de anonymous complex type.
+ * <p>Classe Java de UserType complex type.
  * 
  * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
  * 
  * <pre>
- * &lt;complexType&gt;
+ * &lt;complexType name="UserType"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="estado" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
- *         &lt;element name="mensagem" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="stateCode" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
+ *         &lt;element name="nome" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="email" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -37,73 +36,81 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "estado",
-    "mensagem",
-    "stateCode"
+@XmlType(name = "UserType", propOrder = {
+    "id",
+    "nome",
+    "email"
 })
-@XmlRootElement(name = "DownBikeResponse")
-public class DownBikeResponse {
+public class UserType {
 
-    protected boolean estado;
+    protected long id;
     @XmlElement(required = true)
-    protected String mensagem;
-    protected int stateCode;
+    protected String nome;
+    @XmlElement(required = true)
+    protected String email;
 
     /**
-     * Obtém o valor da propriedade estado.
+     * Obtém o valor da propriedade id.
      * 
      */
-    public boolean isEstado() {
-        return estado;
+    public long getId() {
+        return id;
     }
 
     /**
-     * Define o valor da propriedade estado.
+     * Define o valor da propriedade id.
      * 
      */
-    public void setEstado(boolean value) {
-        this.estado = value;
+    public void setId(long value) {
+        this.id = value;
     }
 
     /**
-     * Obtém o valor da propriedade mensagem.
+     * Obtém o valor da propriedade nome.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getMensagem() {
-        return mensagem;
+    public String getNome() {
+        return nome;
     }
 
     /**
-     * Define o valor da propriedade mensagem.
+     * Define o valor da propriedade nome.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setMensagem(String value) {
-        this.mensagem = value;
+    public void setNome(String value) {
+        this.nome = value;
     }
 
     /**
-     * Obtém o valor da propriedade stateCode.
+     * Obtém o valor da propriedade email.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public int getStateCode() {
-        return stateCode;
+    public String getEmail() {
+        return email;
     }
 
     /**
-     * Define o valor da propriedade stateCode.
+     * Define o valor da propriedade email.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setStateCode(int value) {
-        this.stateCode = value;
+    public void setEmail(String value) {
+        this.email = value;
     }
 
 }

@@ -6,7 +6,7 @@
 //
 
 
-package xml.soap.station;
+package xml.soap.local;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,15 +25,13 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="Header" type="{http://station.soap.xml}HeaderType"/&gt;
+ *         &lt;element name="Header" type="{http://local.soap.xml}HeaderType"/&gt;
  *         &lt;element name="Body"&gt;
  *           &lt;complexType&gt;
  *             &lt;complexContent&gt;
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *                 &lt;sequence&gt;
- *                   &lt;element name="idCiclista" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
- *                   &lt;element name="referenceDock" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *                   &lt;element name="info" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *                   &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
  *                 &lt;/sequence&gt;
  *               &lt;/restriction&gt;
  *             &lt;/complexContent&gt;
@@ -52,13 +50,13 @@ import javax.xml.bind.annotation.XmlType;
     "header",
     "body"
 })
-@XmlRootElement(name = "DownBikeRequest")
-public class DownBikeRequest {
+@XmlRootElement(name = "RemoveLocalRequest")
+public class RemoveLocalRequest {
 
     @XmlElement(name = "Header", required = true)
     protected HeaderType header;
     @XmlElement(name = "Body", required = true)
-    protected DownBikeRequest.Body body;
+    protected RemoveLocalRequest.Body body;
 
     /**
      * Obtém o valor da propriedade header.
@@ -89,10 +87,10 @@ public class DownBikeRequest {
      * 
      * @return
      *     possible object is
-     *     {@link DownBikeRequest.Body }
+     *     {@link RemoveLocalRequest.Body }
      *     
      */
-    public DownBikeRequest.Body getBody() {
+    public RemoveLocalRequest.Body getBody() {
         return body;
     }
 
@@ -101,10 +99,10 @@ public class DownBikeRequest {
      * 
      * @param value
      *     allowed object is
-     *     {@link DownBikeRequest.Body }
+     *     {@link RemoveLocalRequest.Body }
      *     
      */
-    public void setBody(DownBikeRequest.Body value) {
+    public void setBody(RemoveLocalRequest.Body value) {
         this.body = value;
     }
 
@@ -119,9 +117,7 @@ public class DownBikeRequest {
      *   &lt;complexContent&gt;
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
      *       &lt;sequence&gt;
-     *         &lt;element name="idCiclista" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
-     *         &lt;element name="referenceDock" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
-     *         &lt;element name="info" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+     *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
      *       &lt;/sequence&gt;
      *     &lt;/restriction&gt;
      *   &lt;/complexContent&gt;
@@ -132,80 +128,26 @@ public class DownBikeRequest {
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "idCiclista",
-        "referenceDock",
-        "info"
+        "id"
     })
     public static class Body {
 
-        protected long idCiclista;
-        @XmlElement(required = true)
-        protected String referenceDock;
-        @XmlElement(required = true)
-        protected String info;
+        protected long id;
 
         /**
-         * Obtém o valor da propriedade idCiclista.
+         * Obtém o valor da propriedade id.
          * 
          */
-        public long getIdCiclista() {
-            return idCiclista;
+        public long getId() {
+            return id;
         }
 
         /**
-         * Define o valor da propriedade idCiclista.
+         * Define o valor da propriedade id.
          * 
          */
-        public void setIdCiclista(long value) {
-            this.idCiclista = value;
-        }
-
-        /**
-         * Obtém o valor da propriedade referenceDock.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getReferenceDock() {
-            return referenceDock;
-        }
-
-        /**
-         * Define o valor da propriedade referenceDock.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setReferenceDock(String value) {
-            this.referenceDock = value;
-        }
-
-        /**
-         * Obtém o valor da propriedade info.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getInfo() {
-            return info;
-        }
-
-        /**
-         * Define o valor da propriedade info.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setInfo(String value) {
-            this.info = value;
+        public void setId(long value) {
+            this.id = value;
         }
 
     }
