@@ -82,16 +82,12 @@
               <xs:element name="password" type="xs:string" />
               <!-- nome -->
               <xs:element name="username" type="xs:string" />
-              <!-- nomecompleto -->
-              <xs:element name="nomecompleto" type="xs:string" />
               <!-- genero -->
               <xs:element name="genero" type="xs:string" />
               <!-- foto -->
               <xs:element name="foto" type="xs:string" />
               <!-- tipo -->
               <xs:element name="tipo" type="xs:int" />
-              <!-- nacionalidade -->
-              <xs:element name="nacionalidade" type="xs:string" />
               <!-- profissao -->
               <xs:element name="profissao" type="xs:string" />
               <!-- telefone -->
@@ -119,15 +115,12 @@
               <!-- nome -->
               <xs:element name="username" type="xs:string" />
               <!-- nomecompleto -->
-              <xs:element name="nomecompleto" type="xs:string" />
-              <!-- genero -->
+                      <!-- genero -->
               <xs:element name="genero" type="xs:string" />
               <!-- foto -->
               <xs:element name="foto" type="xs:string" />
               <!-- tipo -->
               <xs:element name="tipo" type="xs:int" />
-              <!-- nacionalidade -->
-              <xs:element name="nacionalidade" type="xs:string" />
               <!-- profissao -->
               <xs:element name="profissao" type="xs:string" />
               <!-- telefone -->
@@ -173,8 +166,7 @@
         <!-- nome -->
         <xs:element name="username" type="xs:string" />
         <!-- nomecompleto -->
-        <xs:element name="nomecompleto" type="xs:string" />
-        <!-- genero -->
+          <!-- genero -->
         <xs:element name="genero" type="xs:string" />
         <!--  -->
         <xs:element name="profissao" type="xs:string" />
@@ -205,7 +197,6 @@
       <!-- nome -->
       <xs:element name="username" type="xs:string" />
       <!-- nomecompleto -->
-      <xs:element name="nomecompleto" type="xs:string" />
       <!-- genero -->
       <xs:element name="genero" type="xs:string" />
       <!--  -->
@@ -259,8 +250,7 @@
         <!-- nome -->
         <xs:element name="username" type="xs:string" />
         <!-- nomecompleto -->
-        <xs:element name="nomecompleto" type="xs:string" />
-        <!-- genero -->
+          <!-- genero -->
         <xs:element name="genero" type="xs:string" />
         <!-- foto -->
         <xs:element name="foto" type="xs:string" />
@@ -316,8 +306,7 @@
               <!-- nome -->
               <xs:element name="username" type="xs:string" />
               <!-- nomecompleto -->
-              <xs:element name="nomecompleto" type="xs:string" />
-              <!-- genero -->
+                      <!-- genero -->
               <xs:element name="genero" type="xs:string" />
               <!--  -->
               <xs:element name="profissao" type="xs:string" />

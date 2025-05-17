@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.05.16 às 07:15:31 PM WAT 
+// Gerado em: 2025.05.17 às 12:40:32 PM WAT 
 //
 
 
@@ -35,7 +35,6 @@ import javax.xml.bind.annotation.XmlType;
  *                   &lt;element name="email" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *                   &lt;element name="password" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *                   &lt;element name="username" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *                   &lt;element name="nomecompleto" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *                   &lt;element name="genero" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *                   &lt;element name="profissao" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *                   &lt;element name="telefone" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
@@ -129,7 +128,6 @@ public class UpdateCiclistaRequest {
      *         &lt;element name="email" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
      *         &lt;element name="password" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
      *         &lt;element name="username" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
-     *         &lt;element name="nomecompleto" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
      *         &lt;element name="genero" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
      *         &lt;element name="profissao" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
      *         &lt;element name="telefone" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
@@ -148,7 +146,6 @@ public class UpdateCiclistaRequest {
         "email",
         "password",
         "username",
-        "nomecompleto",
         "genero",
         "profissao",
         "telefone",
@@ -163,8 +160,6 @@ public class UpdateCiclistaRequest {
         protected String password;
         @XmlElement(required = true)
         protected String username;
-        @XmlElement(required = true)
-        protected String nomecompleto;
         @XmlElement(required = true)
         protected String genero;
         @XmlElement(required = true)
@@ -260,30 +255,6 @@ public class UpdateCiclistaRequest {
          */
         public void setUsername(String value) {
             this.username = value;
-        }
-
-        /**
-         * Obtém o valor da propriedade nomecompleto.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getNomecompleto() {
-            return nomecompleto;
-        }
-
-        /**
-         * Define o valor da propriedade nomecompleto.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setNomecompleto(String value) {
-            this.nomecompleto = value;
         }
 
         /**

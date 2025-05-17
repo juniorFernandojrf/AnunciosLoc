@@ -31,12 +31,8 @@ public class User implements Serializable{
     protected String password;
     @Column(name = "email", unique = true, nullable = false)
     protected String email;
-    @Column(name = "nomecompleto", nullable = false)
-    protected String nomecompleto;
     @Column(name = "profissao")
     protected String profissao;
-    @Column(name = "nacionalidade")
-    protected String nacionalidade;
     @Column(name = "genero")
     protected String genero;
     @Column(name = "tipo")

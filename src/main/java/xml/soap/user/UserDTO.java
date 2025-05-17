@@ -7,7 +7,6 @@ import javax.xml.bind.annotation.*;
     "id",
     "username",
     "email",
-    "nomecompleto"
 })
 @XmlRootElement(name = "UserDTO")
 public class UserDTO {
@@ -15,7 +14,6 @@ public class UserDTO {
     private Long id;
     private String username;
     private String email;
-    private String nomecompleto;
     public void setId(Long id2) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setId'");
@@ -28,10 +26,6 @@ public class UserDTO {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setEmail'");
     }
-    public void setNomecompleto(String nomecompleto2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setNomecompleto'");
-    }
-
+    
     // Getters e setters
 }

@@ -31,17 +31,16 @@ public class UserEndPoint {
     @ResponsePayload
     public AddUserResponse addUser(@RequestPayload AddUserRequest request) {
         AddUserResponse response = new AddUserResponse();
+        
         try {
             // Construir o User com os dados do request
             User user = new User();
             user.setEmail(request.getBody().getEmail());
             user.setPassword(request.getBody().getPassword());
             user.setUsername(request.getBody().getUsername());
-            user.setNomecompleto(request.getBody().getNomecompleto());
             user.setGenero(request.getBody().getGenero());
             user.setFoto(request.getBody().getFoto());
             user.setTipo(request.getBody().getTipo());
-            user.setNacionalidade(request.getBody().getNacionalidade());
             user.setProfissao(request.getBody().getProfissao());
             user.setTelefone(request.getBody().getTelefone());
 
