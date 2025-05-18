@@ -11,6 +11,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.AnunciosLoc.AnunciosLoc.bd.user.User;
 import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
+import com.AnunciosLoc.AnunciosLoc.services.UserService;
 
 import xml.soap.user.*;
 
@@ -20,85 +21,30 @@ public class UserEndPoint {
 
     private static final String NAMESPACE_URI = "http://user.soap.xml";
 
+    
     @Autowired
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public UserEndPoint(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserEndPoint(UserService userService) {
+        this.userService = userService;
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AddUserRequest")
     @ResponsePayload
     public AddUserResponse addUser(@RequestPayload AddUserRequest request) {
-        AddUserResponse response = new AddUserResponse();
-        
-        try {
-            // Construir o User com os dados do request
-            User user = new User();
-            user.setEmail(request.getBody().getEmail());
-            user.setPassword(request.getBody().getPassword());
-            user.setUsername(request.getBody().getUsername());
-            user.setGenero(request.getBody().getGenero());
-            user.setFoto(request.getBody().getFoto());
-            user.setTipo(request.getBody().getTipo());
-            user.setProfissao(request.getBody().getProfissao());
-            user.setTelefone(request.getBody().getTelefone());
-
-            userRepository.save(user); // Salvar na BD
-            response.setMensagem("Usuário cadastrado com sucesso.");
-            response.setStatus(true);
-        } catch (Exception e) {
-            response.setMensagem("Erro ao cadastrar usuário: " + e.getMessage());
-            response.setStatus(false);
-        }
-
-        return response;
+       return this.userService.addUser(request);
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "LoginRequest")
     @ResponsePayload
     public UserResponse login(@RequestPayload LoginRequest request) {
-        System.out.println("Entrando no serviço de login");
-
-        UserResponse response = new UserResponse();
-        Optional<User> userOpt = userRepository.findByEmailAndPassword(
-                request.getEmail(), request.getPassword());
-
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
-            response.setEstado(true);
-            response.setMensagem("Login realizado com sucesso.");
-            response.setStateCode(1);
-            response.setId(user.getId());
-            response.setCiclistaId(user.getId()); // ou outro campo relacionado
-        } else {
-            response.setEstado(false);
-            response.setMensagem("Credenciais inválidas.");
-            response.setStateCode(0);
-            response.setId(0);
-            response.setCiclistaId(0);
-        }
-        return response;
+       return this.login(request);
     }
+
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "LogoutRequest")
     @ResponsePayload
     public LogoutResponse logout(@RequestPayload LogoutRequest request) {
-        System.out.println("Entrando no serviço de logout");
-
-        LogoutResponse response = new LogoutResponse();
-
-        Optional<User> userOpt = Optional.ofNullable(userRepository.findByEmail(request.getEmail()));
-
-        if (userOpt.isPresent()) {
-            // Aqui você pode adicionar lógica para encerrar sessão, remover token, etc.
-            response.setEstado(true);
-            response.setMensagem("Logout realizado com sucesso.");
-        } else {
-            response.setEstado(false);
-            response.setMensagem("Usuário não encontrado.");
-        }
-
-        return response;
+        return this.logout(request);
     }
 }
