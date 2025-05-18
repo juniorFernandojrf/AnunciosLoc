@@ -1,7 +1,7 @@
 package com.AnunciosLoc.AnunciosLoc.controllers;
 
-import com.AnunciosLoc.AnunciosLoc.bd.local.Local;
-import com.AnunciosLoc.AnunciosLoc.bd.local.LocalRepository;
+import com.AnunciosLoc.AnunciosLoc.services.LocalService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -11,9 +11,6 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import xml.soap.local.*;
 
-import java.util.List;
-import java.util.Optional;
-
 @Endpoint
 @Component
 public class LocalEndPoint {
@@ -21,117 +18,29 @@ public class LocalEndPoint {
     private static final String NAMESPACE_URI = "http://local.soap.xml";
 
     @Autowired
-    private final LocalRepository localRepository;
+    private final LocalService localService;
 
-    public LocalEndPoint(LocalRepository localRepository) {
-        this.localRepository = localRepository;
+    public LocalEndPoint(LocalService localService) {
+        this.localService = localService;
     }
 
     // Adicionar Localização
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AddLocalRequest")
     @ResponsePayload
-    public AddLocalResponse adicionarLocal(@RequestPayload AddLocalRequest request) {
-        // AddLocalResponse response = new AddLocalResponse();
-        AddLocalResponse response = new AddLocalResponse();
-        AddLocalResponse.Body body = new AddLocalResponse.Body();
-
-        try {
-            Local local = new Local();
-            local.setNome(request.getBody().getNome());
-            local.setLatitude(request.getBody().getLatitude());
-            local.setLongitude(request.getBody().getLongitude());
-
-            localRepository.save(local);
-
-            body.setMensagem("Localização adicionada com sucesso!");
-            body.setStatus(true);
-        } catch (Exception e) {
-            body.setMensagem("Erro ao adicionar localização: " + e.getMessage());
-            body.setStatus(false);
-        }
-
-        response.setBody(body);
-
-        return response;
+    public AddLocalResponse adicionarLocal(@RequestPayload AddLocalRequest request) {        
+        return this.localService.adicionarLocal(request);
     }
 
     // Listar Localizações
-
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AllLocalRequest")
     @ResponsePayload
     public AllLocalResponse listarTodosOsLocais(@RequestPayload AllLocalRequest request) {
-        AllLocalResponse response = new AllLocalResponse();
-
-        try {
-            List<Local> locais = localRepository.findAll();
-
-            for (Local local : locais) {
-                LocalType localType = new LocalType();
-                localType.setId(local.getId());
-                localType.setNome(local.getNome());
-                localType.setLatitude(local.getLatitude());
-                localType.setLongitude(local.getLongitude());
-                response.getLocal().add(localType);
-            }
-
-            // Setando status e mensagem no caso de sucesso
-            response.setStatus(true);
-            response.setMensagem("Localizações listadas com sucesso.");
-        } catch (Exception e) {
-            // Setando status e mensagem no caso de erro
-            response.setStatus(false);
-            response.setMensagem("Erro ao listar localizações: " + e.getMessage());
-
-        }
-
-        return response;
+        return this.localService.listarTodosOsLocais(request);
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "RemoveLocalRequest")
     @ResponsePayload
     public RemoveLocalResponse removerLocal(@RequestPayload RemoveLocalRequest request) {
-        RemoveLocalResponse response = new RemoveLocalResponse();
-
-        try {
-            Long id = request.getBody().getId();
-
-            // Verificação de entrada válida
-            if (id == null || id <= 0) {
-                response.setStatus(false);
-                response.setMensagem("ID inválido para remoção.");
-                response.setId(-1);
-                return response;
-            }
-
-            // Verifica se o local existe antes de tentar remover
-            Optional<Local> optionalLocal = localRepository.findById(id);
-
-            if (!optionalLocal.isPresent()) {
-                response.setStatus(false);
-                response.setMensagem("Esse Local não existe ");
-                response.setId(id.intValue());
-                return response;
-            }
-
-            // Realiza a remoção
-            localRepository.deleteById(id);
-
-            // Confirmação de sucesso na remoção
-            response.setStatus(true);
-            response.setMensagem("Local removido com sucesso.");
-            response.setId(id.intValue());
-
-        } catch (Exception e) {
-            // Tratamento de exceções inesperadas
-            response.setStatus(false);
-            response.setMensagem("Erro ao remover local: " + e.getMessage());
-            response.setId(-1);
-
-            // Log do erro para auditoria/debug
-            System.err.println("Erro ao remover local: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        return response;
+        return this.localService.removerLocal(request);
     }
 }
