@@ -12,6 +12,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.AnunciosLoc.AnunciosLoc.bd.user.User;
 import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
+import com.AnunciosLoc.AnunciosLoc.utils.HashPassword;
 
 import xml.soap.user.*;
 
@@ -21,6 +22,7 @@ public class UserService {
     @Autowired(required = true)
     private UserRepository userRepository;
 
+    
     public AddUserResponse addUser(AddUserRequest request) {
         AddUserResponse response = new AddUserResponse();
 
@@ -28,7 +30,7 @@ public class UserService {
             // Construir o User com os dados do request
             User user = new User();
             user.setEmail(request.getBody().getEmail());
-            user.setPassword(request.getBody().getPassword());
+            user.setPassword(HashPassword.hashing(request.getBody().getPassword()));
             user.setUsername(request.getBody().getUsername());
             user.setGenero(request.getBody().getGenero());
             user.setFoto(request.getBody().getFoto());
@@ -51,23 +53,32 @@ public class UserService {
         System.out.println("Entrando no serviço de login");
 
         UserResponse response = new UserResponse();
-        Optional<User> userOpt = userRepository.findByEmailAndPassword(
-                request.getEmail(), request.getPassword());
+
+        // Buscar apenas pelo email
+        Optional<User> userOpt = userRepository.findByEmail(request.getEmail());
 
         if (userOpt.isPresent()) {
             User user = userOpt.get();
-            response.setEstado(true);
-            response.setMensagem("Login realizado com sucesso.");
-            response.setStateCode(1);
-            response.setId(user.getId());
-            response.setCiclistaId(user.getId()); // ou outro campo relacionado
+
+            // Verificar se a senha digitada bate com o hash
+            if (user.getPassword().equals(HashPassword.hashing(request.getPassword()))){
+                response.setEstado(true);
+                response.setMensagem("Login realizado com sucesso.");
+                response.setStateCode(1);
+                response.setId(user.getId());
+            } else {
+                response.setEstado(false);
+                response.setMensagem("Senha incorreta.");
+                response.setStateCode(0);
+                response.setId(0);
+            }
         } else {
             response.setEstado(false);
-            response.setMensagem("Credenciais inválidas.");
+            response.setMensagem("Usuário não encontrado.");
             response.setStateCode(0);
             response.setId(0);
-            response.setCiclistaId(0);
         }
+
         return response;
     }
 
@@ -76,7 +87,7 @@ public class UserService {
 
         LogoutResponse response = new LogoutResponse();
 
-        Optional<User> userOpt = Optional.ofNullable(userRepository.findByEmail(request.getEmail()));
+        Optional<User> userOpt = userRepository.findByEmail(request.getEmail()); // ✅
 
         if (userOpt.isPresent()) {
             // Aqui você pode adicionar lógica para encerrar sessão, remover token, etc.

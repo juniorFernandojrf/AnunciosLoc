@@ -21,7 +21,6 @@ public class UserEndPoint {
 
     private static final String NAMESPACE_URI = "http://user.soap.xml";
 
-    
     @Autowired
     private final UserService userService;
 
@@ -32,19 +31,19 @@ public class UserEndPoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AddUserRequest")
     @ResponsePayload
     public AddUserResponse addUser(@RequestPayload AddUserRequest request) {
-       return this.userService.addUser(request);
+        return this.userService.addUser(request);
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "LoginRequest")
     @ResponsePayload
     public UserResponse login(@RequestPayload LoginRequest request) {
-       return this.login(request);
+        return this.userService.login(request);
     }
-
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "LogoutRequest")
     @ResponsePayload
     public LogoutResponse logout(@RequestPayload LogoutRequest request) {
-        return this.logout(request);
+        return this.userService.logout(request);
     }
+
 }
