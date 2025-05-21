@@ -11,6 +11,7 @@ import com.AnunciosLoc.AnunciosLoc.bd.local.Local;
 import com.AnunciosLoc.AnunciosLoc.bd.local.LocalRepository;
 import com.AnunciosLoc.AnunciosLoc.bd.user.User;
 import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
+import com.AnunciosLoc.AnunciosLoc.bd.userProfile.UserProfile;
 import com.AnunciosLoc.AnunciosLoc.bd.anuncio.Anuncio;
 import xml.soap.anuncios.*;
 
@@ -45,7 +46,7 @@ public class AnunciosService {
             anuncio.setDescricao(request.getBody().getDescricao());
             anuncio.setDataexpiracao(request.getBody().getDataexpiracao());
 
-            anuncio.setBloquear("false"); // evitar o erro
+            // anuncio.setBloquear("false"); // evitar o erro
             anuncioRepository.save(anuncio);
 
             // Captura e associa User e Local

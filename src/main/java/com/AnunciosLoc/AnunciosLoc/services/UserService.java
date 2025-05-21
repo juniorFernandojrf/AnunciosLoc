@@ -12,6 +12,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.AnunciosLoc.AnunciosLoc.bd.user.User;
 import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
+// import com.AnunciosLoc.AnunciosLoc.bd.user_profile.UserRepository;
 import com.AnunciosLoc.AnunciosLoc.utils.HashPassword;
 
 import xml.soap.user.*;

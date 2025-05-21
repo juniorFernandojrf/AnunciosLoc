@@ -1,4 +1,4 @@
-package com.AnunciosLoc.AnunciosLoc.bd.user.user_profile;
+package com.AnunciosLoc.AnunciosLoc.bd.userProfile;
 
 import javax.persistence.*;
 import javax.xml.datatype.XMLGregorianCalendar;
