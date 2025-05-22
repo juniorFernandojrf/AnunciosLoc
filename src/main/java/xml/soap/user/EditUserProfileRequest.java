@@ -6,7 +6,7 @@
 //
 
 
-package xml.soap.station;
+package xml.soap.user;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,15 +25,16 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="Header" type="{http://station.soap.xml}HeaderType"/&gt;
+ *         &lt;element name="Header" type="{http://user.soap.xml}HeaderType"/&gt;
  *         &lt;element name="Body"&gt;
  *           &lt;complexType&gt;
  *             &lt;complexContent&gt;
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *                 &lt;sequence&gt;
- *                   &lt;element name="idCiclista" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
- *                   &lt;element name="referenceDock" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *                   &lt;element name="info" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *                   &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
+ *                   &lt;element name="chaveAntiga" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *                   &lt;element name="novaChaver" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *                   &lt;element name="novoValor" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *                 &lt;/sequence&gt;
  *               &lt;/restriction&gt;
  *             &lt;/complexContent&gt;
@@ -52,13 +53,13 @@ import javax.xml.bind.annotation.XmlType;
     "header",
     "body"
 })
-@XmlRootElement(name = "DownBikeRequest")
-public class DownBikeRequest {
+@XmlRootElement(name = "EditUserProfileRequest")
+public class EditUserProfileRequest {
 
     @XmlElement(name = "Header", required = true)
     protected HeaderType header;
     @XmlElement(name = "Body", required = true)
-    protected DownBikeRequest.Body body;
+    protected EditUserProfileRequest.Body body;
 
     /**
      * Obtém o valor da propriedade header.
@@ -89,10 +90,10 @@ public class DownBikeRequest {
      * 
      * @return
      *     possible object is
-     *     {@link DownBikeRequest.Body }
+     *     {@link EditUserProfileRequest.Body }
      *     
      */
-    public DownBikeRequest.Body getBody() {
+    public EditUserProfileRequest.Body getBody() {
         return body;
     }
 
@@ -101,10 +102,10 @@ public class DownBikeRequest {
      * 
      * @param value
      *     allowed object is
-     *     {@link DownBikeRequest.Body }
+     *     {@link EditUserProfileRequest.Body }
      *     
      */
-    public void setBody(DownBikeRequest.Body value) {
+    public void setBody(EditUserProfileRequest.Body value) {
         this.body = value;
     }
 
@@ -119,9 +120,10 @@ public class DownBikeRequest {
      *   &lt;complexContent&gt;
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
      *       &lt;sequence&gt;
-     *         &lt;element name="idCiclista" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
-     *         &lt;element name="referenceDock" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
-     *         &lt;element name="info" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+     *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
+     *         &lt;element name="chaveAntiga" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+     *         &lt;element name="novaChaver" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+     *         &lt;element name="novoValor" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
      *       &lt;/sequence&gt;
      *     &lt;/restriction&gt;
      *   &lt;/complexContent&gt;
@@ -132,80 +134,107 @@ public class DownBikeRequest {
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "idCiclista",
-        "referenceDock",
-        "info"
+        "userId",
+        "chaveAntiga",
+        "novaChaver",
+        "novoValor"
     })
     public static class Body {
 
-        protected long idCiclista;
+        protected long userId;
         @XmlElement(required = true)
-        protected String referenceDock;
+        protected String chaveAntiga;
         @XmlElement(required = true)
-        protected String info;
+        protected String novaChaver;
+        @XmlElement(required = true)
+        protected String novoValor;
 
         /**
-         * Obtém o valor da propriedade idCiclista.
+         * Obtém o valor da propriedade userId.
          * 
          */
-        public long getIdCiclista() {
-            return idCiclista;
+        public long getUserId() {
+            return userId;
         }
 
         /**
-         * Define o valor da propriedade idCiclista.
+         * Define o valor da propriedade userId.
          * 
          */
-        public void setIdCiclista(long value) {
-            this.idCiclista = value;
+        public void setUserId(long value) {
+            this.userId = value;
         }
 
         /**
-         * Obtém o valor da propriedade referenceDock.
+         * Obtém o valor da propriedade chaveAntiga.
          * 
          * @return
          *     possible object is
          *     {@link String }
          *     
          */
-        public String getReferenceDock() {
-            return referenceDock;
+        public String getChaveAntiga() {
+            return chaveAntiga;
         }
 
         /**
-         * Define o valor da propriedade referenceDock.
+         * Define o valor da propriedade chaveAntiga.
          * 
          * @param value
          *     allowed object is
          *     {@link String }
          *     
          */
-        public void setReferenceDock(String value) {
-            this.referenceDock = value;
+        public void setChaveAntiga(String value) {
+            this.chaveAntiga = value;
         }
 
         /**
-         * Obtém o valor da propriedade info.
+         * Obtém o valor da propriedade novaChaver.
          * 
          * @return
          *     possible object is
          *     {@link String }
          *     
          */
-        public String getInfo() {
-            return info;
+        public String getNovaChaver() {
+            return novaChaver;
         }
 
         /**
-         * Define o valor da propriedade info.
+         * Define o valor da propriedade novaChaver.
          * 
          * @param value
          *     allowed object is
          *     {@link String }
          *     
          */
-        public void setInfo(String value) {
-            this.info = value;
+        public void setNovaChaver(String value) {
+            this.novaChaver = value;
+        }
+
+        /**
+         * Obtém o valor da propriedade novoValor.
+         * 
+         * @return
+         *     possible object is
+         *     {@link String }
+         *     
+         */
+        public String getNovoValor() {
+            return novoValor;
+        }
+
+        /**
+         * Define o valor da propriedade novoValor.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *     
+         */
+        public void setNovoValor(String value) {
+            this.novoValor = value;
         }
 
     }

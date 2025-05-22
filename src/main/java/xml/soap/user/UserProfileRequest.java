@@ -6,7 +6,7 @@
 //
 
 
-package xml.soap.station;
+package xml.soap.user;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,13 +25,15 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="Header" type="{http://station.soap.xml}HeaderType"/&gt;
+ *         &lt;element name="Header" type="{http://user.soap.xml}HeaderType"/&gt;
  *         &lt;element name="Body"&gt;
  *           &lt;complexType&gt;
  *             &lt;complexContent&gt;
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *                 &lt;sequence&gt;
- *                   &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
+ *                   &lt;element name="chave" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *                   &lt;element name="valor" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *                   &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
  *                 &lt;/sequence&gt;
  *               &lt;/restriction&gt;
  *             &lt;/complexContent&gt;
@@ -50,13 +52,13 @@ import javax.xml.bind.annotation.XmlType;
     "header",
     "body"
 })
-@XmlRootElement(name = "TestStationRequest")
-public class TestStationRequest {
+@XmlRootElement(name = "UserProfileRequest")
+public class UserProfileRequest {
 
     @XmlElement(name = "Header", required = true)
     protected HeaderType header;
     @XmlElement(name = "Body", required = true)
-    protected TestStationRequest.Body body;
+    protected UserProfileRequest.Body body;
 
     /**
      * Obtém o valor da propriedade header.
@@ -87,10 +89,10 @@ public class TestStationRequest {
      * 
      * @return
      *     possible object is
-     *     {@link TestStationRequest.Body }
+     *     {@link UserProfileRequest.Body }
      *     
      */
-    public TestStationRequest.Body getBody() {
+    public UserProfileRequest.Body getBody() {
         return body;
     }
 
@@ -99,10 +101,10 @@ public class TestStationRequest {
      * 
      * @param value
      *     allowed object is
-     *     {@link TestStationRequest.Body }
+     *     {@link UserProfileRequest.Body }
      *     
      */
-    public void setBody(TestStationRequest.Body value) {
+    public void setBody(UserProfileRequest.Body value) {
         this.body = value;
     }
 
@@ -117,7 +119,9 @@ public class TestStationRequest {
      *   &lt;complexContent&gt;
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
      *       &lt;sequence&gt;
-     *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
+     *         &lt;element name="chave" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+     *         &lt;element name="valor" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+     *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
      *       &lt;/sequence&gt;
      *     &lt;/restriction&gt;
      *   &lt;/complexContent&gt;
@@ -128,26 +132,80 @@ public class TestStationRequest {
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "id"
+        "chave",
+        "valor",
+        "userId"
     })
     public static class Body {
 
-        protected long id;
+        @XmlElement(required = true)
+        protected String chave;
+        @XmlElement(required = true)
+        protected String valor;
+        protected long userId;
 
         /**
-         * Obtém o valor da propriedade id.
+         * Obtém o valor da propriedade chave.
          * 
+         * @return
+         *     possible object is
+         *     {@link String }
+         *     
          */
-        public long getId() {
-            return id;
+        public String getChave() {
+            return chave;
         }
 
         /**
-         * Define o valor da propriedade id.
+         * Define o valor da propriedade chave.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *     
+         */
+        public void setChave(String value) {
+            this.chave = value;
+        }
+
+        /**
+         * Obtém o valor da propriedade valor.
+         * 
+         * @return
+         *     possible object is
+         *     {@link String }
+         *     
+         */
+        public String getValor() {
+            return valor;
+        }
+
+        /**
+         * Define o valor da propriedade valor.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *     
+         */
+        public void setValor(String value) {
+            this.valor = value;
+        }
+
+        /**
+         * Obtém o valor da propriedade userId.
          * 
          */
-        public void setId(long value) {
-            this.id = value;
+        public long getUserId() {
+            return userId;
+        }
+
+        /**
+         * Define o valor da propriedade userId.
+         * 
+         */
+        public void setUserId(long value) {
+            this.userId = value;
         }
 
     }

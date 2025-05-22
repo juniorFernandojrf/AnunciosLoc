@@ -2,6 +2,7 @@ package com.AnunciosLoc.AnunciosLoc.bd.anuncio;
 
 import javax.persistence.*;
 
+import java.time.LocalDateTime;
 import com.AnunciosLoc.AnunciosLoc.bd.local.Local;
 import com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaEntrega;
 import com.AnunciosLoc.AnunciosLoc.bd.user.User;
@@ -33,10 +34,10 @@ public class Anuncio implements Serializable{
     private String descricao;
 
     @Column(name = "datainico", nullable = false)
-    private String datainicio;
+    private LocalDateTime datainicio;
 
     @Column(name = "dataexpiracao", nullable = false)
-    private String dataexpiracao;
+    private LocalDateTime dataexpiracao;
     
     @ManyToOne
     @JoinColumn(name = "user_id")

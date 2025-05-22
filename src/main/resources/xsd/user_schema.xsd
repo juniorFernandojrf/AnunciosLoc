@@ -31,7 +31,7 @@
         <!-- mensagem do estado -->
         <xs:element name="mensagem" type="xs:string" />
         <!-- código de estado -->
-        <xs:element name="estado" type="xs:boolean" />
+        <xs:element name="estado"   type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -61,7 +61,7 @@
     <xs:complexType>
       <xs:sequence>
         <!-- email -->
-        <xs:element name="email" type="xs:string" />
+        <xs:element name="email"    type="xs:string" />
         <!-- password -->
         <xs:element name="password" type="xs:string" />
       </xs:sequence>
@@ -77,21 +77,21 @@
           <xs:complexType>
             <xs:sequence>
               <!-- email -->
-              <xs:element name="email" type="xs:string" />
+              <xs:element name="email"     type="xs:string" />
               <!-- password -->
-              <xs:element name="password" type="xs:string" />
+              <xs:element name="password"  type="xs:string" />
               <!-- nome -->
-              <xs:element name="username" type="xs:string" />
+              <xs:element name="username"  type="xs:string" />
               <!-- genero -->
-              <xs:element name="genero" type="xs:string" />
+              <xs:element name="genero"    type="xs:string" />
               <!-- foto -->
-              <xs:element name="foto" type="xs:string" />
+              <xs:element name="foto"      type="xs:string" />
               <!-- tipo -->
-              <xs:element name="tipo" type="xs:int" />
+              <xs:element name="tipo"      type="xs:int" />
               <!-- profissao -->
               <xs:element name="profissao" type="xs:string" />
               <!-- telefone -->
-              <xs:element name="telefone" type="xs:string" />
+              <xs:element name="telefone"  type="xs:string" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -109,22 +109,22 @@
           <xs:complexType>
             <xs:sequence>
               <!-- email -->
-              <xs:element name="email" type="xs:string" />
+              <xs:element name="email"     type="xs:string" />
               <!-- password -->
-              <xs:element name="password" type="xs:string" />
+              <xs:element name="password"  type="xs:string" />
               <!-- nome -->
-              <xs:element name="username" type="xs:string" />
+              <xs:element name="username"  type="xs:string" />
               <!-- nomecompleto -->
                       <!-- genero -->
-              <xs:element name="genero" type="xs:string" />
+              <xs:element name="genero"    type="xs:string" />
               <!-- foto -->
-              <xs:element name="foto" type="xs:string" />
+              <xs:element name="foto"      type="xs:string" />
               <!-- tipo -->
-              <xs:element name="tipo" type="xs:int" />
+              <xs:element name="tipo"      type="xs:int" />
               <!-- profissao -->
               <xs:element name="profissao" type="xs:string" />
               <!-- telefone -->
-              <xs:element name="telefone" type="xs:string" />
+              <xs:element name="telefone"  type="xs:string" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -136,7 +136,7 @@
   <xs:element name="GetUserRequest">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="Header" type="tns:HeaderType" />
+        <xs:element name="Header"   type="tns:HeaderType" />
         <xs:element name="Body">
           <xs:complexType>
             <xs:sequence>
@@ -152,17 +152,17 @@
     <xs:complexType>
       <xs:sequence>
         <!-- retorno da confirmação da inserção -->
-        <xs:element name="estado" type="xs:boolean" />
+        <xs:element name="estado"    type="xs:boolean" />
         <!-- mensagem do estado -->
-        <xs:element name="mensagem" type="xs:string" />
+        <xs:element name="mensagem"  type="xs:string" />
         <!-- código de estado -->
         <xs:element name="stateCode" type="xs:int" />
         <!-- id -->
-        <xs:element name="id" type="xs:long" />
+        <xs:element name="id"        type="xs:long" />
         <!--id ciclista-->
         <xs:element name="ciclistaId" type="xs:long" />
         <!-- email -->
-        <xs:element name="email" type="xs:string" />
+        <xs:element name="email"     type="xs:string" />
         <!-- nome -->
         <xs:element name="username" type="xs:string" />
         <!-- nomecompleto -->
@@ -209,5 +209,80 @@
       <xs:element name="token" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
+
+  
+  <!-- Definição do elemento "user" -->
+  <xs:element name="UserProfileRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Header" type="tns:HeaderType" />
+        <xs:element name="Body">
+          <xs:complexType>
+            <xs:sequence>
+              <!-- email -->
+              <xs:element name="chave" type="xs:string" />
+              <!-- password -->
+              <xs:element name="valor" type="xs:string" />
+              <!-- nome -->
+              <xs:element name="userId" type="xs:long" />
+
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+
+  <xs:element name="UserProfileResponse">
+  <xs:complexType>
+    <xs:sequence>
+      <!-- Status: sucesso ou erro -->
+      <xs:element name="status" type="xs:boolean"/>
+      <!-- Mensagem opcional de retorno -->
+      <xs:element name="mensagem" type="xs:string" minOccurs="0"/>
+      <!-- ID do perfil criado -->
+      <xs:element name="profileId" type="xs:long" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+  <!-- Definição do elemento "user" -->
+  <xs:element name="EditUserProfileRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Header" type="tns:HeaderType" />
+        <xs:element name="Body">
+          <xs:complexType>
+            <xs:sequence>
+              <!-- userId -->
+              <xs:element name="userId" type="xs:long" />
+              <!-- chave -->
+              <xs:element name="chaveAntiga" type="xs:string" />
+              <!-- valor -->
+              <xs:element name="novaChaver" type="xs:string" />
+              <!-- valor -->
+              <xs:element name="novoValor" type="xs:string" />
+              
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+
+  <xs:element name="EditUserProfileResponse">
+  <xs:complexType>
+    <xs:sequence>
+      <!-- Status: sucesso ou erro -->
+      <xs:element name="status" type="xs:boolean"/>
+      <!-- Mensagem opcional de retorno -->
+      <xs:element name="mensagem" type="xs:string" minOccurs="0"/>
+      <!-- ID do perfil criado -->
+      <xs:element name="profileId" type="xs:long" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
 
 </xs:schema>

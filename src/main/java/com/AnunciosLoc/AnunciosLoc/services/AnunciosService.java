@@ -44,7 +44,7 @@ public class AnunciosService {
 
             // anuncio.setBloquear(request.getBody().getBloquear());
             anuncio.setDescricao(request.getBody().getDescricao());
-            anuncio.setDataexpiracao(request.getBody().getDataexpiracao());
+            // anuncio.setDataexpiracao(request.getBody().getDataexpiracao());
 
             // anuncio.setBloquear("false"); // evitar o erro
             anuncioRepository.save(anuncio);

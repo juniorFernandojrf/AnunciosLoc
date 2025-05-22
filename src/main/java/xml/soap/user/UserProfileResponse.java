@@ -6,13 +6,10 @@
 //
 
 
-package xml.soap.local;
+package xml.soap.user;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -27,9 +24,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="mensagem" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
- *         &lt;element name="local" type="{http://local.soap.xml}LocalType" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;element name="mensagem" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="profileId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -40,17 +37,32 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "mensagem",
     "status",
-    "local"
+    "mensagem",
+    "profileId"
 })
-@XmlRootElement(name = "AllLocalResponse")
-public class AllLocalResponse {
+@XmlRootElement(name = "UserProfileResponse")
+public class UserProfileResponse {
 
-    @XmlElement(required = true)
-    protected String mensagem;
     protected boolean status;
-    protected List<LocalType> local;
+    protected String mensagem;
+    protected Long profileId;
+
+    /**
+     * Obtém o valor da propriedade status.
+     * 
+     */
+    public boolean isStatus() {
+        return status;
+    }
+
+    /**
+     * Define o valor da propriedade status.
+     * 
+     */
+    public void setStatus(boolean value) {
+        this.status = value;
+    }
 
     /**
      * Obtém o valor da propriedade mensagem.
@@ -77,48 +89,27 @@ public class AllLocalResponse {
     }
 
     /**
-     * Obtém o valor da propriedade status.
+     * Obtém o valor da propriedade profileId.
      * 
+     * @return
+     *     possible object is
+     *     {@link Long }
+     *     
      */
-    public boolean isStatus() {
-        return status;
+    public Long getProfileId() {
+        return profileId;
     }
 
     /**
-     * Define o valor da propriedade status.
+     * Define o valor da propriedade profileId.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Long }
+     *     
      */
-    public void setStatus(boolean value) {
-        this.status = value;
-    }
-
-    /**
-     * Gets the value of the local property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the local property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getLocal().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link LocalType }
-     * 
-     * 
-     */
-    public List<LocalType> getLocal() {
-        if (local == null) {
-            local = new ArrayList<LocalType>();
-        }
-        return this.local;
+    public void setProfileId(Long value) {
+        this.profileId = value;
     }
 
 }

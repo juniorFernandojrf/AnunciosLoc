@@ -11,6 +11,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.AnunciosLoc.AnunciosLoc.bd.user.User;
 import com.AnunciosLoc.AnunciosLoc.bd.userProfile.UserProfile;
+import com.AnunciosLoc.AnunciosLoc.services.UserProfileService;
 import com.AnunciosLoc.AnunciosLoc.services.UserService;
 
 import xml.soap.user.*;
@@ -24,8 +25,12 @@ public class UserEndPoint {
     @Autowired
     private final UserService userService;
 
-    public UserEndPoint(UserService userService) {
+    @Autowired
+    private final UserProfileService userProfileService;
+
+    public UserEndPoint(UserService userService, UserProfileService userProfileService) {
         this.userService = userService;
+        this.userProfileService = userProfileService;
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AddUserRequest")
@@ -33,6 +38,7 @@ public class UserEndPoint {
     public AddUserResponse addUser(@RequestPayload AddUserRequest request) {
         return this.userService.addUser(request);
     }
+    
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "LoginRequest")
     @ResponsePayload

@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+
+
 @Data
 @Entity
 @Table(name = "condicao_perfil")
@@ -19,7 +22,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CondicaoPerfil {
+public class CondicaoPerfil implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
