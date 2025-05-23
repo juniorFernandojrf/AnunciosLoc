@@ -9,8 +9,12 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.AnunciosLoc.AnunciosLoc.services.UserProfileService;
 
+import xml.soap.user.AllUserProfileRequest;
+import xml.soap.user.AllUserProfileResponse;
 import xml.soap.user.EditUserProfileRequest;
 import xml.soap.user.EditUserProfileResponse;
+import xml.soap.user.RemoveUserProfileRequest;
+import xml.soap.user.RemoveUserProfileResponse;
 import xml.soap.user.UserProfileRequest;
 import xml.soap.user.UserProfileResponse;
 
@@ -39,6 +43,16 @@ public class UserProfileEndPoint {
         return this.userProfileService.editProfile(request);
     }
 
-    
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "RemoveUserProfileRequest")
+    @ResponsePayload
+    public RemoveUserProfileResponse removeProfile(@RequestPayload RemoveUserProfileRequest request) {
+        return this.userProfileService.removeProfile(request);
+    }
+
+    // @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AllUserProfileRequest")
+    // @ResponsePayload
+    // public AllUserProfileResponse allUserProfile(@RequestPayload AllUserProfileRequest request) {
+    //     return  userProfileService.allUserProfile(request); // aqui os tipos batem
+    // }
 
 }

@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.05.22 às 03:32:11 PM WAT 
+// Gerado em: 2025.05.23 às 05:08:02 AM WAT 
 //
 
 
@@ -74,6 +74,30 @@ public class ObjectFactory {
      */
     public EditUserProfileRequest createEditUserProfileRequest() {
         return new EditUserProfileRequest();
+    }
+
+    /**
+     * Create an instance of {@link AllUserProfileRequest }
+     * 
+     */
+    public AllUserProfileRequest createAllUserProfileRequest() {
+        return new AllUserProfileRequest();
+    }
+
+    /**
+     * Create an instance of {@link AllUserProfileResponse }
+     * 
+     */
+    public AllUserProfileResponse createAllUserProfileResponse() {
+        return new AllUserProfileResponse();
+    }
+
+    /**
+     * Create an instance of {@link RemoveUserProfileRequest }
+     * 
+     */
+    public RemoveUserProfileRequest createRemoveUserProfileRequest() {
+        return new RemoveUserProfileRequest();
     }
 
     /**
@@ -197,11 +221,51 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link AllUserProfileRequest.Body }
+     * 
+     */
+    public AllUserProfileRequest.Body createAllUserProfileRequestBody() {
+        return new AllUserProfileRequest.Body();
+    }
+
+    /**
+     * Create an instance of {@link AllUserProfileResponse.Profile }
+     * 
+     */
+    public AllUserProfileResponse.Profile createAllUserProfileResponseProfile() {
+        return new AllUserProfileResponse.Profile();
+    }
+
+    /**
+     * Create an instance of {@link RemoveUserProfileRequest.Body }
+     * 
+     */
+    public RemoveUserProfileRequest.Body createRemoveUserProfileRequestBody() {
+        return new RemoveUserProfileRequest.Body();
+    }
+
+    /**
+     * Create an instance of {@link RemoveUserProfileResponse }
+     * 
+     */
+    public RemoveUserProfileResponse createRemoveUserProfileResponse() {
+        return new RemoveUserProfileResponse();
+    }
+
+    /**
      * Create an instance of {@link UserType }
      * 
      */
     public UserType createUserType() {
         return new UserType();
+    }
+
+    /**
+     * Create an instance of {@link ParChaveValorDTO }
+     * 
+     */
+    public ParChaveValorDTO createParChaveValorDTO() {
+        return new ParChaveValorDTO();
     }
 
 }

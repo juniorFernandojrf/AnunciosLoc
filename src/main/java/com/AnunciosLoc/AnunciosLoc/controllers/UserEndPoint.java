@@ -1,7 +1,5 @@
 package com.AnunciosLoc.AnunciosLoc.controllers;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -9,8 +7,6 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import com.AnunciosLoc.AnunciosLoc.bd.user.User;
-import com.AnunciosLoc.AnunciosLoc.bd.userProfile.UserProfile;
 import com.AnunciosLoc.AnunciosLoc.services.UserProfileService;
 import com.AnunciosLoc.AnunciosLoc.services.UserService;
 
@@ -25,12 +21,9 @@ public class UserEndPoint {
     @Autowired
     private final UserService userService;
 
-    @Autowired
-    private final UserProfileService userProfileService;
 
     public UserEndPoint(UserService userService, UserProfileService userProfileService) {
         this.userService = userService;
-        this.userProfileService = userProfileService;
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AddUserRequest")

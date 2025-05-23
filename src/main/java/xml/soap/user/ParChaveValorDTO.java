@@ -6,7 +6,7 @@
 //
 
 
-package xml.soap.station;
+package xml.soap.user;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -15,16 +15,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de HeaderType complex type.
+ * <p>Classe Java de ParChaveValorDTO complex type.
  * 
  * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
  * 
  * <pre>
- * &lt;complexType name="HeaderType"&gt;
+ * &lt;complexType name="ParChaveValorDTO"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="AuthToken" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="chave" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="valor" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -34,36 +35,63 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "HeaderType", propOrder = {
-    "authToken"
+@XmlType(name = "ParChaveValorDTO", propOrder = {
+    "chave",
+    "valor"
 })
-public class HeaderType {
+public class ParChaveValorDTO {
 
-    @XmlElement(name = "AuthToken", required = true)
-    protected String authToken;
+    @XmlElement(required = true)
+    protected String chave;
+    @XmlElement(required = true)
+    protected String valor;
 
     /**
-     * Obtém o valor da propriedade authToken.
+     * Obtém o valor da propriedade chave.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getAuthToken() {
-        return authToken;
+    public String getChave() {
+        return chave;
     }
 
     /**
-     * Define o valor da propriedade authToken.
+     * Define o valor da propriedade chave.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setAuthToken(String value) {
-        this.authToken = value;
+    public void setChave(String value) {
+        this.chave = value;
+    }
+
+    /**
+     * Obtém o valor da propriedade valor.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getValor() {
+        return valor;
+    }
+
+    /**
+     * Define o valor da propriedade valor.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setValor(String value) {
+        this.valor = value;
     }
 
 }

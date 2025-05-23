@@ -31,7 +31,6 @@ public class AnunciosEndPoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AllAnuncioRequest")
     @ResponsePayload
     public AllAnuncioResponse getAllAnuncios(@RequestPayload AllAnuncioRequest request) {
-
         return this.anunciosService.getAllAnuncios(request);
     }
 

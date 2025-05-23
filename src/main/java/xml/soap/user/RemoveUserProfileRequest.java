@@ -6,7 +6,7 @@
 //
 
 
-package xml.soap.station;
+package xml.soap.user;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,13 +25,14 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="Header" type="{http://station.soap.xml}HeaderType"/&gt;
+ *         &lt;element name="Header" type="{http://user.soap.xml}HeaderType"/&gt;
  *         &lt;element name="Body"&gt;
  *           &lt;complexType&gt;
  *             &lt;complexContent&gt;
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *                 &lt;sequence&gt;
- *                   &lt;element name="reference" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *                   &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
+ *                   &lt;element name="chave" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *                 &lt;/sequence&gt;
  *               &lt;/restriction&gt;
  *             &lt;/complexContent&gt;
@@ -50,13 +51,13 @@ import javax.xml.bind.annotation.XmlType;
     "header",
     "body"
 })
-@XmlRootElement(name = "DeleteDockReq")
-public class DeleteDockReq {
+@XmlRootElement(name = "RemoveUserProfileRequest")
+public class RemoveUserProfileRequest {
 
     @XmlElement(name = "Header", required = true)
     protected HeaderType header;
     @XmlElement(name = "Body", required = true)
-    protected DeleteDockReq.Body body;
+    protected RemoveUserProfileRequest.Body body;
 
     /**
      * Obtém o valor da propriedade header.
@@ -87,10 +88,10 @@ public class DeleteDockReq {
      * 
      * @return
      *     possible object is
-     *     {@link DeleteDockReq.Body }
+     *     {@link RemoveUserProfileRequest.Body }
      *     
      */
-    public DeleteDockReq.Body getBody() {
+    public RemoveUserProfileRequest.Body getBody() {
         return body;
     }
 
@@ -99,10 +100,10 @@ public class DeleteDockReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link DeleteDockReq.Body }
+     *     {@link RemoveUserProfileRequest.Body }
      *     
      */
-    public void setBody(DeleteDockReq.Body value) {
+    public void setBody(RemoveUserProfileRequest.Body value) {
         this.body = value;
     }
 
@@ -117,7 +118,8 @@ public class DeleteDockReq {
      *   &lt;complexContent&gt;
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
      *       &lt;sequence&gt;
-     *         &lt;element name="reference" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+     *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
+     *         &lt;element name="chave" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
      *       &lt;/sequence&gt;
      *     &lt;/restriction&gt;
      *   &lt;/complexContent&gt;
@@ -128,35 +130,53 @@ public class DeleteDockReq {
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "reference"
+        "userId",
+        "chave"
     })
     public static class Body {
 
+        protected long userId;
         @XmlElement(required = true)
-        protected String reference;
+        protected String chave;
 
         /**
-         * Obtém o valor da propriedade reference.
+         * Obtém o valor da propriedade userId.
+         * 
+         */
+        public long getUserId() {
+            return userId;
+        }
+
+        /**
+         * Define o valor da propriedade userId.
+         * 
+         */
+        public void setUserId(long value) {
+            this.userId = value;
+        }
+
+        /**
+         * Obtém o valor da propriedade chave.
          * 
          * @return
          *     possible object is
          *     {@link String }
          *     
          */
-        public String getReference() {
-            return reference;
+        public String getChave() {
+            return chave;
         }
 
         /**
-         * Define o valor da propriedade reference.
+         * Define o valor da propriedade chave.
          * 
          * @param value
          *     allowed object is
          *     {@link String }
          *     
          */
-        public void setReference(String value) {
-            this.reference = value;
+        public void setChave(String value) {
+            this.chave = value;
         }
 
     }

@@ -12,4 +12,6 @@ import com.AnunciosLoc.AnunciosLoc.bd.user.User;
 public interface UserProfileRepository extends JpaRepository<UserProfile, Long> {
     Optional<UserProfile> findByUserAndChave(User user, String chave);
     List    <UserProfile> findByUserId(Long usuer_id);
+    List    <UserProfile> findByUser(User user);
+
 }

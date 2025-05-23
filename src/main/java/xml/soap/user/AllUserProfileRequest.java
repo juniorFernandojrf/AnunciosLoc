@@ -6,7 +6,7 @@
 //
 
 
-package xml.soap.station;
+package xml.soap.user;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,13 +25,13 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="Header" type="{http://station.soap.xml}HeaderType"/&gt;
+ *         &lt;element name="Header" type="{http://user.soap.xml}HeaderType"/&gt;
  *         &lt;element name="Body"&gt;
  *           &lt;complexType&gt;
  *             &lt;complexContent&gt;
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *                 &lt;sequence&gt;
- *                   &lt;element name="reference" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *                   &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
  *                 &lt;/sequence&gt;
  *               &lt;/restriction&gt;
  *             &lt;/complexContent&gt;
@@ -50,13 +50,13 @@ import javax.xml.bind.annotation.XmlType;
     "header",
     "body"
 })
-@XmlRootElement(name = "DeleteDockReq")
-public class DeleteDockReq {
+@XmlRootElement(name = "AllUserProfileRequest")
+public class AllUserProfileRequest {
 
     @XmlElement(name = "Header", required = true)
     protected HeaderType header;
     @XmlElement(name = "Body", required = true)
-    protected DeleteDockReq.Body body;
+    protected AllUserProfileRequest.Body body;
 
     /**
      * Obtém o valor da propriedade header.
@@ -87,10 +87,10 @@ public class DeleteDockReq {
      * 
      * @return
      *     possible object is
-     *     {@link DeleteDockReq.Body }
+     *     {@link AllUserProfileRequest.Body }
      *     
      */
-    public DeleteDockReq.Body getBody() {
+    public AllUserProfileRequest.Body getBody() {
         return body;
     }
 
@@ -99,10 +99,10 @@ public class DeleteDockReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link DeleteDockReq.Body }
+     *     {@link AllUserProfileRequest.Body }
      *     
      */
-    public void setBody(DeleteDockReq.Body value) {
+    public void setBody(AllUserProfileRequest.Body value) {
         this.body = value;
     }
 
@@ -117,7 +117,7 @@ public class DeleteDockReq {
      *   &lt;complexContent&gt;
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
      *       &lt;sequence&gt;
-     *         &lt;element name="reference" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+     *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
      *       &lt;/sequence&gt;
      *     &lt;/restriction&gt;
      *   &lt;/complexContent&gt;
@@ -128,35 +128,26 @@ public class DeleteDockReq {
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "reference"
+        "userId"
     })
     public static class Body {
 
-        @XmlElement(required = true)
-        protected String reference;
+        protected long userId;
 
         /**
-         * Obtém o valor da propriedade reference.
+         * Obtém o valor da propriedade userId.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
          */
-        public String getReference() {
-            return reference;
+        public long getUserId() {
+            return userId;
         }
 
         /**
-         * Define o valor da propriedade reference.
+         * Define o valor da propriedade userId.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
          */
-        public void setReference(String value) {
-            this.reference = value;
+        public void setUserId(long value) {
+            this.userId = value;
         }
 
     }

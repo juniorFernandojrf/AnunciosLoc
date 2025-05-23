@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.05.22 às 03:32:11 PM WAT 
+// Gerado em: 2025.05.23 às 05:08:02 AM WAT 
 //
 
 
@@ -29,7 +29,6 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="mensagem" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="stateCode" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
- *         &lt;element name="ciclistaId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
  *         &lt;element name="email" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="username" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="genero" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
@@ -51,7 +50,6 @@ import javax.xml.bind.annotation.XmlType;
     "mensagem",
     "stateCode",
     "id",
-    "ciclistaId",
     "email",
     "username",
     "genero",
@@ -68,7 +66,6 @@ public class UserResponse {
     protected String mensagem;
     protected int stateCode;
     protected long id;
-    protected long ciclistaId;
     @XmlElement(required = true)
     protected String email;
     @XmlElement(required = true)
@@ -154,22 +151,6 @@ public class UserResponse {
      */
     public void setId(long value) {
         this.id = value;
-    }
-
-    /**
-     * Obtém o valor da propriedade ciclistaId.
-     * 
-     */
-    public long getCiclistaId() {
-        return ciclistaId;
-    }
-
-    /**
-     * Define o valor da propriedade ciclistaId.
-     * 
-     */
-    public void setCiclistaId(long value) {
-        this.ciclistaId = value;
     }
 
     /**
