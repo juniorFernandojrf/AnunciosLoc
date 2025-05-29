@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.05.23 às 05:08:02 AM WAT 
+// Gerado em: 2025.05.27 às 11:12:22 AM WAT 
 //
 
 
@@ -77,6 +77,30 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link PoliticaEntregaType }
+     * 
+     */
+    public PoliticaEntregaType createPoliticaEntregaType() {
+        return new PoliticaEntregaType();
+    }
+
+    /**
+     * Create an instance of {@link UserType }
+     * 
+     */
+    public UserType createUserType() {
+        return new UserType();
+    }
+
+    /**
+     * Create an instance of {@link LocalType }
+     * 
+     */
+    public LocalType createLocalType() {
+        return new LocalType();
+    }
+
+    /**
      * Create an instance of {@link AllAnuncioRequest }
      * 
      */
@@ -117,19 +141,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link UserType }
+     * Create an instance of {@link CondicaoPerfilType }
      * 
      */
-    public UserType createUserType() {
-        return new UserType();
-    }
-
-    /**
-     * Create an instance of {@link LocalType }
-     * 
-     */
-    public LocalType createLocalType() {
-        return new LocalType();
+    public CondicaoPerfilType createCondicaoPerfilType() {
+        return new CondicaoPerfilType();
     }
 
 }

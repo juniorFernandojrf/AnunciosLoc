@@ -1,41 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:tns="http://anuncios.soap.xml"
-  targetNamespace="http://anuncios.soap.xml"
-  elementFormDefault="qualified"
->
+  xmlns:tns="http://anuncios.soap.xml" 
+  targetNamespace="http://anuncios.soap.xml" 
+  elementFormDefault="qualified">
 
-  <!-- Definindo o tipo para o cabeçalho -->
+  <!-- Cabeçalho -->
   <xs:complexType name="HeaderType">
     <xs:sequence>
-      <!-- Token de sessão -->
-      <xs:element name="AuthToken" type="xs:string" />
+      <xs:element name="AuthToken" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 
-  <!-- Definição do elemento "user" -->
+  <!-- Condição do perfil -->
+  <xs:complexType name="CondicaoPerfilType">
+    <xs:sequence>
+      <xs:element name="chave" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="valor" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Tipo de política de entrega -->
+  <xs:complexType name="PoliticaEntregaType">
+    <xs:sequence>
+      <xs:element name="titulo" type="tns:PoliticaTipo"/>
+      <xs:element name="condicoes" minOccurs="0" maxOccurs="unbounded" type="tns:CondicaoPerfilType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="PoliticaTipo">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="WHITELIST"/>
+      <xs:enumeration value="BLACKLIST"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Requisição de adicionar anúncio -->
   <xs:element name="AddAnuncioRequest">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="Header" type="tns:HeaderType" />
+        <xs:element name="Header" type="tns:HeaderType"/>
         <xs:element name="Body">
           <xs:complexType>
             <xs:sequence>
-              <!-- titulo -->
-              <xs:element name="titulo" type="xs:string" />
-              <!-- local -->
-              <xs:element name="local" type="xs:string" />
-              <!-- descricao -->
-              <xs:element name="descricao" type="xs:string" />
-              <!-- dataexpiracao -->
-              <xs:element name="dataexpiracao" type="xs:string" />
-              <!-- bloquear -->
-              <xs:element name="bloquear" type="xs:boolean" />
-
-              <!-- Novos campos -->
-              <xs:element name="userId" type="xs:long" />
-              <xs:element name="localId" type="xs:long" />
-
+              <xs:element name="titulo" type="xs:string"/>
+              <xs:element name="descricao" type="xs:string"/>
+              <xs:element name="datainicio" type="xs:dateTime"/>
+              <xs:element name="dataExpiracao" type="xs:dateTime"/>
+              <xs:element name="userId" type="xs:long"/>
+              <xs:element name="localId" type="xs:long"/>
+              <!-- Novo campo: política de entrega -->
+              <xs:element name="politicaEntrega" type="tns:PoliticaEntregaType" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -43,124 +57,110 @@
     </xs:complexType>
   </xs:element>
 
-  
-  <!-- Definição do elemento "user" -->
+  <!-- Resposta para adicionar anúncio -->
   <xs:element name="AddAnuncioResponse">
     <xs:complexType>
       <xs:sequence>
-        <!-- titulo -->
-        <xs:element name="titulo" type="xs:string" />
-        <!-- local -->
-        <xs:element name="local" type="xs:string" />
-        <!-- descricao -->
-        <xs:element name="descricao" type="xs:string" />
-        <!-- dataexpiracao -->
-        <xs:element name="dataexpiracao" type="xs:string" />
-        <!-- bloquear -->
-        <xs:element name="bloquear" type="xs:string" />
-        <!-- id -->
-        <xs:element name="id" type="xs:int" />
-        <!-- mensagem -->
-        <xs:element name="mensagem" type="xs:string" />
-        <!-- status -->
-        <xs:element name="status" type="xs:boolean" />
-
-        <!-- Novos campos -->
-        <xs:element name="userId" type="xs:long" />
-        <xs:element name="localId" type="xs:long" />
-
-        
+        <xs:element name="titulo"        type="xs:string"/>
+        <xs:element name="local"         type="xs:string"/>
+        <xs:element name="dataInicio"    type="xs:string"/>
+        <xs:element name="dataExpiracao" type="xs:string"/>
+        <xs:element name="bloquear"      type="xs:string"/>
+        <xs:element name="id"            type="xs:int"/>
+        <xs:element name="mensagem"      type="xs:string"/>
+        <xs:element name="status"        type="xs:boolean"/>
+        <xs:element name="politiEntrega" type="tns:PoliticaEntregaType"     minOccurs="0"/>
+        <xs:element name="usuario"       type="tns:UserType"  minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="LocalType"     type="tns:LocalType" minOccurs="0" maxOccurs="unbounded"/>
+        <!-- Novos campos para facilitar acesso direto -->
+        <xs:element name="anuncioId" type="xs:long" minOccurs="0"/>
+        <xs:element name="userId"    type="xs:long" minOccurs="0"/>
+        <xs:element name="localId"   type="xs:long" minOccurs="0"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  
-  <!-- Declaração da requisição -->
-    <xs:element name="AllAnuncioRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="Header" type="tns:HeaderType"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
 
-  <!-- Definition of all elements "anuncio" response -->
+  <!-- Usuário -->
+  <xs:complexType name="UserType">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element name="email" type="xs:string"/>
+      <xs:element name="username" type="xs:string"/>
+      <xs:element name="genero" type="xs:string"/>
+      <xs:element name="profissao" type="xs:string"/>
+      <xs:element name="telefone" type="xs:string"/>
+      <xs:element name="foto" type="xs:string"/>
+      <xs:element name="token" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Local -->
+  <xs:complexType name="LocalType">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element name="nome" type="xs:string"/>
+      <xs:element name="latitude" type="xs:double"/>
+      <xs:element name="longitude" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Tipo de anúncio para resposta de listagem -->
+  <xs:complexType name="AnuncioType">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int"/>
+      <xs:element name="titulo" type="xs:string"/>
+      <xs:element name="dataInicio" type="xs:string"/>
+      <xs:element name="descricao" type="xs:string"/>
+      <xs:element name="dataExpira" type="xs:string"/>
+      <xs:element name="userId" type="xs:long"/>
+      <xs:element name="localId" type="xs:long"/>
+      <xs:element name="usuario" type="tns:UserType" minOccurs="0"/>
+      <xs:element name="local" type="tns:LocalType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="AllAnuncioRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Header" type="tns:HeaderType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="AllAnuncioResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="mensagem" type="xs:string" />
-        <xs:element name="estado"   type="xs:boolean" />
-        <xs:element name="anuncios" type="tns:AnuncioType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="mensagem" type="xs:string"/>
+        <xs:element name="estado" type="xs:boolean"/>
+        <xs:element name="anuncios" type="tns:AnuncioType" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
 
-  <!--====- Tipo do usuário =====-->
-  <xs:complexType name="UserType">
-    <xs:sequence>
-      <xs:element name="id" type="xs:long" />
-      <xs:element name="nome" type="xs:string" />
-      <xs:element name="email" type="xs:string" />
-      <!-- Adicione outros campos conforme necessário -->
-    </xs:sequence>
-  </xs:complexType>
-
-  <!--=== Tipo do local ===-->
-  <xs:complexType name="LocalType">
-    <xs:sequence>
-      <xs:element name="id" type="xs:long" />
-      <xs:element name="nome" type="xs:string" />
-      <xs:element name="latitude" type="xs:double" />
-      <xs:element name="longitude" type="xs:double" />
-      <!-- Adicione outros campos conforme necessário -->
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="AnuncioType">
-    <xs:sequence>
-      <xs:element name="id" type="xs:int" />
-      <xs:element name="titulo" type="xs:string" />
-      <xs:element name="descricao" type="xs:string" />
-      <xs:element name="dataexpiracao" type="xs:string" />
-      <xs:element name="bloquear" type="xs:boolean" />
-
-      <!-- IDs ainda podem ser úteis -->
-      <xs:element name="userId" type="xs:long" />
-      <xs:element name="localId" type="xs:long" />
-
-      <!-- Novos detalhes completos -->
-      <xs:element name="usuario" type="tns:UserType" minOccurs="0" />
-      <xs:element name="local" type="tns:LocalType" minOccurs="0" />
-
-    </xs:sequence>
-  </xs:complexType>
-
-
   <xs:element name="RemoveAnuncioRequest">
-  <xs:complexType>
-    <xs:sequence>
-      <xs:element name="Header" type="tns:HeaderType" />
-      <xs:element name="Body">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="id"     type="xs:long" />
-            <xs:element name="userId" type="xs:long" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
-</xs:element>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Header" type="tns:HeaderType"/>
+        <xs:element name="Body">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" type="xs:long"/>
+              <xs:element name="userId" type="xs:long"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 
-<xs:element name="RemoveAnuncioResponse">
-  <xs:complexType>
-    <xs:sequence>
-      <xs:element name="mensagem" type="xs:string"/>
-      <xs:element name="status" type="xs:boolean"/>
-      <xs:element name="id" type="xs:int"/>
-    </xs:sequence>
-  </xs:complexType>
-</xs:element>
-
-
+  <xs:element name="RemoveAnuncioResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="mensagem" type="xs:string"/>
+        <xs:element name="status" type="xs:boolean"/>
+        <xs:element name="id" type="xs:int"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 
 </xs:schema>

@@ -20,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class User implements Serializable{
-
+    
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")

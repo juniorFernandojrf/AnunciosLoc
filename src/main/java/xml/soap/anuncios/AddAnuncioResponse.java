@@ -2,12 +2,14 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.05.23 às 05:08:02 AM WAT 
+// Gerado em: 2025.05.27 às 11:12:22 AM WAT 
 //
 
 
 package xml.soap.anuncios;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -27,14 +29,18 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence&gt;
  *         &lt;element name="titulo" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="local" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="descricao" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="dataexpiracao" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="dataInicio" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="dataExpiracao" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="bloquear" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
  *         &lt;element name="mensagem" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
- *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
- *         &lt;element name="localId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
+ *         &lt;element name="politiEntrega" type="{http://anuncios.soap.xml}PoliticaEntregaType" minOccurs="0"/&gt;
+ *         &lt;element name="usuario" type="{http://anuncios.soap.xml}UserType" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;element name="LocalType" type="{http://anuncios.soap.xml}LocalType" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;element name="anuncioId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/&gt;
+ *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/&gt;
+ *         &lt;element name="localId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -47,12 +53,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "titulo",
     "local",
-    "descricao",
-    "dataexpiracao",
+    "dataInicio",
+    "dataExpiracao",
     "bloquear",
     "id",
     "mensagem",
     "status",
+    "politiEntrega",
+    "usuario",
+    "localType",
+    "anuncioId",
     "userId",
     "localId"
 })
@@ -64,17 +74,22 @@ public class AddAnuncioResponse {
     @XmlElement(required = true)
     protected String local;
     @XmlElement(required = true)
-    protected String descricao;
+    protected String dataInicio;
     @XmlElement(required = true)
-    protected String dataexpiracao;
+    protected String dataExpiracao;
     @XmlElement(required = true)
     protected String bloquear;
     protected int id;
     @XmlElement(required = true)
     protected String mensagem;
     protected boolean status;
-    protected long userId;
-    protected long localId;
+    protected PoliticaEntregaType politiEntrega;
+    protected List<UserType> usuario;
+    @XmlElement(name = "LocalType")
+    protected List<LocalType> localType;
+    protected Long anuncioId;
+    protected Long userId;
+    protected Long localId;
 
     /**
      * Obtém o valor da propriedade titulo.
@@ -125,51 +140,51 @@ public class AddAnuncioResponse {
     }
 
     /**
-     * Obtém o valor da propriedade descricao.
+     * Obtém o valor da propriedade dataInicio.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getDescricao() {
-        return descricao;
+    public String getDataInicio() {
+        return dataInicio;
     }
 
     /**
-     * Define o valor da propriedade descricao.
+     * Define o valor da propriedade dataInicio.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setDescricao(String value) {
-        this.descricao = value;
+    public void setDataInicio(String value) {
+        this.dataInicio = value;
     }
 
     /**
-     * Obtém o valor da propriedade dataexpiracao.
+     * Obtém o valor da propriedade dataExpiracao.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getDataexpiracao() {
-        return dataexpiracao;
+    public String getDataExpiracao() {
+        return dataExpiracao;
     }
 
     /**
-     * Define o valor da propriedade dataexpiracao.
+     * Define o valor da propriedade dataExpiracao.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setDataexpiracao(String value) {
-        this.dataexpiracao = value;
+    public void setDataExpiracao(String value) {
+        this.dataExpiracao = value;
     }
 
     /**
@@ -253,34 +268,156 @@ public class AddAnuncioResponse {
     }
 
     /**
-     * Obtém o valor da propriedade userId.
+     * Obtém o valor da propriedade politiEntrega.
+     * 
+     * @return
+     *     possible object is
+     *     {@link PoliticaEntregaType }
+     *     
+     */
+    public PoliticaEntregaType getPolitiEntrega() {
+        return politiEntrega;
+    }
+
+    /**
+     * Define o valor da propriedade politiEntrega.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link PoliticaEntregaType }
+     *     
+     */
+    public void setPolitiEntrega(PoliticaEntregaType value) {
+        this.politiEntrega = value;
+    }
+
+    /**
+     * Gets the value of the usuario property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the usuario property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getUsuario().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link UserType }
+     * 
      * 
      */
-    public long getUserId() {
+    public List<UserType> getUsuario() {
+        if (usuario == null) {
+            usuario = new ArrayList<UserType>();
+        }
+        return this.usuario;
+    }
+
+    /**
+     * Gets the value of the localType property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the localType property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getLocalType().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link LocalType }
+     * 
+     * 
+     */
+    public List<LocalType> getLocalType() {
+        if (localType == null) {
+            localType = new ArrayList<LocalType>();
+        }
+        return this.localType;
+    }
+
+    /**
+     * Obtém o valor da propriedade anuncioId.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Long }
+     *     
+     */
+    public Long getAnuncioId() {
+        return anuncioId;
+    }
+
+    /**
+     * Define o valor da propriedade anuncioId.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Long }
+     *     
+     */
+    public void setAnuncioId(Long value) {
+        this.anuncioId = value;
+    }
+
+    /**
+     * Obtém o valor da propriedade userId.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Long }
+     *     
+     */
+    public Long getUserId() {
         return userId;
     }
 
     /**
      * Define o valor da propriedade userId.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Long }
+     *     
      */
-    public void setUserId(long value) {
+    public void setUserId(Long value) {
         this.userId = value;
     }
 
     /**
      * Obtém o valor da propriedade localId.
      * 
+     * @return
+     *     possible object is
+     *     {@link Long }
+     *     
      */
-    public long getLocalId() {
+    public Long getLocalId() {
         return localId;
     }
 
     /**
      * Define o valor da propriedade localId.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Long }
+     *     
      */
-    public void setLocalId(long value) {
+    public void setLocalId(Long value) {
         this.localId = value;
     }
 

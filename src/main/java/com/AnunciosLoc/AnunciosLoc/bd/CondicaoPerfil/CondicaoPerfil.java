@@ -4,37 +4,28 @@ import javax.persistence.*;
 
 import com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaEntrega;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serializable;
-
 
 @Data
 @Entity
 @Table(name = "condicao_perfil")
-@Getter
-@Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@AllArgsConstructor
 public class CondicaoPerfil implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String chave; // Ex: "profissao"
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String valor; // Ex: "Estudante"
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "politica_entrega_id")
     private PoliticaEntrega politicaEntrega;
 

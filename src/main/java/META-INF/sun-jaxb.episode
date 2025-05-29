@@ -5,7 +5,7 @@
 Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-Gerado em: 2025.05.23 às 05:08:02 AM WAT 
+Gerado em: 2025.05.27 às 11:12:22 AM WAT 
 
   -->
   <bindings scd="x-schema::tns" xmlns:tns="http://anuncios.soap.xml">
@@ -24,6 +24,15 @@ Gerado em: 2025.05.23 às 05:08:02 AM WAT
     <bindings scd="tns:AddAnuncioResponse">
       <class ref="xml.soap.anuncios.AddAnuncioResponse"/>
     </bindings>
+    <bindings scd="~tns:PoliticaEntregaType">
+      <class ref="xml.soap.anuncios.PoliticaEntregaType"/>
+    </bindings>
+    <bindings scd="~tns:UserType">
+      <class ref="xml.soap.anuncios.UserType"/>
+    </bindings>
+    <bindings scd="~tns:LocalType">
+      <class ref="xml.soap.anuncios.LocalType"/>
+    </bindings>
     <bindings scd="tns:AllAnuncioRequest">
       <class ref="xml.soap.anuncios.AllAnuncioRequest"/>
     </bindings>
@@ -36,11 +45,11 @@ Gerado em: 2025.05.23 às 05:08:02 AM WAT
     <bindings scd="tns:RemoveAnuncioResponse">
       <class ref="xml.soap.anuncios.RemoveAnuncioResponse"/>
     </bindings>
-    <bindings scd="~tns:UserType">
-      <class ref="xml.soap.anuncios.UserType"/>
+    <bindings scd="~tns:CondicaoPerfilType">
+      <class ref="xml.soap.anuncios.CondicaoPerfilType"/>
     </bindings>
-    <bindings scd="~tns:LocalType">
-      <class ref="xml.soap.anuncios.LocalType"/>
+    <bindings scd="~tns:PoliticaTipo">
+      <typesafeEnumClass ref="xml.soap.anuncios.PoliticaTipo"/>
     </bindings>
   </bindings>
   <bindings scd="x-schema::tns" xmlns:tns="http://local.soap.xml">
@@ -144,11 +153,11 @@ Gerado em: 2025.05.23 às 05:08:02 AM WAT
     <schemaBindings map="false">
       <package name="xml.soap.user"/>
     </schemaBindings>
-    <bindings scd="tns:AddUserRequest">
-      <class ref="xml.soap.user.AddUserRequest"/>
-    </bindings>
     <bindings scd="tns:LoginResponse">
       <class ref="xml.soap.user.LoginResponse"/>
+    </bindings>
+    <bindings scd="tns:AddUserRequest">
+      <class ref="xml.soap.user.AddUserRequest"/>
     </bindings>
     <bindings scd="tns:GetUserRequest">
       <class ref="xml.soap.user.GetUserRequest"/>

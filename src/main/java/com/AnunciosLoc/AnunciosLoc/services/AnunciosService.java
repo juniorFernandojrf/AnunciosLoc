@@ -1,37 +1,41 @@
 package com.AnunciosLoc.AnunciosLoc.services;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.AnunciosLoc.AnunciosLoc.bd.anuncio.Anuncio;
 import com.AnunciosLoc.AnunciosLoc.bd.anuncio.AnuncioRepository;
+import com.AnunciosLoc.AnunciosLoc.bd.condicaoPerfil.CondicaoPerfil;
 import com.AnunciosLoc.AnunciosLoc.bd.local.Local;
 import com.AnunciosLoc.AnunciosLoc.bd.local.LocalRepository;
+import com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaEntrega;
+import com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaEntregaRepository;
 import com.AnunciosLoc.AnunciosLoc.bd.user.User;
 import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
-import com.AnunciosLoc.AnunciosLoc.bd.userProfile.UserProfile;
-import com.AnunciosLoc.AnunciosLoc.bd.anuncio.Anuncio;
+
 import xml.soap.anuncios.*;
 
 @Service
 public class AnunciosService {
 
-    @Autowired
     private final AnuncioRepository anuncioRepository;
-    @Autowired
     private final UserRepository userRepository;
-
-    @Autowired
     private final LocalRepository localizacaoRepository;
+    private final PoliticaEntregaRepository politicaEntregaRepository;
 
     public AnunciosService(
             AnuncioRepository anuncioRepository,
             UserRepository userRepository,
+            PoliticaEntregaRepository politicaEntregaRepository,
             LocalRepository localizacaoRepository) {
         this.anuncioRepository = anuncioRepository;
         this.userRepository = userRepository;
+        this.politicaEntregaRepository = politicaEntregaRepository;
         this.localizacaoRepository = localizacaoRepository;
     }
 
@@ -39,130 +43,176 @@ public class AnunciosService {
         AddAnuncioResponse response = new AddAnuncioResponse();
 
         try {
+            // Validar usuário
+            Optional<User> userOptional = userRepository.findById(request.getBody().getUserId());
+            if (!userOptional.isPresent()) {
+                response.setStatus(false);
+                response.setMensagem("Usuário não encontrado.");
+                return response;
+            }
+
+            // Validar local
+            Optional<Local> localOptional = localizacaoRepository.findById(request.getBody().getLocalId());
+            if (!localOptional.isPresent()) {
+                response.setStatus(false);
+                response.setMensagem("Local não encontrado.");
+                return response;
+            }
+
+            User user = userOptional.get();
+            Local local = localOptional.get();
+
+            // Validar datas
+            if (request.getBody().getDatainicio() == null || request.getBody().getDataExpiracao() == null) {
+                response.setStatus(false);
+                response.setMensagem("Data de início ou expiração não informada.");
+                return response;
+            }
+
+            LocalDateTime inicio = request.getBody().getDatainicio().toGregorianCalendar()
+                    .toZonedDateTime().withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime();
+            LocalDateTime expiracao = request.getBody().getDataExpiracao().toGregorianCalendar()
+                    .toZonedDateTime().withZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime();
+
+            if (inicio.isAfter(expiracao)) {
+                response.setStatus(false);
+                response.setMensagem("A data de início não pode ser posterior à data de expiração.");
+                return response;
+            }
+
+            // Criar anúncio
             Anuncio anuncio = new Anuncio();
             anuncio.setTitulo(request.getBody().getTitulo());
-
-            // anuncio.setBloquear(request.getBody().getBloquear());
             anuncio.setDescricao(request.getBody().getDescricao());
-            // anuncio.setDataexpiracao(request.getBody().getDataexpiracao());
+            anuncio.setDataInicio(inicio);
+            anuncio.setDataExpiracao(expiracao);
+            anuncio.setUser(user);
+            anuncio.setLocalizacao(local);
+            anuncio = anuncioRepository.save(anuncio);
 
-            // anuncio.setBloquear("false"); // evitar o erro
-            anuncioRepository.save(anuncio);
-
-            // Captura e associa User e Local
-            Long userId = request.getBody().getUserId(); // ou getIdUser(), getIdUsuario(), etc.
-            Long localId = request.getBody().getLocalId(); // ou getIdLocal(), etc.
-
-            // ...
-            Optional<User> userOpt = userRepository.findById(userId);
-            Optional<Local> localOpt = localizacaoRepository.findById(localId);
-
-            if (!userOpt.isPresent() || !localOpt.isPresent()) {
-                response.setMensagem("Usuário ou Localização não encontrados.");
+            // Validar política de entrega
+            if (request.getBody().getPoliticaEntrega() == null) {
                 response.setStatus(false);
+                response.setMensagem("Erro: política de entrega não informada corretamente.");
                 return response;
             }
 
-            anuncio.setUser(userOpt.get());
-            anuncio.setLocalizacao(localOpt.get());
+            // Processar política de entrega
+            List<PoliticaEntregaType> politicas = request.getBody().getPoliticaEntrega();
+            PoliticaEntregaType politicaEntregaType = (politicas != null && !politicas.isEmpty()) ? politicas.get(0)
+                    : null;
 
-            anuncioRepository.save(anuncio);
-            response.setMensagem("Anúncio publicado com sucesso.");
-            response.setStatus(true);
-            response.setUserId(userId.intValue());
-            response.setLocalId(localId.intValue());
+            PoliticaEntrega politica = new PoliticaEntrega();
+            List<CondicaoPerfil> condicoes = new ArrayList<>();
+            PoliticaTipo tipoPoliticaEnum = PoliticaTipo.WHITELIST; // padrão
 
-        } catch (Exception e) {
-            response.setMensagem("Erro ao publicar o anúncio: " + e.getMessage());
-            response.setStatus(false);
-        }
+            boolean temCondicaoValida = false;
 
-        return response;
-    }
+            if (politicaEntregaType != null) {
+                String titulo = tipoPoliticaEnum.name().toUpperCase(); // ← Normaliza
+                politica.setTitulo(
+                        com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaTipo.valueOf(titulo));
 
-    public AllAnuncioResponse getAllAnuncios(AllAnuncioRequest request) {
-        AllAnuncioResponse response = new AllAnuncioResponse();
+                if (politicaEntregaType.getCondicoes() != null) {
+                    for (CondicaoPerfilType cond : politicaEntregaType.getCondicoes()) {
+                        List<String> chaves = cond.getChave();
+                        List<String> valores = cond.getValor();
 
-        try {
-            List<Anuncio> anuncios = anuncioRepository.findAll();
+                        // Validar que chave e valor não estejam vazios ou nulos
+                        if (chaves != null && !chaves.isEmpty() &&
+                                valores != null && !valores.isEmpty() &&
+                                !chaves.get(0).trim().isEmpty() &&
+                                !valores.get(0).trim().isEmpty()) {
 
-            if (anuncios.isEmpty()) {
-                response.setMensagem("Nenhum anúncio encontrado.");
-                response.setEstado(false);
-                return response;
-            }
-
-            for (Anuncio anuncio : anuncios) {
-                AnuncioType item = new AnuncioType();
-                item.setId(anuncio.getId().intValue());
-                item.setTitulo(anuncio.getTitulo());
-                item.setDescricao(anuncio.getDescricao());
-                item.setDataexpiracao(anuncio.getDataexpiracao().toString());
-
-                // --- User ---
-                User user = anuncio.getUser();
-                if (user != null) {
-                    UserType userType = new UserType();
-                    userType.setId(user.getId().intValue());
-                    userType.setNome(user.getUsername()); // ou user.getName()
-                    userType.setEmail(user.getEmail());
-                    // adicione outros campos conforme sua definição do UserType
-
-                    item.setUsuario(userType);
+                            CondicaoPerfil cp = new CondicaoPerfil();
+                            cp.setChave(chaves.get(0));
+                            cp.setValor(valores.get(0));
+                            cp.setPoliticaEntrega(politica);
+                            condicoes.add(cp);
+                            temCondicaoValida = true;
+                        }
+                    }
                 }
 
-                // --- Localização ---
-                Local local = anuncio.getLocalizacao();
-                if (local != null) {
-                    LocalType localType = new LocalType();
-                    localType.setId(local.getId().intValue());
-                    localType.setNome(local.getNome()); // ou local.getDescricao()
-                    localType.setLatitude(local.getLatitude());
-                    localType.setLongitude(local.getLongitude());
-                    // adicione outros campos conforme sua definição do LocalType
-
-                    item.setLocal(localType);
+                // Validação para impedir política BLACKLIST sem condições válidas
+                if (tipoPoliticaEnum == PoliticaTipo.BLACKLIST && !temCondicaoValida) {
+                    response.setStatus(false);
+                    response.setMensagem("A política BLACKLIST exige ao menos uma condição válida.");
+                    return response;
                 }
 
-                response.getAnuncios().add(item);
-            }
+                if (tipoPoliticaEnum == PoliticaTipo.WHITELIST && !temCondicaoValida) {
+                    condicoes.clear();
+                }
 
-            response.setMensagem("Anúncios listados com sucesso.");
-            response.setEstado(true);
-
-        } catch (Exception e) {
-            response.setMensagem("Erro ao listar os anúncios: " + e.getMessage());
-            response.setEstado(false);
-        }
-
-        return response;
-    }
-
-    public RemoveAnuncioResponse removeAnuncio(RemoveAnuncioRequest request) {
-        RemoveAnuncioResponse response = new RemoveAnuncioResponse();
-
-        long anuncioId = request.getBody().getId();
-        long userId = request.getBody().getUserId();
-
-        Optional<Anuncio> anuncioOptional = anuncioRepository.findById(anuncioId);
-
-        if (anuncioOptional.isPresent()) {
-            Anuncio anuncio = anuncioOptional.get();
-
-            if (anuncio.getUser().getId() == userId) {
-                anuncioRepository.delete(anuncio);
-                response.setMensagem("Anúncio removido com sucesso!");
-                response.setStatus(true);
             } else {
-                response.setMensagem("Você não tem permissão para remover este anúncio.");
-                response.setStatus(false);
+                tipoPoliticaEnum = PoliticaTipo.WHITELIST;
+                politica.setTitulo(com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaTipo
+                        .valueOf(PoliticaTipo.WHITELIST.name()));
+                condicoes.clear(); // ← NENHUMA CONDIÇÃO
             }
-        } else {
-            response.setMensagem("Anúncio não encontrado.");
+
+            politica.setAnuncio(anuncio);
+            politica.setCondicoes(condicoes);
+            politicaEntregaRepository.save(politica);
+
+            // Resposta - Política
+            PoliticaEntregaType politicaResponse = new PoliticaEntregaType();
+            politicaResponse.setTitulo(tipoPoliticaEnum);
+            for (CondicaoPerfil cp : condicoes) {
+                CondicaoPerfilType cpt = new CondicaoPerfilType();
+                if (cp.getChave() != null)
+                    cpt.getChave().add(cp.getChave());
+                if (cp.getValor() != null)
+                    cpt.getValor().add(cp.getValor());
+                politicaResponse.getCondicoes().add(cpt);
+            }
+            response.setPolitiEntrega(politicaResponse);
+
+            // Resposta - Usuário
+            UserType userType = new UserType();
+            userType.setId(user.getId());
+            userType.setEmail(user.getEmail());
+            userType.setUsername(user.getUsername());
+            userType.setGenero(user.getGenero());
+            userType.setProfissao(user.getProfissao());
+            userType.setTelefone(user.getTelefone());
+            userType.setFoto(user.getFoto());
+            response.getUsuario().add(userType);
+
+            // Resposta - Local
+            LocalType localType = new LocalType();
+            localType.setId(local.getId());
+            localType.setNome(local.getNome());
+            localType.setLatitude(local.getLatitude());
+            localType.setLongitude(local.getLongitude());
+            response.getLocalType().add(localType);
+
+            // Sucesso
+            response.setStatus(true);
+            response.setMensagem("Anúncio adicionado com sucesso.");
+            response.setAnuncioId(anuncio.getId());
+            response.setUserId(user.getId());
+            response.setLocalId(local.getId());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            String mensagemErro;
+            if (e instanceof IllegalArgumentException) {
+                mensagemErro = "Houve um problema com os dados fornecidos.";
+            } else if (e instanceof java.time.format.DateTimeParseException) {
+                mensagemErro = "Formato de data inválido.";
+            } else if (e.getCause() != null && e.getCause().toString().contains("constraint")) {
+                mensagemErro = "Conflito nos dados informados.";
+            } else {
+                mensagemErro = "Erro inesperado. Tente novamente.";
+            }
+
             response.setStatus(false);
+            response.setMensagem(mensagemErro);
         }
 
         return response;
     }
-
 }

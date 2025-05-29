@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.05.23 às 05:08:02 AM WAT 
+// Gerado em: 2025.05.27 às 11:12:22 AM WAT 
 //
 
 
@@ -37,19 +37,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AddUserRequest }
-     * 
-     */
-    public AddUserRequest createAddUserRequest() {
-        return new AddUserRequest();
-    }
-
-    /**
      * Create an instance of {@link LoginResponse }
      * 
      */
     public LoginResponse createLoginResponse() {
         return new LoginResponse();
+    }
+
+    /**
+     * Create an instance of {@link AddUserRequest }
+     * 
+     */
+    public AddUserRequest createAddUserRequest() {
+        return new AddUserRequest();
     }
 
     /**
@@ -149,14 +149,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AddUserRequest.Body }
-     * 
-     */
-    public AddUserRequest.Body createAddUserRequestBody() {
-        return new AddUserRequest.Body();
-    }
-
-    /**
      * Create an instance of {@link LoginResponse.User }
      * 
      */
@@ -165,19 +157,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetUserRequest.Body }
-     * 
-     */
-    public GetUserRequest.Body createGetUserRequestBody() {
-        return new GetUserRequest.Body();
-    }
-
-    /**
      * Create an instance of {@link UserResponse }
      * 
      */
     public UserResponse createUserResponse() {
         return new UserResponse();
+    }
+
+    /**
+     * Create an instance of {@link AddUserRequest.Body }
+     * 
+     */
+    public AddUserRequest.Body createAddUserRequestBody() {
+        return new AddUserRequest.Body();
+    }
+
+    /**
+     * Create an instance of {@link GetUserRequest.Body }
+     * 
+     */
+    public GetUserRequest.Body createGetUserRequestBody() {
+        return new GetUserRequest.Body();
     }
 
     /**

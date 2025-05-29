@@ -28,17 +28,17 @@ public class AnunciosEndPoint {
         return this.anunciosService.addAnuncio(request);
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AllAnuncioRequest")
-    @ResponsePayload
-    public AllAnuncioResponse getAllAnuncios(@RequestPayload AllAnuncioRequest request) {
-        return this.anunciosService.getAllAnuncios(request);
-    }
+    // @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AllAnuncioRequest")
+    // @ResponsePayload
+    // public AllAnuncioResponse getAllAnuncios(@RequestPayload AllAnuncioRequest request) {
+    //     return this.anunciosService.getAllAnuncios(request);
+    // }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "RemoveAnuncioRequest")
-    @ResponsePayload
-    public RemoveAnuncioResponse removeAnuncio(@RequestPayload RemoveAnuncioRequest request) {
+    // @PayloadRoot(namespace = NAMESPACE_URI, localPart = "RemoveAnuncioRequest")
+    // @ResponsePayload
+    // public RemoveAnuncioResponse removeAnuncio(@RequestPayload RemoveAnuncioRequest request) {
         
-        return this.anunciosService.removeAnuncio(request);
-    }
+    //     return this.anunciosService.removeAnuncio(request);
+    // }
 
 }

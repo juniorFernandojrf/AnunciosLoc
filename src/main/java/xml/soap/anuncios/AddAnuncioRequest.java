@@ -2,17 +2,21 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.05.23 às 05:08:02 AM WAT 
+// Gerado em: 2025.05.27 às 11:12:22 AM WAT 
 //
 
 
 package xml.soap.anuncios;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -32,12 +36,12 @@ import javax.xml.bind.annotation.XmlType;
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *                 &lt;sequence&gt;
  *                   &lt;element name="titulo" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *                   &lt;element name="local" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *                   &lt;element name="descricao" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *                   &lt;element name="dataexpiracao" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *                   &lt;element name="bloquear" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
+ *                   &lt;element name="datainicio" type="{http://www.w3.org/2001/XMLSchema}dateTime"/&gt;
+ *                   &lt;element name="dataExpiracao" type="{http://www.w3.org/2001/XMLSchema}dateTime"/&gt;
  *                   &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
  *                   &lt;element name="localId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
+ *                   &lt;element name="politicaEntrega" type="{http://anuncios.soap.xml}PoliticaEntregaType" maxOccurs="unbounded" minOccurs="0"/&gt;
  *                 &lt;/sequence&gt;
  *               &lt;/restriction&gt;
  *             &lt;/complexContent&gt;
@@ -124,12 +128,12 @@ public class AddAnuncioRequest {
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
      *       &lt;sequence&gt;
      *         &lt;element name="titulo" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
-     *         &lt;element name="local" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
      *         &lt;element name="descricao" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
-     *         &lt;element name="dataexpiracao" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
-     *         &lt;element name="bloquear" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
+     *         &lt;element name="datainicio" type="{http://www.w3.org/2001/XMLSchema}dateTime"/&gt;
+     *         &lt;element name="dataExpiracao" type="{http://www.w3.org/2001/XMLSchema}dateTime"/&gt;
      *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
      *         &lt;element name="localId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
+     *         &lt;element name="politicaEntrega" type="{http://anuncios.soap.xml}PoliticaEntregaType" maxOccurs="unbounded" minOccurs="0"/&gt;
      *       &lt;/sequence&gt;
      *     &lt;/restriction&gt;
      *   &lt;/complexContent&gt;
@@ -141,26 +145,28 @@ public class AddAnuncioRequest {
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
         "titulo",
-        "local",
         "descricao",
-        "dataexpiracao",
-        "bloquear",
+        "datainicio",
+        "dataExpiracao",
         "userId",
-        "localId"
+        "localId",
+        "politicaEntrega"
     })
     public static class Body {
 
         @XmlElement(required = true)
         protected String titulo;
         @XmlElement(required = true)
-        protected String local;
-        @XmlElement(required = true)
         protected String descricao;
         @XmlElement(required = true)
-        protected String dataexpiracao;
-        protected boolean bloquear;
+        @XmlSchemaType(name = "dateTime")
+        protected XMLGregorianCalendar datainicio;
+        @XmlElement(required = true)
+        @XmlSchemaType(name = "dateTime")
+        protected XMLGregorianCalendar dataExpiracao;
         protected long userId;
         protected long localId;
+        protected List<PoliticaEntregaType> politicaEntrega;
 
         /**
          * Obtém o valor da propriedade titulo.
@@ -184,30 +190,6 @@ public class AddAnuncioRequest {
          */
         public void setTitulo(String value) {
             this.titulo = value;
-        }
-
-        /**
-         * Obtém o valor da propriedade local.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getLocal() {
-            return local;
-        }
-
-        /**
-         * Define o valor da propriedade local.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setLocal(String value) {
-            this.local = value;
         }
 
         /**
@@ -235,43 +217,51 @@ public class AddAnuncioRequest {
         }
 
         /**
-         * Obtém o valor da propriedade dataexpiracao.
+         * Obtém o valor da propriedade datainicio.
          * 
          * @return
          *     possible object is
-         *     {@link String }
+         *     {@link XMLGregorianCalendar }
          *     
          */
-        public String getDataexpiracao() {
-            return dataexpiracao;
+        public XMLGregorianCalendar getDatainicio() {
+            return datainicio;
         }
 
         /**
-         * Define o valor da propriedade dataexpiracao.
+         * Define o valor da propriedade datainicio.
          * 
          * @param value
          *     allowed object is
-         *     {@link String }
+         *     {@link XMLGregorianCalendar }
          *     
          */
-        public void setDataexpiracao(String value) {
-            this.dataexpiracao = value;
+        public void setDatainicio(XMLGregorianCalendar value) {
+            this.datainicio = value;
         }
 
         /**
-         * Obtém o valor da propriedade bloquear.
+         * Obtém o valor da propriedade dataExpiracao.
          * 
+         * @return
+         *     possible object is
+         *     {@link XMLGregorianCalendar }
+         *     
          */
-        public boolean isBloquear() {
-            return bloquear;
+        public XMLGregorianCalendar getDataExpiracao() {
+            return dataExpiracao;
         }
 
         /**
-         * Define o valor da propriedade bloquear.
+         * Define o valor da propriedade dataExpiracao.
          * 
+         * @param value
+         *     allowed object is
+         *     {@link XMLGregorianCalendar }
+         *     
          */
-        public void setBloquear(boolean value) {
-            this.bloquear = value;
+        public void setDataExpiracao(XMLGregorianCalendar value) {
+            this.dataExpiracao = value;
         }
 
         /**
@@ -304,6 +294,35 @@ public class AddAnuncioRequest {
          */
         public void setLocalId(long value) {
             this.localId = value;
+        }
+
+        /**
+         * Gets the value of the politicaEntrega property.
+         * 
+         * <p>
+         * This accessor method returns a reference to the live list,
+         * not a snapshot. Therefore any modification you make to the
+         * returned list will be present inside the JAXB object.
+         * This is why there is not a <CODE>set</CODE> method for the politicaEntrega property.
+         * 
+         * <p>
+         * For example, to add a new item, do as follows:
+         * <pre>
+         *    getPoliticaEntrega().add(newItem);
+         * </pre>
+         * 
+         * 
+         * <p>
+         * Objects of the following type(s) are allowed in the list
+         * {@link PoliticaEntregaType }
+         * 
+         * 
+         */
+        public List<PoliticaEntregaType> getPoliticaEntrega() {
+            if (politicaEntrega == null) {
+                politicaEntrega = new ArrayList<PoliticaEntregaType>();
+            }
+            return this.politicaEntrega;
         }
 
     }

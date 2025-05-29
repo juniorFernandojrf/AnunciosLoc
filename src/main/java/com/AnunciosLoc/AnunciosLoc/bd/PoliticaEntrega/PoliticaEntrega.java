@@ -3,17 +3,7 @@ package com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.AnunciosLoc.AnunciosLoc.bd.anuncio.Anuncio;
 import com.AnunciosLoc.AnunciosLoc.bd.condicaoPerfil.CondicaoPerfil;
@@ -32,14 +22,12 @@ public class PoliticaEntrega implements Serializable {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private PoliticaTipo  titulo;
+    private PoliticaTipo titulo; // WHITELIST ou BLACKLIST
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "politicaEntrega", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CondicaoPerfil> condicoes;
 
     @OneToOne
-    @JoinColumn(name = "anuncio_id")
+    @JoinColumn(name = "anuncio_id", referencedColumnName = "id")
     private Anuncio anuncio;
-    
 }
-

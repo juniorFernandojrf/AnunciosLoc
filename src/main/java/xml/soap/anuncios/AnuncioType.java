@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.05.23 às 05:08:02 AM WAT 
+// Gerado em: 2025.05.27 às 11:12:22 AM WAT 
 //
 
 
@@ -26,9 +26,9 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence&gt;
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
  *         &lt;element name="titulo" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="dataInicio" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="descricao" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="dataexpiracao" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="bloquear" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
+ *         &lt;element name="dataExpira" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
  *         &lt;element name="localId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
  *         &lt;element name="usuario" type="{http://anuncios.soap.xml}UserType" minOccurs="0"/&gt;
@@ -45,9 +45,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "AnuncioType", propOrder = {
     "id",
     "titulo",
+    "dataInicio",
     "descricao",
-    "dataexpiracao",
-    "bloquear",
+    "dataExpira",
     "userId",
     "localId",
     "usuario",
@@ -59,10 +59,11 @@ public class AnuncioType {
     @XmlElement(required = true)
     protected String titulo;
     @XmlElement(required = true)
+    protected String dataInicio;
+    @XmlElement(required = true)
     protected String descricao;
     @XmlElement(required = true)
-    protected String dataexpiracao;
-    protected boolean bloquear;
+    protected String dataExpira;
     protected long userId;
     protected long localId;
     protected UserType usuario;
@@ -109,6 +110,30 @@ public class AnuncioType {
     }
 
     /**
+     * Obtém o valor da propriedade dataInicio.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDataInicio() {
+        return dataInicio;
+    }
+
+    /**
+     * Define o valor da propriedade dataInicio.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDataInicio(String value) {
+        this.dataInicio = value;
+    }
+
+    /**
      * Obtém o valor da propriedade descricao.
      * 
      * @return
@@ -133,43 +158,27 @@ public class AnuncioType {
     }
 
     /**
-     * Obtém o valor da propriedade dataexpiracao.
+     * Obtém o valor da propriedade dataExpira.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getDataexpiracao() {
-        return dataexpiracao;
+    public String getDataExpira() {
+        return dataExpira;
     }
 
     /**
-     * Define o valor da propriedade dataexpiracao.
+     * Define o valor da propriedade dataExpira.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setDataexpiracao(String value) {
-        this.dataexpiracao = value;
-    }
-
-    /**
-     * Obtém o valor da propriedade bloquear.
-     * 
-     */
-    public boolean isBloquear() {
-        return bloquear;
-    }
-
-    /**
-     * Define o valor da propriedade bloquear.
-     * 
-     */
-    public void setBloquear(boolean value) {
-        this.bloquear = value;
+    public void setDataExpira(String value) {
+        this.dataExpira = value;
     }
 
     /**

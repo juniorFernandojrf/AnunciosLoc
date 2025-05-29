@@ -6,30 +6,29 @@
 //
 
 
-package xml.soap.local;
+package xml.soap.anuncios;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de anonymous complex type.
+ * <p>Classe Java de PoliticaEntregaType complex type.
  * 
  * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
  * 
  * <pre>
- * &lt;complexType&gt;
+ * &lt;complexType name="PoliticaEntregaType"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="mensagem" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
- *         &lt;element name="local" type="{http://local.soap.xml}LocalType" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;element name="titulo" type="{http://anuncios.soap.xml}PoliticaTipo"/&gt;
+ *         &lt;element name="condicoes" type="{http://anuncios.soap.xml}CondicaoPerfilType" maxOccurs="unbounded" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -39,86 +38,68 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "mensagem",
-    "status",
-    "local"
+@XmlType(name = "PoliticaEntregaType", propOrder = {
+    "titulo",
+    "condicoes"
 })
-@XmlRootElement(name = "AllLocalResponse")
-public class AllLocalResponse {
+public class PoliticaEntregaType {
 
     @XmlElement(required = true)
-    protected String mensagem;
-    protected boolean status;
-    protected List<LocalType> local;
+    @XmlSchemaType(name = "string")
+    protected PoliticaTipo titulo;
+    protected List<CondicaoPerfilType> condicoes;
 
     /**
-     * Obtém o valor da propriedade mensagem.
+     * Obtém o valor da propriedade titulo.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link PoliticaTipo }
      *     
      */
-    public String getMensagem() {
-        return mensagem;
+    public PoliticaTipo getTitulo() {
+        return titulo;
     }
 
     /**
-     * Define o valor da propriedade mensagem.
+     * Define o valor da propriedade titulo.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link PoliticaTipo }
      *     
      */
-    public void setMensagem(String value) {
-        this.mensagem = value;
+    public void setTitulo(PoliticaTipo value) {
+        this.titulo = value;
     }
 
     /**
-     * Obtém o valor da propriedade status.
-     * 
-     */
-    public boolean isStatus() {
-        return status;
-    }
-
-    /**
-     * Define o valor da propriedade status.
-     * 
-     */
-    public void setStatus(boolean value) {
-        this.status = value;
-    }
-
-    /**
-     * Gets the value of the local property.
+     * Gets the value of the condicoes property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the local property.
+     * This is why there is not a <CODE>set</CODE> method for the condicoes property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getLocal().add(newItem);
+     *    getCondicoes().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link LocalType }
+     * {@link CondicaoPerfilType }
      * 
      * 
      */
-    public List<LocalType> getLocal() {
-        if (local == null) {
-            local = new ArrayList<LocalType>();
+    public List<CondicaoPerfilType> getCondicoes() {
+        if (condicoes == null) {
+            condicoes = new ArrayList<CondicaoPerfilType>();
         }
-        return this.local;
+        return this.condicoes;
     }
 
 }

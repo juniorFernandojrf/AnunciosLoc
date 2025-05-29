@@ -33,11 +33,11 @@ public class Anuncio implements Serializable{
     @Column(nullable = false)
     private String descricao;
 
-    @Column(name = "datainico", nullable = false)
-    private LocalDateTime datainicio;
+    @Column(name = "data_inicio", nullable = false)
+    private LocalDateTime dataInicio;
 
-    @Column(name = "dataexpiracao", nullable = false)
-    private LocalDateTime dataexpiracao;
+    @Column(name = "data_expiracao", nullable = false)
+    private LocalDateTime dataExpiracao;
     
     @ManyToOne
     @JoinColumn(name = "user_id")
