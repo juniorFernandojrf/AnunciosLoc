@@ -43,6 +43,7 @@ public class User implements Serializable{
     protected String telefone; 
 
     @OneToMany(mappedBy = "user")
+    @ToString.Exclude
     private List<Anuncio> anuncios;
 
     public void setAuthToken(Object object) {

@@ -13,7 +13,7 @@
     </xs:sequence>
   </xs:complexType>
 
-  <!-- Definição do elemento "user" -->
+  <!-- Definição do elemento "local" -->
   <xs:element name="AddLocalRequest">
     <xs:complexType>
       <xs:sequence>

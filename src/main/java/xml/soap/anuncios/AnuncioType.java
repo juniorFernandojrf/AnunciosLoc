@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.05.27 às 11:12:22 AM WAT 
+// Gerado em: 2025.06.04 às 10:28:39 AM WAT 
 //
 
 
@@ -28,11 +28,10 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="titulo" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="dataInicio" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="descricao" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="dataExpira" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
- *         &lt;element name="localId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
+ *         &lt;element name="dataExpiracao" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="usuario" type="{http://anuncios.soap.xml}UserType" minOccurs="0"/&gt;
  *         &lt;element name="local" type="{http://anuncios.soap.xml}LocalType" minOccurs="0"/&gt;
+ *         &lt;element name="anuncioId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -47,11 +46,10 @@ import javax.xml.bind.annotation.XmlType;
     "titulo",
     "dataInicio",
     "descricao",
-    "dataExpira",
-    "userId",
-    "localId",
+    "dataExpiracao",
     "usuario",
-    "local"
+    "local",
+    "anuncioId"
 })
 public class AnuncioType {
 
@@ -63,11 +61,10 @@ public class AnuncioType {
     @XmlElement(required = true)
     protected String descricao;
     @XmlElement(required = true)
-    protected String dataExpira;
-    protected long userId;
-    protected long localId;
+    protected String dataExpiracao;
     protected UserType usuario;
     protected LocalType local;
+    protected Long anuncioId;
 
     /**
      * Obtém o valor da propriedade id.
@@ -158,59 +155,27 @@ public class AnuncioType {
     }
 
     /**
-     * Obtém o valor da propriedade dataExpira.
+     * Obtém o valor da propriedade dataExpiracao.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getDataExpira() {
-        return dataExpira;
+    public String getDataExpiracao() {
+        return dataExpiracao;
     }
 
     /**
-     * Define o valor da propriedade dataExpira.
+     * Define o valor da propriedade dataExpiracao.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setDataExpira(String value) {
-        this.dataExpira = value;
-    }
-
-    /**
-     * Obtém o valor da propriedade userId.
-     * 
-     */
-    public long getUserId() {
-        return userId;
-    }
-
-    /**
-     * Define o valor da propriedade userId.
-     * 
-     */
-    public void setUserId(long value) {
-        this.userId = value;
-    }
-
-    /**
-     * Obtém o valor da propriedade localId.
-     * 
-     */
-    public long getLocalId() {
-        return localId;
-    }
-
-    /**
-     * Define o valor da propriedade localId.
-     * 
-     */
-    public void setLocalId(long value) {
-        this.localId = value;
+    public void setDataExpiracao(String value) {
+        this.dataExpiracao = value;
     }
 
     /**
@@ -259,6 +224,30 @@ public class AnuncioType {
      */
     public void setLocal(LocalType value) {
         this.local = value;
+    }
+
+    /**
+     * Obtém o valor da propriedade anuncioId.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Long }
+     *     
+     */
+    public Long getAnuncioId() {
+        return anuncioId;
+    }
+
+    /**
+     * Define o valor da propriedade anuncioId.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Long }
+     *     
+     */
+    public void setAnuncioId(Long value) {
+        this.anuncioId = value;
     }
 
 }

@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.AnunciosLoc.AnunciosLoc.bd.anuncio.Anuncio;
 import com.AnunciosLoc.AnunciosLoc.bd.anuncio.AnuncioRepository;
@@ -17,6 +19,7 @@ import com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaEntrega;
 import com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaEntregaRepository;
 import com.AnunciosLoc.AnunciosLoc.bd.user.User;
 import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
+import com.AnunciosLoc.AnunciosLoc.utils.anuncio.AnuncioUtil;
 
 import xml.soap.anuncios.*;
 
@@ -27,6 +30,9 @@ public class AnunciosService {
     private final UserRepository userRepository;
     private final LocalRepository localizacaoRepository;
     private final PoliticaEntregaRepository politicaEntregaRepository;
+
+    @Autowired
+    private AnuncioUtil anuncioUtil;
 
     public AnunciosService(
             AnuncioRepository anuncioRepository,
@@ -109,9 +115,18 @@ public class AnunciosService {
             boolean temCondicaoValida = false;
 
             if (politicaEntregaType != null) {
-                String titulo = tipoPoliticaEnum.name().toUpperCase(); // ← Normaliza
+
+                String titulo = politicaEntregaType.getTitulo().name();
+                try {
+                    tipoPoliticaEnum = PoliticaTipo.valueOf(titulo.toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    response.setStatus(false);
+                    response.setMensagem("Tipo de política inválido: " + titulo);
+                    return response;
+                }
+
                 politica.setTitulo(
-                        com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaTipo.valueOf(titulo));
+                        com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaTipo.valueOf(tipoPoliticaEnum.name()));
 
                 if (politicaEntregaType.getCondicoes() != null) {
                     for (CondicaoPerfilType cond : politicaEntregaType.getCondicoes()) {
@@ -146,6 +161,7 @@ public class AnunciosService {
                 }
 
             } else {
+
                 tipoPoliticaEnum = PoliticaTipo.WHITELIST;
                 politica.setTitulo(com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaTipo
                         .valueOf(PoliticaTipo.WHITELIST.name()));
@@ -153,6 +169,14 @@ public class AnunciosService {
             }
 
             politica.setAnuncio(anuncio);
+
+            // Verificação da política DEPOIS de extrair os dados
+            if (tipoPoliticaEnum == PoliticaTipo.BLACKLIST && !temCondicaoValida) {
+                response.setStatus(false);
+                response.setMensagem("A política BLACKLIST exige ao menos uma condição válida.");
+                return response;
+            }
+
             politica.setCondicoes(condicoes);
             politicaEntregaRepository.save(politica);
 
@@ -215,4 +239,92 @@ public class AnunciosService {
 
         return response;
     }
+
+    @Transactional
+    public AllAnuncioResponse getAllAnuncios(AllAnuncioRequest request) {
+        AllAnuncioResponse response = new AllAnuncioResponse();
+        List<AnuncioType> anunciosDisponiveis = new ArrayList<>();
+
+        try {
+            // Dados do corpo da requisição
+            Long userId = request.getBody().getUserId();
+            Double latitude = request.getBody().getLatitude();
+            Double longitude = request.getBody().getLongitude();
+
+            // Buscar todos os anúncios
+            List<Anuncio> anuncios = anuncioRepository.findAll();
+            LocalDateTime agora = LocalDateTime.now();
+
+            System.out.println("Total de anúncios encontrados: " + anuncios.size());
+
+            for (Anuncio anuncio : anuncios) {
+                System.out.println("Verificando anúncio ID: " + anuncio.getId());
+
+                if (anuncio.getDataInicio().isAfter(agora) || anuncio.getDataExpiracao().isBefore(agora)) {
+                    System.out.println("Anúncio fora do período válido: " + anuncio.getId());
+                    continue;
+                }
+
+                Local local = anuncio.getLocalizacao();
+                if (local == null || local.getLatitude() == null || local.getLongitude() == null) {
+                    System.out.println("Local inválido para anúncio ID: " + anuncio.getId());
+                    continue;
+                }
+                
+                if (!anuncioUtil.estaProximo(latitude, longitude, local.getLatitude(), local.getLongitude())) {
+                    System.out.println("Anúncio fora da distância: " + anuncio.getId());
+                    continue;
+                }
+
+                // Se passou nos filtros
+                AnuncioType anuncioType = anuncioUtil.MapAnuncioType(anuncio);
+                anunciosDisponiveis.add(anuncioType);
+
+                // Adicionar o local do anúncio à resposta
+                if (anuncio.getLocalizacao() != null) {
+                    LocalType localDoAnuncio = anuncioUtil.mapLocalToLocalType(anuncio.getLocalizacao());
+                    response.getLocalType().add(localDoAnuncio); // <-- Agora retorna os locais dos anúncios!
+                }
+
+                // Se chegou aqui, adiciona à lista
+                anunciosDisponiveis.add(anuncioUtil.MapAnuncioType(anuncio));
+            }
+
+            System.out.println("Total de anúncios disponíveis após filtro: " + anunciosDisponiveis.size());
+
+            // Preencher resposta
+            if (anunciosDisponiveis.isEmpty()) {
+                response.setMensagem("Nenhum anúncio disponível com os filtros aplicados.");
+            } else {
+                response.setMensagem("Anúncios disponíveis retornados com sucesso.");
+            }
+
+            response.setEstado(true);
+            response.getAnuncios().addAll(anunciosDisponiveis);
+            System.out.println("Total de anúncios disponíveis: " + anunciosDisponiveis.size());
+
+            // Adicionar informações adicionais (usuário e local)
+            if (!anunciosDisponiveis.isEmpty()) {
+                // Adicionar informações adicionais (usuário e local)
+                User user = userRepository.findById(userId).orElse(null);
+                UserType userType = anuncioUtil.mapUserToUserType(user);
+                if (userType != null) {
+                    response.getUsuario().add(userType);
+                }
+
+                Local local = localizacaoRepository.findById(request.getBody().getLocalId()).orElse(null);
+                if (local != null) {
+                    response.getLocalType().add(anuncioUtil.mapLocalToLocalType(local));
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setEstado(false);
+            response.setMensagem("Erro ao buscar anúncios: " + e.getMessage());
+        }
+
+        return response;
+    }
+
 }

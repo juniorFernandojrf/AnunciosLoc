@@ -41,6 +41,7 @@ public class Local implements Serializable {
     private Double longitude;
 
     @OneToMany(mappedBy = "localizacao", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Anuncio> ads = new ArrayList<>();
 
 }

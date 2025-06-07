@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.05.27 às 11:12:22 AM WAT 
+// Gerado em: 2025.06.04 às 10:28:39 AM WAT 
 //
 
 
@@ -42,6 +42,14 @@ public class ObjectFactory {
      */
     public AddAnuncioRequest createAddAnuncioRequest() {
         return new AddAnuncioRequest();
+    }
+
+    /**
+     * Create an instance of {@link AllAnuncioRequest }
+     * 
+     */
+    public AllAnuncioRequest createAllAnuncioRequest() {
+        return new AllAnuncioRequest();
     }
 
     /**
@@ -101,11 +109,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AllAnuncioRequest }
+     * Create an instance of {@link AllAnuncioRequest.Body }
      * 
      */
-    public AllAnuncioRequest createAllAnuncioRequest() {
-        return new AllAnuncioRequest();
+    public AllAnuncioRequest.Body createAllAnuncioRequestBody() {
+        return new AllAnuncioRequest.Body();
     }
 
     /**

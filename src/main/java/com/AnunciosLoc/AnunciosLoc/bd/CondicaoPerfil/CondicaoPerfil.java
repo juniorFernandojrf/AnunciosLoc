@@ -25,6 +25,7 @@ public class CondicaoPerfil implements Serializable {
     @Column(nullable = true)
     private String valor; // Ex: "Estudante"
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "politica_entrega_id")
     private PoliticaEntrega politicaEntrega;
