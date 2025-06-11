@@ -240,18 +240,108 @@ public class AnunciosService {
         return response;
     }
 
+    // @Transactional
+    // public AllAnuncioResponse getAllAnuncios(AllAnuncioRequest request) {
+    // AllAnuncioResponse response = new AllAnuncioResponse();
+    // List<AnuncioType> anunciosDisponiveis = new ArrayList<>();
+
+    // try {
+    // // Dados do corpo da requisição
+    // Long userId = request.getBody().getUserId();
+    // Double latitude = request.getBody().getLatitude();
+    // Double longitude = request.getBody().getLongitude();
+
+    // // Buscar todos os anúncios
+    // List<Anuncio> anuncios = anuncioRepository.findAll();
+    // LocalDateTime agora = LocalDateTime.now();
+
+    // System.out.println("Total de anúncios encontrados: " + anuncios.size());
+
+    // for (Anuncio anuncio : anuncios) {
+    // System.out.println("Verificando anúncio ID: " + anuncio.getId());
+
+    // if (anuncio.getDataInicio().isAfter(agora) ||
+    // anuncio.getDataExpiracao().isBefore(agora)) {
+    // System.out.println("Anúncio fora do período válido: " + anuncio.getId());
+    // continue;
+    // }
+
+    // Local local = anuncio.getLocalizacao();
+    // if (local == null || local.getLatitude() == null || local.getLongitude() ==
+    // null) {
+    // System.out.println("Local inválido para anúncio ID: " + anuncio.getId());
+    // continue;
+    // }
+
+    // if (!anuncioUtil.estaProximo(latitude, longitude, local.getLatitude(),
+    // local.getLongitude())) {
+    // System.out.println("Anúncio fora da distância: " + anuncio.getId());
+    // continue;
+    // }
+
+    // // Se passou nos filtros
+    // AnuncioType anuncioType = anuncioUtil.MapAnuncioType(anuncio);
+    // anunciosDisponiveis.add(anuncioType);
+
+    // // Adicionar o local do anúncio à resposta
+    // if (anuncio.getLocalizacao() != null) {
+    // LocalType localDoAnuncio =
+    // anuncioUtil.mapLocalToLocalType(anuncio.getLocalizacao());
+    // response.getLocalType().add(localDoAnuncio); // <-- Agora retorna os locais
+    // dos anúncios!
+    // }
+
+    // // Se chegou aqui, adiciona à lista
+    // anunciosDisponiveis.add(anuncioUtil.MapAnuncioType(anuncio));
+    // }
+
+    // System.out.println("Total de anúncios disponíveis após filtro: " +
+    // anunciosDisponiveis.size());
+
+    // // Preencher resposta
+    // if (anunciosDisponiveis.isEmpty()) {
+    // response.setMensagem("Nenhum anúncio disponível com os filtros aplicados.");
+    // } else {
+    // response.setMensagem("Anúncios disponíveis retornados com sucesso.");
+    // }
+
+    // response.setEstado(true);
+    // response.getAnuncios().addAll(anunciosDisponiveis);
+    // System.out.println("Total de anúncios disponíveis: " +
+    // anunciosDisponiveis.size());
+
+    // // Adicionar informações adicionais (usuário e local)
+    // if (!anunciosDisponiveis.isEmpty()) {
+    // // Adicionar informações adicionais (usuário e local)
+    // User user = userRepository.findById(userId).orElse(null);
+    // UserType userType = anuncioUtil.mapUserToUserType(user);
+    // if (userType != null) {
+    // response.getUsuario().add(userType);
+    // }
+
+    // Local local =
+    // localizacaoRepository.findById(request.getBody().getLocalId()).orElse(null);
+    // if (local != null) {
+    // response.getLocalType().add(anuncioUtil.mapLocalToLocalType(local));
+    // }
+    // }
+
+    // } catch (Exception e) {
+    // e.printStackTrace();
+    // response.setEstado(false);
+    // response.setMensagem("Erro ao buscar anúncios: " + e.getMessage());
+    // }
+
+    // return response;
+    // }
+
     @Transactional
     public AllAnuncioResponse getAllAnuncios(AllAnuncioRequest request) {
         AllAnuncioResponse response = new AllAnuncioResponse();
         List<AnuncioType> anunciosDisponiveis = new ArrayList<>();
 
         try {
-            // Dados do corpo da requisição
-            Long userId = request.getBody().getUserId();
-            Double latitude = request.getBody().getLatitude();
-            Double longitude = request.getBody().getLongitude();
-
-            // Buscar todos os anúncios
+            // Buscar todos os anúncios do banco de dados
             List<Anuncio> anuncios = anuncioRepository.findAll();
             LocalDateTime agora = LocalDateTime.now();
 
@@ -260,63 +350,41 @@ public class AnunciosService {
             for (Anuncio anuncio : anuncios) {
                 System.out.println("Verificando anúncio ID: " + anuncio.getId());
 
-                if (anuncio.getDataInicio().isAfter(agora) || anuncio.getDataExpiracao().isBefore(agora)) {
-                    System.out.println("Anúncio fora do período válido: " + anuncio.getId());
-                    continue;
-                }
+                // Verificar se o anúncio está dentro do período válido
+                // if (anuncio.getDataInicio().isAfter(agora) ||
+                // anuncio.getDataExpiracao().isBefore(agora)) {
+                // System.out.println("Anúncio fora do período válido: " + anuncio.getId());
+                // continue;
+                // }
 
-                Local local = anuncio.getLocalizacao();
-                if (local == null || local.getLatitude() == null || local.getLongitude() == null) {
-                    System.out.println("Local inválido para anúncio ID: " + anuncio.getId());
-                    continue;
-                }
-                
-                if (!anuncioUtil.estaProximo(latitude, longitude, local.getLatitude(), local.getLongitude())) {
-                    System.out.println("Anúncio fora da distância: " + anuncio.getId());
-                    continue;
-                }
-
-                // Se passou nos filtros
+                // Mapear o anúncio para AnuncioType e adicionar à lista
                 AnuncioType anuncioType = anuncioUtil.MapAnuncioType(anuncio);
                 anunciosDisponiveis.add(anuncioType);
 
-                // Adicionar o local do anúncio à resposta
+                // Mapear localização associada ao anúncio
                 if (anuncio.getLocalizacao() != null) {
-                    LocalType localDoAnuncio = anuncioUtil.mapLocalToLocalType(anuncio.getLocalizacao());
-                    response.getLocalType().add(localDoAnuncio); // <-- Agora retorna os locais dos anúncios!
+                    LocalType localType = anuncioUtil.mapLocalToLocalType(anuncio.getLocalizacao());
+                    response.getLocalType().add(localType);
                 }
 
-                // Se chegou aqui, adiciona à lista
-                anunciosDisponiveis.add(anuncioUtil.MapAnuncioType(anuncio));
+                // Mapear usuário associado ao anúncio
+                if (anuncio.getUser() != null) {
+                    UserType userType = anuncioUtil.mapUserToUserType(anuncio.getUser());
+                    response.getUsuario().add(userType);
+                }
             }
 
             System.out.println("Total de anúncios disponíveis após filtro: " + anunciosDisponiveis.size());
 
             // Preencher resposta
             if (anunciosDisponiveis.isEmpty()) {
-                response.setMensagem("Nenhum anúncio disponível com os filtros aplicados.");
+                response.setMensagem("Nenhum anúncio disponível.");
             } else {
-                response.setMensagem("Anúncios disponíveis retornados com sucesso.");
+                response.setMensagem("Anúncios retornados com sucesso.");
             }
 
             response.setEstado(true);
             response.getAnuncios().addAll(anunciosDisponiveis);
-            System.out.println("Total de anúncios disponíveis: " + anunciosDisponiveis.size());
-
-            // Adicionar informações adicionais (usuário e local)
-            if (!anunciosDisponiveis.isEmpty()) {
-                // Adicionar informações adicionais (usuário e local)
-                User user = userRepository.findById(userId).orElse(null);
-                UserType userType = anuncioUtil.mapUserToUserType(user);
-                if (userType != null) {
-                    response.getUsuario().add(userType);
-                }
-
-                Local local = localizacaoRepository.findById(request.getBody().getLocalId()).orElse(null);
-                if (local != null) {
-                    response.getLocalType().add(anuncioUtil.mapLocalToLocalType(local));
-                }
-            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -327,4 +395,47 @@ public class AnunciosService {
         return response;
     }
 
+    public GetAnuncioResponse getAnuncio(GetAnuncioRequest request) {
+    GetAnuncioResponse response = new GetAnuncioResponse();
+    try {
+        Long userId = request.getBody().getUserId();
+        Long anuncioId = request.getBody().getAnucioId();
+
+        Optional<Anuncio> optionalAnuncio = anuncioRepository.findById(anuncioId);
+
+        if (!optionalAnuncio.isPresent()) {
+            response.setEstado(false);
+            response.setMensagem("Anúncio não encontrado.");
+            return response;
+        }
+
+        Anuncio anuncio = optionalAnuncio.get();
+       
+        // Mapear resposta
+        AnuncioType anuncioType = anuncioUtil.MapAnuncioType(anuncio);
+        response.getAnuncios().add(anuncioType);
+
+        response.setEstado(true);
+        response.setMensagem("Anúncio retornado com sucesso.");
+
+        // Adicionar informações adicionais (usuário e local)
+        User user = userRepository.findById(userId).orElse(null);
+        UserType userType = anuncioUtil.mapUserToUserType(user);
+        if (userType != null) {
+            response.getUsuario().add(userType);
+        }
+
+        Local local = localizacaoRepository.findById(anuncio.getLocalizacao().getId()).orElse(null);
+        if (local != null) {
+            response.getLocalType().add(anuncioUtil.mapLocalToLocalType(local));
+        }
+
+    } catch (Exception e) {
+        response.setEstado(false);
+        response.setMensagem("Erro ao buscar anúncio: " + e.getMessage());
+        e.printStackTrace();
+    }
+
+    return response;
+}
 }

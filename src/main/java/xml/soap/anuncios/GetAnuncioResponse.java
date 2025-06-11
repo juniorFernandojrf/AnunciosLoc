@@ -48,8 +48,8 @@ import javax.xml.bind.annotation.XmlType;
     "localType",
     "anuncios"
 })
-@XmlRootElement(name = "AllAnuncioResponse")
-public class AllAnuncioResponse {
+@XmlRootElement(name = "GetAnuncioResponse")
+public class GetAnuncioResponse {
 
     @XmlElement(required = true)
     protected String mensagem;

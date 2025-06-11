@@ -6,7 +6,7 @@
 //
 
 
-package xml.soap.user;
+package xml.soap.anuncios;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,14 +25,14 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="Header" type="{http://user.soap.xml}HeaderType"/&gt;
+ *         &lt;element name="Header" type="{http://anuncios.soap.xml}HeaderType"/&gt;
  *         &lt;element name="Body"&gt;
  *           &lt;complexType&gt;
  *             &lt;complexContent&gt;
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *                 &lt;sequence&gt;
  *                   &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
- *                   &lt;element name="chave" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *                   &lt;element name="anucioId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
  *                 &lt;/sequence&gt;
  *               &lt;/restriction&gt;
  *             &lt;/complexContent&gt;
@@ -51,13 +51,13 @@ import javax.xml.bind.annotation.XmlType;
     "header",
     "body"
 })
-@XmlRootElement(name = "RemoveUserProfileRequest")
-public class RemoveUserProfileRequest {
+@XmlRootElement(name = "GetAnuncioRequest")
+public class GetAnuncioRequest {
 
     @XmlElement(name = "Header", required = true)
     protected HeaderType header;
     @XmlElement(name = "Body", required = true)
-    protected RemoveUserProfileRequest.Body body;
+    protected GetAnuncioRequest.Body body;
 
     /**
      * Obtém o valor da propriedade header.
@@ -88,10 +88,10 @@ public class RemoveUserProfileRequest {
      * 
      * @return
      *     possible object is
-     *     {@link RemoveUserProfileRequest.Body }
+     *     {@link GetAnuncioRequest.Body }
      *     
      */
-    public RemoveUserProfileRequest.Body getBody() {
+    public GetAnuncioRequest.Body getBody() {
         return body;
     }
 
@@ -100,10 +100,10 @@ public class RemoveUserProfileRequest {
      * 
      * @param value
      *     allowed object is
-     *     {@link RemoveUserProfileRequest.Body }
+     *     {@link GetAnuncioRequest.Body }
      *     
      */
-    public void setBody(RemoveUserProfileRequest.Body value) {
+    public void setBody(GetAnuncioRequest.Body value) {
         this.body = value;
     }
 
@@ -119,7 +119,7 @@ public class RemoveUserProfileRequest {
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
      *       &lt;sequence&gt;
      *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
-     *         &lt;element name="chave" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+     *         &lt;element name="anucioId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
      *       &lt;/sequence&gt;
      *     &lt;/restriction&gt;
      *   &lt;/complexContent&gt;
@@ -131,13 +131,12 @@ public class RemoveUserProfileRequest {
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
         "userId",
-        "chave"
+        "anucioId"
     })
     public static class Body {
 
         protected long userId;
-        @XmlElement(required = true)
-        protected String chave;
+        protected long anucioId;
 
         /**
          * Obtém o valor da propriedade userId.
@@ -156,27 +155,19 @@ public class RemoveUserProfileRequest {
         }
 
         /**
-         * Obtém o valor da propriedade chave.
+         * Obtém o valor da propriedade anucioId.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
          */
-        public String getChave() {
-            return chave;
+        public long getAnucioId() {
+            return anucioId;
         }
 
         /**
-         * Define o valor da propriedade chave.
+         * Define o valor da propriedade anucioId.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
          */
-        public void setChave(String value) {
-            this.chave = value;
+        public void setAnucioId(long value) {
+            this.anucioId = value;
         }
 
     }

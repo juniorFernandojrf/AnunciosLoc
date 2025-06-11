@@ -5,7 +5,7 @@
 Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-Gerado em: 2025.06.04 às 10:28:39 AM WAT 
+Gerado em: 2025.06.11 às 11:53:49 AM WAT 
 
   -->
   <bindings scd="x-schema::tns" xmlns:tns="http://anuncios.soap.xml">
@@ -17,6 +17,9 @@ Gerado em: 2025.06.04 às 10:28:39 AM WAT
     </bindings>
     <bindings scd="tns:AllAnuncioRequest">
       <class ref="xml.soap.anuncios.AllAnuncioRequest"/>
+    </bindings>
+    <bindings scd="tns:GetAnuncioRequest">
+      <class ref="xml.soap.anuncios.GetAnuncioRequest"/>
     </bindings>
     <bindings scd="tns:RemoveAnuncioRequest">
       <class ref="xml.soap.anuncios.RemoveAnuncioRequest"/>
@@ -41,6 +44,9 @@ Gerado em: 2025.06.04 às 10:28:39 AM WAT
     </bindings>
     <bindings scd="~tns:AnuncioType">
       <class ref="xml.soap.anuncios.AnuncioType"/>
+    </bindings>
+    <bindings scd="tns:GetAnuncioResponse">
+      <class ref="xml.soap.anuncios.GetAnuncioResponse"/>
     </bindings>
     <bindings scd="tns:RemoveAnuncioResponse">
       <class ref="xml.soap.anuncios.RemoveAnuncioResponse"/>

@@ -22,7 +22,6 @@ public class UserService {
 
     @Autowired(required = true)
     private UserRepository userRepository;
-
     
     public AddUserResponse addUser(AddUserRequest request) {
         AddUserResponse response = new AddUserResponse();
@@ -101,4 +100,5 @@ public class UserService {
 
         return response;
     }
+
 }
