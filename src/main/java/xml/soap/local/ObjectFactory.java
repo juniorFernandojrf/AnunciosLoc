@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.06.11 às 11:53:49 AM WAT 
+// Gerado em: 2025.06.11 às 01:13:46 PM WAT 
 //
 
 
@@ -50,6 +50,14 @@ public class ObjectFactory {
      */
     public AddLocalResponse createAddLocalResponse() {
         return new AddLocalResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetLocalRequest }
+     * 
+     */
+    public GetLocalRequest createGetLocalRequest() {
+        return new GetLocalRequest();
     }
 
     /**
@@ -106,6 +114,22 @@ public class ObjectFactory {
      */
     public LocalType createLocalType() {
         return new LocalType();
+    }
+
+    /**
+     * Create an instance of {@link GetLocalRequest.Body }
+     * 
+     */
+    public GetLocalRequest.Body createGetLocalRequestBody() {
+        return new GetLocalRequest.Body();
+    }
+
+    /**
+     * Create an instance of {@link GetLocalResponse }
+     * 
+     */
+    public GetLocalResponse createGetLocalResponse() {
+        return new GetLocalResponse();
     }
 
     /**

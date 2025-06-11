@@ -6,7 +6,7 @@
 //
 
 
-package xml.soap.anuncios;
+package xml.soap.local;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,14 +25,13 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="Header" type="{http://anuncios.soap.xml}HeaderType"/&gt;
+ *         &lt;element name="Header" type="{http://local.soap.xml}HeaderType"/&gt;
  *         &lt;element name="Body"&gt;
  *           &lt;complexType&gt;
  *             &lt;complexContent&gt;
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *                 &lt;sequence&gt;
- *                   &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
- *                   &lt;element name="anucioId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
+ *                   &lt;element name="LocalId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
  *                 &lt;/sequence&gt;
  *               &lt;/restriction&gt;
  *             &lt;/complexContent&gt;
@@ -51,13 +50,13 @@ import javax.xml.bind.annotation.XmlType;
     "header",
     "body"
 })
-@XmlRootElement(name = "GetAnuncioRequest")
-public class GetAnuncioRequest {
+@XmlRootElement(name = "GetLocalRequest")
+public class GetLocalRequest {
 
     @XmlElement(name = "Header", required = true)
     protected HeaderType header;
     @XmlElement(name = "Body", required = true)
-    protected GetAnuncioRequest.Body body;
+    protected GetLocalRequest.Body body;
 
     /**
      * Obtém o valor da propriedade header.
@@ -88,10 +87,10 @@ public class GetAnuncioRequest {
      * 
      * @return
      *     possible object is
-     *     {@link GetAnuncioRequest.Body }
+     *     {@link GetLocalRequest.Body }
      *     
      */
-    public GetAnuncioRequest.Body getBody() {
+    public GetLocalRequest.Body getBody() {
         return body;
     }
 
@@ -100,10 +99,10 @@ public class GetAnuncioRequest {
      * 
      * @param value
      *     allowed object is
-     *     {@link GetAnuncioRequest.Body }
+     *     {@link GetLocalRequest.Body }
      *     
      */
-    public void setBody(GetAnuncioRequest.Body value) {
+    public void setBody(GetLocalRequest.Body value) {
         this.body = value;
     }
 
@@ -118,8 +117,7 @@ public class GetAnuncioRequest {
      *   &lt;complexContent&gt;
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
      *       &lt;sequence&gt;
-     *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
-     *         &lt;element name="anucioId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
+     *         &lt;element name="LocalId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
      *       &lt;/sequence&gt;
      *     &lt;/restriction&gt;
      *   &lt;/complexContent&gt;
@@ -130,44 +128,27 @@ public class GetAnuncioRequest {
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "userId",
-        "anucioId"
+        "localId"
     })
     public static class Body {
 
-        protected long userId;
-        protected long anucioId;
+        @XmlElement(name = "LocalId")
+        protected long localId;
 
         /**
-         * Obtém o valor da propriedade userId.
+         * Obtém o valor da propriedade localId.
          * 
          */
-        public long getUserId() {
-            return userId;
+        public long getLocalId() {
+            return localId;
         }
 
         /**
-         * Define o valor da propriedade userId.
+         * Define o valor da propriedade localId.
          * 
          */
-        public void setUserId(long value) {
-            this.userId = value;
-        }
-
-        /**
-         * Obtém o valor da propriedade anucioId.
-         * 
-         */
-        public long getAnucioId() {
-            return anucioId;
-        }
-
-        /**
-         * Define o valor da propriedade anucioId.
-         * 
-         */
-        public void setAnucioId(long value) {
-            this.anucioId = value;
+        public void setLocalId(long value) {
+            this.localId = value;
         }
 
     }

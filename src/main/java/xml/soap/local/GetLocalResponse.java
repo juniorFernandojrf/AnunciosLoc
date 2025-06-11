@@ -44,8 +44,8 @@ import javax.xml.bind.annotation.XmlType;
     "status",
     "local"
 })
-@XmlRootElement(name = "AllLocalResponse")
-public class AllLocalResponse {
+@XmlRootElement(name = "GetLocalResponse")
+public class GetLocalResponse {
 
     @XmlElement(required = true)
     protected String mensagem;
