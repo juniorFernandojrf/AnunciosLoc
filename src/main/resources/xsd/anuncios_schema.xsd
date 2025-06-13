@@ -87,9 +87,9 @@
       <xs:element name="email"     type="xs:string"/>
       <xs:element name="username"  type="xs:string"/>
       <xs:element name="genero"    type="xs:string"/>
-      <xs:element name="profissao" type="xs:string"/>
+      <xs:element name="datanascimento"    type="xs:string"/>
+      <xs:element name="tipo"      type="xs:int"/>
       <xs:element name="telefone"  type="xs:string"/>
-      <xs:element name="foto"      type="xs:string"/>
       <xs:element name="token"     type="xs:string"/>
     </xs:sequence>
   </xs:complexType>

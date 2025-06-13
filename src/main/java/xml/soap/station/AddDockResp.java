@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.06.11 às 01:13:46 PM WAT 
+// Gerado em: 2025.06.13 às 05:33:49 PM WAT 
 //
 
 
@@ -16,9 +16,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for anonymous complex type.
+ * <p>Classe Java de anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
  * 
  * <pre>
  * &lt;complexType&gt;
@@ -51,7 +51,7 @@ public class AddDockResp {
     protected int stateCode;
 
     /**
-     // * Obtém o valor da propriedade estado.
+     * Obtém o valor da propriedade estado.
      * 
      */
     public boolean isEstado() {
@@ -59,11 +59,7 @@ public class AddDockResp {
     }
 
     /**
-// <<<<<<< HEAD
      * Define o valor da propriedade estado.
-=======
-     * Sets the value of the estado property.
->>>>>>> olivio
      * 
      */
     public void setEstado(boolean value) {
@@ -71,11 +67,7 @@ public class AddDockResp {
     }
 
     /**
-// <<<<<<< HEAD
      * Obtém o valor da propriedade mensagem.
-=======
-     * Gets the value of the mensagem property.
->>>>>>> olivio
      * 
      * @return
      *     possible object is
@@ -87,11 +79,7 @@ public class AddDockResp {
     }
 
     /**
-// <<<<<<< HEAD
      * Define o valor da propriedade mensagem.
-=======
-     * Sets the value of the mensagem property.
->>>>>>> olivio
      * 
      * @param value
      *     allowed object is
@@ -103,11 +91,7 @@ public class AddDockResp {
     }
 
     /**
-// <<<<<<< HEAD
      * Obtém o valor da propriedade stateCode.
-=======
-     * Gets the value of the stateCode property.
->>>>>>> olivio
      * 
      */
     public int getStateCode() {
@@ -115,11 +99,7 @@ public class AddDockResp {
     }
 
     /**
-// <<<<<<< HEAD
      * Define o valor da propriedade stateCode.
-=======
-     * Sets the value of the stateCode property.
->>>>>>> olivio
      * 
      */
     public void setStateCode(int value) {

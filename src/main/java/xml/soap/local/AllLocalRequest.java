@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.06.11 às 01:13:46 PM WAT 
+// Gerado em: 2025.06.13 às 05:33:49 PM WAT 
 //
 
 
@@ -16,15 +16,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
-// <<<<<<< HEAD
  * <p>Classe Java de anonymous complex type.
  * 
  * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
-=======
- * <p>Java class for anonymous complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
->>>>>>> olivio
  * 
  * <pre>
  * &lt;complexType&gt;
@@ -51,11 +45,7 @@ public class AllLocalRequest {
     protected HeaderType header;
 
     /**
-<<<<<<< HEAD
      * Obtém o valor da propriedade header.
-=======
-     * Gets the value of the header property.
->>>>>>> olivio
      * 
      * @return
      *     possible object is
@@ -67,11 +57,7 @@ public class AllLocalRequest {
     }
 
     /**
-<<<<<<< HEAD
      * Define o valor da propriedade header.
-=======
-     * Sets the value of the header property.
->>>>>>> olivio
      * 
      * @param value
      *     allowed object is

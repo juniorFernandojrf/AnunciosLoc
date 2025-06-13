@@ -1,48 +1,60 @@
 package com.AnunciosLoc.AnunciosLoc.services;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import com.AnunciosLoc.AnunciosLoc.bd.interesses.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import xml.soap.interesses.*;
+import com.AnunciosLoc.AnunciosLoc.bd.interesses.InteressesRepository;
+import com.AnunciosLoc.AnunciosLoc.utils.ConversaoUtil;
+
+import xml.soap.interesses.AllInteressesRequest;
+import xml.soap.interesses.AllInteressesResponse;
+
 
 @Service
-
 public class InteressesService {
+
     @Autowired
-    private final InteressesRepository interessesRepository;
+    private InteressesRepository interessesRepository;
 
-    public InteressesService(InteressesRepository interessesRepository) {
+    @Autowired
+    private ConversaoUtil conversaoUtil;
+
+    public InteressesService(InteressesRepository interessesRepository, ConversaoUtil conversaoUtil){
         this.interessesRepository = interessesRepository;
+        this.conversaoUtil        = conversaoUtil;
     }
-    
 
-
-    // Listar Interesses
     public AllInteressesResponse listarTodosOsInteresses(AllInteressesRequest request) {
-    AllInteressesResponse response = new AllInteressesResponse();
-    try {
-        List<Interesses> interesses = interessesRepository.findAll();
-        System.out.println(interesses);
-        for (Interesses interesse : interesses) {
-            InteressesType interessesType = new InteressesType();
-            interessesType.setId(0);
-            interessesType.setName(null);
-            response.getInteresses().add(interessesType);
+        AllInteressesResponse response = new AllInteressesResponse();
+
+        try {
+            // Buscar todos os interesses no banco
+            List<Interesses> interesses = interessesRepository.findAll();
+
+            // Se não houver nenhum interesse
+            if (interesses.isEmpty()) {
+                response.setStatus(false);
+                response.setMensagem("Nenhum interesse encontrado.");
+                return response;
+            }
+
+            // Mapear cada interesse para o tipo SOAP
+            for (Interesses interesse : interesses) {
+                response.getInteresses().add(conversaoUtil.mapToInteressesType(interesse));
+            }
+
+            // Resposta com sucesso
+            response.setStatus(true);
+            response.setMensagem("Interesses listados com sucesso.");
+
+        } catch (Exception e) {
+            response.setStatus(false);
+            response.setMensagem("Erro interno ao listar interesses: " + e.getMessage());
         }
-        response.setStatus(true);
-        response.setMensagem("Interesses listados com sucesso.");
-    } catch (Exception e) {
-        response.setStatus(false);
-        response.setMensagem("Erro ao listar interesses: " + e.getMessage());
+
+        return response;
     }
-
-    return response;
-}
-
 }

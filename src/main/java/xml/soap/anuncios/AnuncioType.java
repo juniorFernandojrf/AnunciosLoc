@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.06.11 às 01:13:46 PM WAT 
+// Gerado em: 2025.06.13 às 05:33:49 PM WAT 
 //
 
 
@@ -15,15 +15,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
-// <<<<<<< HEAD
  * <p>Classe Java de AnuncioType complex type.
  * 
  * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
-=======
- * <p>Java class for AnuncioType complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
->>>>>>> olivio
  * 
  * <pre>
  * &lt;complexType name="AnuncioType"&gt;
@@ -73,11 +67,7 @@ public class AnuncioType {
     protected Long anuncioId;
 
     /**
-// <<<<<<< HEAD
      * Obtém o valor da propriedade id.
-=======
-     * Gets the value of the id property.
->>>>>>> olivio
      * 
      */
     public int getId() {
@@ -85,11 +75,7 @@ public class AnuncioType {
     }
 
     /**
-// <<<<<<< HEAD
      * Define o valor da propriedade id.
-=======
-     * Sets the value of the id property.
->>>>>>> olivio
      * 
      */
     public void setId(int value) {
@@ -97,11 +83,7 @@ public class AnuncioType {
     }
 
     /**
-// <<<<<<< HEAD
      * Obtém o valor da propriedade titulo.
-=======
-     * Gets the value of the titulo property.
->>>>>>> olivio
      * 
      * @return
      *     possible object is
@@ -113,11 +95,7 @@ public class AnuncioType {
     }
 
     /**
-// <<<<<<< HEAD
      * Define o valor da propriedade titulo.
-=======
-     * Sets the value of the titulo property.
->>>>>>> olivio
      * 
      * @param value
      *     allowed object is
@@ -129,11 +107,7 @@ public class AnuncioType {
     }
 
     /**
-// <<<<<<< HEAD
      * Obtém o valor da propriedade dataInicio.
-=======
-     * Gets the value of the dataInicio property.
->>>>>>> olivio
      * 
      * @return
      *     possible object is
@@ -145,11 +119,7 @@ public class AnuncioType {
     }
 
     /**
-// <<<<<<< HEAD
      * Define o valor da propriedade dataInicio.
-=======
-     * Sets the value of the dataInicio property.
->>>>>>> olivio
      * 
      * @param value
      *     allowed object is
@@ -161,11 +131,7 @@ public class AnuncioType {
     }
 
     /**
-// <<<<<<< HEAD
      * Obtém o valor da propriedade descricao.
-=======
-     * Gets the value of the descricao property.
->>>>>>> olivio
      * 
      * @return
      *     possible object is
@@ -177,11 +143,7 @@ public class AnuncioType {
     }
 
     /**
-// <<<<<<< HEAD
      * Define o valor da propriedade descricao.
-=======
-     * Sets the value of the descricao property.
->>>>>>> olivio
      * 
      * @param value
      *     allowed object is
@@ -193,11 +155,7 @@ public class AnuncioType {
     }
 
     /**
-// <<<<<<< HEAD
      * Obtém o valor da propriedade dataExpiracao.
-=======
-     * Gets the value of the dataExpiracao property.
->>>>>>> olivio
      * 
      * @return
      *     possible object is
@@ -209,11 +167,7 @@ public class AnuncioType {
     }
 
     /**
-// <<<<<<< HEAD
      * Define o valor da propriedade dataExpiracao.
-=======
-     * Sets the value of the dataExpiracao property.
->>>>>>> olivio
      * 
      * @param value
      *     allowed object is
@@ -225,11 +179,7 @@ public class AnuncioType {
     }
 
     /**
-// <<<<<<< HEAD
      * Obtém o valor da propriedade usuario.
-=======
-     * Gets the value of the usuario property.
->>>>>>> olivio
      * 
      * @return
      *     possible object is
@@ -241,11 +191,7 @@ public class AnuncioType {
     }
 
     /**
-// <<<<<<< HEAD
      * Define o valor da propriedade usuario.
-=======
-     * Sets the value of the usuario property.
->>>>>>> olivio
      * 
      * @param value
      *     allowed object is
@@ -257,11 +203,7 @@ public class AnuncioType {
     }
 
     /**
-// <<<<<<< HEAD
      * Obtém o valor da propriedade local.
-=======
-     * Gets the value of the local property.
->>>>>>> olivio
      * 
      * @return
      *     possible object is
@@ -273,11 +215,7 @@ public class AnuncioType {
     }
 
     /**
-// <<<<<<< HEAD
      * Define o valor da propriedade local.
-=======
-     * Sets the value of the local property.
->>>>>>> olivio
      * 
      * @param value
      *     allowed object is
@@ -289,11 +227,7 @@ public class AnuncioType {
     }
 
     /**
-// <<<<<<< HEAD
      * Obtém o valor da propriedade anuncioId.
-=======
-     * Gets the value of the anuncioId property.
->>>>>>> olivio
      * 
      * @return
      *     possible object is
@@ -305,11 +239,7 @@ public class AnuncioType {
     }
 
     /**
-// <<<<<<< HEAD
      * Define o valor da propriedade anuncioId.
-=======
-     * Sets the value of the anuncioId property.
->>>>>>> olivio
      * 
      * @param value
      *     allowed object is
