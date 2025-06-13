@@ -5,25 +5,22 @@ import java.util.Optional;
 
 import com.AnunciosLoc.AnunciosLoc.bd.local.Local;
 import com.AnunciosLoc.AnunciosLoc.bd.local.LocalRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.AnunciosLoc.AnunciosLoc.utils.ConversaoUtil;
 
 import xml.soap.local.*;
 
 @Service
 
 public class LocalService {
-
     @Autowired
     private final LocalRepository localRepository;
 
     public LocalService(LocalRepository localRepository) {
-    this.localRepository = localRepository;
-}
+        this.localRepository = localRepository;
+    }
 
-    // Adicionar Localização
+    // Adicionar Localização    
     public AddLocalResponse adicionarLocal(AddLocalRequest request) {
         // AddLocalResponse response = new AddLocalResponse();
         AddLocalResponse response = new AddLocalResponse();
@@ -79,38 +76,6 @@ public class LocalService {
         return response;
     }
 
-    public GetLocalResponse getLocal(GetLocalRequest request) {
-    GetLocalResponse response = new GetLocalResponse();
-
-    try {
-        Long localId = request.getBody().getLocalId();
-
-        Optional<Local> optionalLocal = localRepository.findById(localId);
-
-        if (!optionalLocal.isPresent()) {
-            response.setStatus(false);
-            response.setMensagem("Local não encontrado.");
-            return response;
-        }
-
-        Local local = optionalLocal.get();
-
-        
-       LocalType soapLocal = ConversaoUtil.toLocalLocalType(local);
-       response.getLocal().add(soapLocal);
-
-        response.setStatus(true);
-        response.setMensagem("Local retornado com sucesso.");
-
-    } catch (Exception e) {
-        response.setStatus(false);
-        response.setMensagem("Erro ao buscar local: " + e.getMessage());
-        e.printStackTrace();
-    }
-
-    return response;
-}
-    
     public RemoveLocalResponse removerLocal(RemoveLocalRequest request) {
         RemoveLocalResponse response = new RemoveLocalResponse();
 

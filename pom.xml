@@ -5,7 +5,10 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
- HEAD
+
+ 
+
+<!-- >>>>>>> olivio -->
 		<version>2.5.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
@@ -51,6 +54,7 @@
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
+
 		<version>3.4.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
@@ -77,12 +81,17 @@
 	</properties>
 	<dependencies>
  
+
+<!-- >>>>>>> olivio -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
 
+
+
+<!-- >>>>>>> olivio -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -161,6 +170,7 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -169,6 +179,8 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
  
+
+<!-- >>>>>>> olivio -->
 		</dependency>
 
 		<dependency>
@@ -179,6 +191,9 @@
 		</dependency>
 
 
+
+
+<!-- >>>>>>> olivio -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-cache</artifactId>
@@ -188,6 +203,7 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
 		</dependency>
+
 
 		<dependency>
 			<groupId>com.mysql</groupId>
@@ -210,12 +226,17 @@
 			<scope>test</scope>
 		</dependency>
  
+
+<!-- >>>>>>> olivio -->
 	</dependencies>
 
 	<build>
 		<plugins>
 			<plugin>
 
+
+
+<!-- >>>>>>> olivio -->
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
@@ -279,6 +300,7 @@
 				</configuration>
 			</plugin-->
 			
+
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
@@ -303,6 +325,8 @@
 				</configuration>
 			</plugin>
  
+
+<!-- >>>>>>> olivio -->
 		</plugins>
 	</build>
 

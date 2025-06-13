@@ -18,7 +18,7 @@ public class LocalEndPoint {
     private static final String NAMESPACE_URI = "http://local.soap.xml";
 
     @Autowired
-    private final LocalService localService;
+private final LocalService localService;
 
     public LocalEndPoint(LocalService localService) {
         this.localService = localService;

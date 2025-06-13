@@ -16,9 +16,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de anonymous complex type.
+ * <p>Java class for anonymous complex type.
  * 
- * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+ * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType&gt;
@@ -51,7 +51,7 @@ public class AddDockResp {
     protected int stateCode;
 
     /**
-     * Obtém o valor da propriedade estado.
+     // * Obtém o valor da propriedade estado.
      * 
      */
     public boolean isEstado() {
@@ -59,7 +59,11 @@ public class AddDockResp {
     }
 
     /**
+// <<<<<<< HEAD
      * Define o valor da propriedade estado.
+=======
+     * Sets the value of the estado property.
+>>>>>>> olivio
      * 
      */
     public void setEstado(boolean value) {
@@ -67,7 +71,11 @@ public class AddDockResp {
     }
 
     /**
+// <<<<<<< HEAD
      * Obtém o valor da propriedade mensagem.
+=======
+     * Gets the value of the mensagem property.
+>>>>>>> olivio
      * 
      * @return
      *     possible object is
@@ -79,7 +87,11 @@ public class AddDockResp {
     }
 
     /**
+// <<<<<<< HEAD
      * Define o valor da propriedade mensagem.
+=======
+     * Sets the value of the mensagem property.
+>>>>>>> olivio
      * 
      * @param value
      *     allowed object is
@@ -91,7 +103,11 @@ public class AddDockResp {
     }
 
     /**
+// <<<<<<< HEAD
      * Obtém o valor da propriedade stateCode.
+=======
+     * Gets the value of the stateCode property.
+>>>>>>> olivio
      * 
      */
     public int getStateCode() {
@@ -99,7 +115,11 @@ public class AddDockResp {
     }
 
     /**
+// <<<<<<< HEAD
      * Define o valor da propriedade stateCode.
+=======
+     * Sets the value of the stateCode property.
+>>>>>>> olivio
      * 
      */
     public void setStateCode(int value) {

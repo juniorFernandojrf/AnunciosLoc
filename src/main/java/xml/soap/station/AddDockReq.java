@@ -16,22 +16,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+<<<<<<< HEAD
  * <p>Classe Java de anonymous complex type.
  * 
  * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+=======
+ * <p>Java class for anonymous complex type.
+ * 
  * 
  * <pre>
- * &lt;complexType&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *       &lt;sequence&gt;
- *         &lt;element name="Header" type="{http://station.soap.xml}HeaderType"/&gt;
  *         &lt;element name="Body"&gt;
- *           &lt;complexType&gt;
- *             &lt;complexContent&gt;
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *                 &lt;sequence&gt;
- *                   &lt;element name="station" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *                 &lt;/sequence&gt;
  *               &lt;/restriction&gt;
  *             &lt;/complexContent&gt;
@@ -59,7 +53,11 @@ public class AddDockReq {
     protected AddDockReq.Body body;
 
     /**
+<<<<<<< HEAD
      * Obtém o valor da propriedade header.
+=======
+     * Gets the value of the header property.
+>>>>>>> olivio
      * 
      * @return
      *     possible object is
@@ -71,7 +69,11 @@ public class AddDockReq {
     }
 
     /**
+<<<<<<< HEAD
      * Define o valor da propriedade header.
+=======
+     * Sets the value of the header property.
+>>>>>>> olivio
      * 
      * @param value
      *     allowed object is
@@ -83,7 +85,11 @@ public class AddDockReq {
     }
 
     /**
+<<<<<<< HEAD
      * Obtém o valor da propriedade body.
+=======
+     * Gets the value of the body property.
+>>>>>>> olivio
      * 
      * @return
      *     possible object is
@@ -95,7 +101,11 @@ public class AddDockReq {
     }
 
     /**
+<<<<<<< HEAD
      * Define o valor da propriedade body.
+=======
+     * Sets the value of the body property.
+>>>>>>> olivio
      * 
      * @param value
      *     allowed object is
@@ -108,9 +118,15 @@ public class AddDockReq {
 
 
     /**
+<<<<<<< HEAD
      * <p>Classe Java de anonymous complex type.
      * 
      * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+=======
+     * <p>Java class for anonymous complex type.
+     * 
+     * <p>The following schema fragment specifies the expected content contained within this class.
+>>>>>>> olivio
      * 
      * <pre>
      * &lt;complexType&gt;
@@ -136,7 +152,11 @@ public class AddDockReq {
         protected String station;
 
         /**
+<<<<<<< HEAD
          * Obtém o valor da propriedade station.
+=======
+         * Gets the value of the station property.
+>>>>>>> olivio
          * 
          * @return
          *     possible object is
@@ -148,7 +168,11 @@ public class AddDockReq {
         }
 
         /**
+<<<<<<< HEAD
          * Define o valor da propriedade station.
+=======
+         * Sets the value of the station property.
+>>>>>>> olivio
          * 
          * @param value
          *     allowed object is

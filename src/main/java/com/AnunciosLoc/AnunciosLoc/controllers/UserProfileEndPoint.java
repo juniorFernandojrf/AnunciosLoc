@@ -33,9 +33,13 @@ public class UserProfileEndPoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "UserProfileRequest")
     @ResponsePayload
-    public UserProfileResponse addProfile(@RequestPayload UserProfileRequest request) {
-        return this.userProfileService.addProfile(request);
+    public UserProfileResponse addProfileUser(@RequestPayload UserProfileRequest request) {
+        userProfileService.addProfile(request.getUserId(), request.getValor());
+        UserProfileResponse response = new UserProfileResponse();
+        response.setMensagem("Interesses salvos com sucesso!");
+        return response;
     }
+
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "EditUserProfileRequest")
     @ResponsePayload

@@ -22,9 +22,11 @@ public class UserService {
 
     @Autowired(required = true)
     private UserRepository userRepository;
+
     
-    public AddUserResponse addUser(AddUserRequest request) {
-        AddUserResponse response = new AddUserResponse();
+    public UserResponse addUser(AddUserRequest request) {
+        UserResponse response = new UserResponse();
+        System.out.println("Entrando no serviço de Cadastro");
 
         try {
             // Construir o User com os dados do request
@@ -33,26 +35,26 @@ public class UserService {
             user.setPassword(HashPassword.hashing(request.getBody().getPassword()));
             user.setUsername(request.getBody().getUsername());
             user.setGenero(request.getBody().getGenero());
-            user.setFoto(request.getBody().getFoto());
             user.setTipo(request.getBody().getTipo());
-            user.setProfissao(request.getBody().getProfissao());
             user.setTelefone(request.getBody().getTelefone());
+            user.setDatanascimento(request.getBody().getDatanascimento());
 
             userRepository.save(user); // Salvar na BD
             response.setMensagem("Usuário cadastrado com sucesso.");
-            response.setStatus(true);
+            System.out.println("Usuario Cadastrado com Sucesso" + user);
+            response.setEstado(true);
         } catch (Exception e) {
             response.setMensagem("Erro ao cadastrar usuário: " + e.getMessage());
-            response.setStatus(false);
+            response.setEstado(false);
         }
 
         return response;
     }
 
-    public UserResponse login(LoginRequest request) {
+    public LoginResponse login(LoginRequest request) {
         System.out.println("Entrando no serviço de login");
 
-        UserResponse response = new UserResponse();
+        LoginResponse response = new LoginResponse();
 
         // Buscar apenas pelo email
         Optional<User> userOpt = userRepository.findByEmail(request.getEmail());
@@ -62,20 +64,24 @@ public class UserService {
 
             // Verificar se a senha digitada bate com o hash
             if (user.getPassword().equals(HashPassword.hashing(request.getPassword()))){
-                response.setEstado(true);
+                System.out.println("Usuário autenticado com sucesso: " + user.getEmail());
+                response.setId(user.getId());
+                response.setEmail(user.getEmail());
+                response.setUsername(user.getUsername());
+                response.setDatanascimento(user.getDatanascimento());
+                response.setGenero(user.getGenero());
+                response.setTelefone(user.getTelefone());
+                response.setStatus(true);
                 response.setMensagem("Login realizado com sucesso.");
-                response.setStateCode(1);
                 response.setId(user.getId());
             } else {
-                response.setEstado(false);
+                response.setStatus(false);
                 response.setMensagem("Senha incorreta.");
-                response.setStateCode(0);
                 response.setId(0);
             }
         } else {
-            response.setEstado(false);
+            response.setStatus(false);
             response.setMensagem("Usuário não encontrado.");
-            response.setStateCode(0);
             response.setId(0);
         }
 
@@ -87,7 +93,7 @@ public class UserService {
 
         LogoutResponse response = new LogoutResponse();
 
-        Optional<User> userOpt = userRepository.findByEmail(request.getEmail()); // ✅
+        Optional<User> userOpt = userRepository.findByEmail(request.getEmail()); // 
 
         if (userOpt.isPresent()) {
             // Aqui você pode adicionar lógica para encerrar sessão, remover token, etc.
@@ -100,5 +106,4 @@ public class UserService {
 
         return response;
     }
-
 }

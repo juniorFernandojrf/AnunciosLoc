@@ -16,9 +16,15 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
+// <<<<<<< HEAD
  * <p>Classe Java de anonymous complex type.
  * 
  * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
+=======
+ * <p>Java class for anonymous complex type.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.
+>>>>>>> olivio
  * 
  * <pre>
  * &lt;complexType&gt;
@@ -45,7 +51,11 @@ public class AllLocalRequest {
     protected HeaderType header;
 
     /**
+<<<<<<< HEAD
      * Obtém o valor da propriedade header.
+=======
+     * Gets the value of the header property.
+>>>>>>> olivio
      * 
      * @return
      *     possible object is
@@ -57,7 +67,11 @@ public class AllLocalRequest {
     }
 
     /**
+<<<<<<< HEAD
      * Define o valor da propriedade header.
+=======
+     * Sets the value of the header property.
+>>>>>>> olivio
      * 
      * @param value
      *     allowed object is

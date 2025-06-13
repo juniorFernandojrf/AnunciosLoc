@@ -31,14 +31,12 @@ public class User implements Serializable{
     protected String password;
     @Column(name = "email", unique = true, nullable = false)
     protected String email;
-    @Column(name = "profissao")
-    protected String profissao;
+    @Column(name = "datanascimento")
+    protected String datanascimento;
     @Column(name = "genero")
     protected String genero;
     @Column(name = "tipo")
     protected int tipo;
-    @Column(name = "foto")
-    protected String foto;
     @Column(name = "telefone")
     protected String telefone; 
 

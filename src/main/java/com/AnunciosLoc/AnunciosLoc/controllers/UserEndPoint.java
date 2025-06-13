@@ -28,14 +28,14 @@ public class UserEndPoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AddUserRequest")
     @ResponsePayload
-    public AddUserResponse addUser(@RequestPayload AddUserRequest request) {
+    public UserResponse addUser(@RequestPayload AddUserRequest request) {
         return this.userService.addUser(request);
     }
     
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "LoginRequest")
     @ResponsePayload
-    public UserResponse login(@RequestPayload LoginRequest request) {
+    public LoginResponse login(@RequestPayload LoginRequest request) {
         return this.userService.login(request);
     }
 

@@ -34,12 +34,6 @@ public class AnunciosEndPoint {
         return this.anunciosService.getAllAnuncios(request);
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetAnuncioRequest")
-    @ResponsePayload
-    public GetAnuncioResponse getAnuncioResponse(@RequestPayload GetAnuncioRequest request) {
-        return this.anunciosService.getAnuncio(request);
-    }
-
     // @PayloadRoot(namespace = NAMESPACE_URI, localPart = "RemoveAnuncioRequest")
     // @ResponsePayload
     // public RemoveAnuncioResponse removeAnuncio(@RequestPayload RemoveAnuncioRequest request) {
