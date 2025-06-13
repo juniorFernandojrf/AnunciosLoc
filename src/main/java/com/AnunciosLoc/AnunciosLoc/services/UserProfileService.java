@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.hibernate.type.IntegerType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,12 @@ import com.AnunciosLoc.AnunciosLoc.bd.userProfile.AllUserProfileResponse;
 import com.AnunciosLoc.AnunciosLoc.bd.userProfile.ParChaveValorDTO;
 import com.AnunciosLoc.AnunciosLoc.bd.userProfile.UserProfile;
 import com.AnunciosLoc.AnunciosLoc.bd.userProfile.UserProfileRepository;
+import com.ctc.wstx.ent.IntEntity;
 
 import xml.soap.user.AllUserProfileRequest;
 import xml.soap.user.EditUserProfileRequest;
 import xml.soap.user.EditUserProfileResponse;
+import xml.soap.user.InteresseType;
 import xml.soap.user.RemoveUserProfileRequest;
 import xml.soap.user.RemoveUserProfileResponse;
 import xml.soap.user.UserProfileRequest;
@@ -27,48 +30,49 @@ public class UserProfileService {
 
     @Autowired
     private UserProfileRepository userProfileRepository;
-
+    
     @Autowired
     private UserRepository userRepository;
 
-    public UserProfileResponse addProfile(UserProfileRequest request) {
-        UserProfileResponse response = new UserProfileResponse();
+    public UserProfileService(UserRepository userRepository, UserProfileRepository userProfileRepository) {
+        this.userRepository = userRepository;
+        this.userProfileRepository = userProfileRepository;
+    }
+    public void addProfile(String usuarioId, List<InteresseType> interesses) {
+        Optional<User> optionalUser = userRepository.findById(Long.valueOf(usuarioId));
 
-        try {
-            Optional<User> userOptional = userRepository.findById(request.getBody().getUserId());
-
-            System.out.println("Verificando User da request ID: " + request.getBody().getUserId());
-
-            if (!userOptional.isPresent()) {
-                response.setMensagem("Usuário não encontrado.");
-                response.setStatus(false);
-                return response;
-            }
-
-            User user = userOptional.get();
-
-            System.out.println("Verificando User da BD ID: " + user.getId());
-            if (userProfileRepository.findByUserAndChave(user, request.getBody().getChave()).isPresent()) {
-                response.setMensagem("Esta chave já existe no perfil do usuário.");
-                response.setStatus(false);
-                return response;
-            }
-
-            UserProfile perfil = new UserProfile();
-            perfil.setUser(user);
-            perfil.setChave(request.getBody().getChave());
-            perfil.setValor(request.getBody().getValor());
-
-            userProfileRepository.save(perfil);
-
-            response.setMensagem("Par chave-valor adicionado com sucesso.");
-            response.setStatus(true);
-        } catch (Exception e) {
-            response.setMensagem("Erro ao adicionar perfil: " + e.getMessage());
-            response.setStatus(false);
+        if (!optionalUser.isPresent()) {
+            throw new RuntimeException("Usuário não encontrado com o ID: " + usuarioId);
         }
 
-        return response;
+        User user = optionalUser.get();
+
+        // Buscar todos os interesses atuais do usuário
+        List<UserProfile> interessesExistentes = userProfileRepository.findByUser(user);
+
+        for (InteresseType interesse : interesses) {
+            String nomeInteresse = interesse.getNome();
+
+            // Verifica se o interesse já existe
+            Optional<UserProfile> interesseExistente = interessesExistentes.stream()
+                .filter(i -> i.getChave().equals("interesse") && i.getValor().equalsIgnoreCase(nomeInteresse))
+                .findFirst();
+
+            if (interesse.isSelecionado()) {
+                // Se estiver selecionado e não existir, adicionar
+                if (!interesseExistente.isPresent()) {
+                    UserProfile profile = new UserProfile();
+                    profile.setUser(user);
+                    profile.setChave("interesse");
+                    profile.setValor(nomeInteresse);
+                    userProfileRepository.save(profile);
+                }
+                // Se já existe e está selecionado, não faz nada (já está certo)
+            } else {
+                // Se não está selecionado e já existe, apagar
+                interesseExistente.ifPresent(userProfileRepository::delete);
+            }
+        }
     }
 
     public EditUserProfileResponse editProfile(EditUserProfileRequest request) {

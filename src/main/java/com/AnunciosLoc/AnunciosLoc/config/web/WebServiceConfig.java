@@ -74,6 +74,22 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return new SimpleXsdSchema(new ClassPathResource("xsd/local_schema.xsd"));
     }
 
+        // --- interesses ---
+    @Bean(name = "interesses")
+    DefaultWsdl11Definition interessesWsdlDefinition(XsdSchema interessesSchema) {
+        DefaultWsdl11Definition wsdl = new DefaultWsdl11Definition();
+        wsdl.setPortTypeName("ApiSoapHttpBikeSharedinteresses");
+        wsdl.setLocationUri("/ws");
+        wsdl.setTargetNamespace("http://interesses.soap.xml");
+        wsdl.setSchema(interessesSchema);
+        return wsdl;
+    }
+
+    @Bean
+    XsdSchema interessesSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("xsd/interesses_schema.xsd"));
+    }
+
     // --- Station ---
     @Bean(name = "station")
     DefaultWsdl11Definition estacaoWsdlDefinition (XsdSchema stationSchema) {
