@@ -128,8 +128,6 @@
             <xs:sequence>
               <xs:element name="userId"    type="xs:long"/>
               <xs:element name="localId"   type="xs:long"/>
-              <xs:element name="latitude"  type="xs:double"/>
-              <xs:element name="longitude" type="xs:double"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>

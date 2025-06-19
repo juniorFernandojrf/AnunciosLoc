@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.06.13 às 05:33:49 PM WAT 
+// Gerado em: 2025.06.19 às 10:16:38 AM WAT 
 //
 
 
@@ -33,8 +33,6 @@ import javax.xml.bind.annotation.XmlType;
  *                 &lt;sequence&gt;
  *                   &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
  *                   &lt;element name="localId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
- *                   &lt;element name="latitude" type="{http://www.w3.org/2001/XMLSchema}double"/&gt;
- *                   &lt;element name="longitude" type="{http://www.w3.org/2001/XMLSchema}double"/&gt;
  *                 &lt;/sequence&gt;
  *               &lt;/restriction&gt;
  *             &lt;/complexContent&gt;
@@ -122,8 +120,6 @@ public class AllAnuncioRequest {
      *       &lt;sequence&gt;
      *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
      *         &lt;element name="localId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
-     *         &lt;element name="latitude" type="{http://www.w3.org/2001/XMLSchema}double"/&gt;
-     *         &lt;element name="longitude" type="{http://www.w3.org/2001/XMLSchema}double"/&gt;
      *       &lt;/sequence&gt;
      *     &lt;/restriction&gt;
      *   &lt;/complexContent&gt;
@@ -135,16 +131,12 @@ public class AllAnuncioRequest {
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
         "userId",
-        "localId",
-        "latitude",
-        "longitude"
+        "localId"
     })
     public static class Body {
 
         protected long userId;
         protected long localId;
-        protected double latitude;
-        protected double longitude;
 
         /**
          * Obtém o valor da propriedade userId.
@@ -176,38 +168,6 @@ public class AllAnuncioRequest {
          */
         public void setLocalId(long value) {
             this.localId = value;
-        }
-
-        /**
-         * Obtém o valor da propriedade latitude.
-         * 
-         */
-        public double getLatitude() {
-            return latitude;
-        }
-
-        /**
-         * Define o valor da propriedade latitude.
-         * 
-         */
-        public void setLatitude(double value) {
-            this.latitude = value;
-        }
-
-        /**
-         * Obtém o valor da propriedade longitude.
-         * 
-         */
-        public double getLongitude() {
-            return longitude;
-        }
-
-        /**
-         * Define o valor da propriedade longitude.
-         * 
-         */
-        public void setLongitude(double value) {
-            this.longitude = value;
         }
 
     }

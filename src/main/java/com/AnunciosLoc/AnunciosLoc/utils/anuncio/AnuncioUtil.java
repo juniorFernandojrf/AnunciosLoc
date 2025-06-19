@@ -14,9 +14,6 @@ import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
 import com.AnunciosLoc.AnunciosLoc.bd.userProfile.UserProfile;
 import com.AnunciosLoc.AnunciosLoc.bd.userProfile.UserProfileRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
-
 import xml.soap.anuncios.AnuncioType;
 import xml.soap.anuncios.LocalType;
 import xml.soap.anuncios.UserType;
@@ -30,30 +27,14 @@ public class AnuncioUtil {
     @Autowired
     private UserProfileRepository userProfileRepository;
 
-    public boolean estaProximo(Double lat1, Double lon1, Double lat2, Double lon2) {
-        final int R = 6371; // Raio da Terra em km
-        double latDistance = Math.toRadians(lat2 - lat1);
-        double lonDistance = Math.toRadians(lon2 - lon1);
-        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
-                        * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double distance = R * c;
-
-        return distance <= 50; // Dentro de 50km
-    }
-
-
-    public boolean usuarioSatisfazAlgumaCondicao(Long userId, List<CondicaoPerfil> condicoes) {
+    public boolean usuarioPertenceAWhiteList(Long userId, List<CondicaoPerfil> condicoes) {
         List<UserProfile> perfis = userProfileRepository.findByUserId(userId);
 
         for (CondicaoPerfil cond : condicoes) {
-            String chave = cond.getChave();
             String valor = cond.getValor();
 
             boolean encontrado = perfis.stream()
-                    .anyMatch(p -> p.getChave().equalsIgnoreCase(chave) &&
-                            p.getValor().equalsIgnoreCase(valor));
+                    .anyMatch(p -> p.getValor().equalsIgnoreCase(valor));
 
             if (encontrado)
                 return true;
@@ -62,27 +43,37 @@ public class AnuncioUtil {
         return false;
     }
 
-    public boolean usuarioSatisfazQualquerCondicao(Long userId, List<CondicaoPerfil> condicoes) {
+    /**
+     * Verifica se o usuário está BLOQUEADO por corresponder a alguma condição da
+     * blacklist.
+     * Retorna TRUE se o usuário deve ser bloqueado.
+     */
+    public boolean usuarioEstaNaBlacklist(Long userId, List<CondicaoPerfil> condicoes) {
         Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isPresent())
-            return false;
 
-        User user = optionalUser.get();
+        if (!optionalUser.isPresent()) {
+            System.out.println("Usuário com ID " + userId + " não encontrado.");
+            return false;
+        }
+
         List<UserProfile> perfis = userProfileRepository.findByUserId(userId);
 
+        if (perfis.isEmpty()) {
+            System.out.println("Nenhum perfil encontrado para o usuário com ID: " + userId);
+            return false; // Sem perfil → não bloqueia
+        }
+
         for (CondicaoPerfil cond : condicoes) {
-            String chave = cond.getChave();
             String valor = cond.getValor();
 
             boolean encontrado = perfis.stream()
-                    .anyMatch(p -> p.getChave().equalsIgnoreCase(chave) &&
-                            p.getValor().equalsIgnoreCase(valor));
+                    .anyMatch(p -> p.getValor().equalsIgnoreCase(valor));
 
             if (encontrado)
-                return true;
+                return true; // Achou uma condição → usuário bloqueado
         }
 
-        return false;
+        return false; // Não achou nenhuma → pode ver
     }
 
     public UserType mapUserToUserType(User user) {
@@ -94,9 +85,10 @@ public class AnuncioUtil {
         userType.setUsername(user.getUsername());
         return userType;
     }
-    
+
     public AnuncioType MapAnuncioType(Anuncio anuncio) {
-        if (anuncio == null)return null;
+        if (anuncio == null)
+            return null;
 
         AnuncioType type = new AnuncioType();
         type.setId(Math.toIntExact(anuncio.getId()));

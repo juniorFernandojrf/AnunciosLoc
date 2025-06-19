@@ -38,9 +38,11 @@ public class UserProfileService {
         this.userRepository = userRepository;
         this.userProfileRepository = userProfileRepository;
     }
+
+    
     public void addProfile(String usuarioId, List<InteresseType> interesses) {
         Optional<User> optionalUser = userRepository.findById(Long.valueOf(usuarioId));
-
+        
         if (!optionalUser.isPresent()) {
             throw new RuntimeException("Usuário não encontrado com o ID: " + usuarioId);
         }
