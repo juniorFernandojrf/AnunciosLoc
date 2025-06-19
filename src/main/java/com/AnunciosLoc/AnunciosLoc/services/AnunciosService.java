@@ -323,4 +323,31 @@ public class AnunciosService {
         return response;
     }
 
+
+     public RemoveAnuncioResponse removeAnuncio(RemoveAnuncioRequest request) {
+        RemoveAnuncioResponse response = new RemoveAnuncioResponse();
+
+        long anuncioId = request.getBody().getId();
+        long userId = request.getBody().getUserId();
+
+        Optional<Anuncio> anuncioOptional = anuncioRepository.findById(anuncioId);
+
+        if (anuncioOptional.isPresent()) {
+            Anuncio anuncio = anuncioOptional.get();
+
+            if (anuncio.getUser().getId() == userId) {
+                anuncioRepository.delete(anuncio);
+                response.setMensagem("Anúncio removido com sucesso!");
+                response.setStatus(true);
+            } else {
+                response.setMensagem("Você não tem permissão para remover este anúncio.");
+                response.setStatus(false);
+            }
+        } else {
+            response.setMensagem("Anúncio não encontrado.");
+            response.setStatus(false);
+        }
+
+        return response;
+    }
 }
