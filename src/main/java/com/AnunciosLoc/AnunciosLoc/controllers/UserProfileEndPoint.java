@@ -34,6 +34,8 @@ public class UserProfileEndPoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "UserProfileRequest")
     @ResponsePayload
     public UserProfileResponse addProfileUser(@RequestPayload UserProfileRequest request) {
+        System.out.println("Interesses recebidos: " + request.getValor().size());
+
         userProfileService.addProfile(request.getUserId(), request.getValor());
         UserProfileResponse response = new UserProfileResponse();
         response.setMensagem("Interesses salvos com sucesso!");
