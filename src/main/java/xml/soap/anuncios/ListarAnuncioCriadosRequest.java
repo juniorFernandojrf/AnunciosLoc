@@ -6,7 +6,7 @@
 //
 
 
-package xml.soap.station;
+package xml.soap.anuncios;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,13 +25,13 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="Header" type="{http://station.soap.xml}HeaderType"/&gt;
+ *         &lt;element name="Header" type="{http://anuncios.soap.xml}HeaderType"/&gt;
  *         &lt;element name="Body"&gt;
  *           &lt;complexType&gt;
  *             &lt;complexContent&gt;
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *                 &lt;sequence&gt;
- *                   &lt;element name="station" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *                   &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
  *                 &lt;/sequence&gt;
  *               &lt;/restriction&gt;
  *             &lt;/complexContent&gt;
@@ -50,13 +50,13 @@ import javax.xml.bind.annotation.XmlType;
     "header",
     "body"
 })
-@XmlRootElement(name = "AddDockReq")
-public class AddDockReq {
+@XmlRootElement(name = "ListarAnuncioCriadosRequest")
+public class ListarAnuncioCriadosRequest {
 
     @XmlElement(name = "Header", required = true)
     protected HeaderType header;
     @XmlElement(name = "Body", required = true)
-    protected AddDockReq.Body body;
+    protected ListarAnuncioCriadosRequest.Body body;
 
     /**
      * Obtém o valor da propriedade header.
@@ -87,10 +87,10 @@ public class AddDockReq {
      * 
      * @return
      *     possible object is
-     *     {@link AddDockReq.Body }
+     *     {@link ListarAnuncioCriadosRequest.Body }
      *     
      */
-    public AddDockReq.Body getBody() {
+    public ListarAnuncioCriadosRequest.Body getBody() {
         return body;
     }
 
@@ -99,10 +99,10 @@ public class AddDockReq {
      * 
      * @param value
      *     allowed object is
-     *     {@link AddDockReq.Body }
+     *     {@link ListarAnuncioCriadosRequest.Body }
      *     
      */
-    public void setBody(AddDockReq.Body value) {
+    public void setBody(ListarAnuncioCriadosRequest.Body value) {
         this.body = value;
     }
 
@@ -117,7 +117,7 @@ public class AddDockReq {
      *   &lt;complexContent&gt;
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
      *       &lt;sequence&gt;
-     *         &lt;element name="station" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+     *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
      *       &lt;/sequence&gt;
      *     &lt;/restriction&gt;
      *   &lt;/complexContent&gt;
@@ -128,35 +128,26 @@ public class AddDockReq {
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "station"
+        "userId"
     })
     public static class Body {
 
-        @XmlElement(required = true)
-        protected String station;
+        protected long userId;
 
         /**
-         * Obtém o valor da propriedade station.
+         * Obtém o valor da propriedade userId.
          * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
          */
-        public String getStation() {
-            return station;
+        public long getUserId() {
+            return userId;
         }
 
         /**
-         * Define o valor da propriedade station.
+         * Define o valor da propriedade userId.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
          */
-        public void setStation(String value) {
-            this.station = value;
+        public void setUserId(long value) {
+            this.userId = value;
         }
 
     }

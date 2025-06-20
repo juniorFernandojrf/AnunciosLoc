@@ -9,14 +9,18 @@ import org.springframework.stereotype.Component;
 import com.AnunciosLoc.AnunciosLoc.bd.anuncio.Anuncio;
 import com.AnunciosLoc.AnunciosLoc.bd.condicaoPerfil.CondicaoPerfil;
 import com.AnunciosLoc.AnunciosLoc.bd.local.Local;
+import com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaEntrega;
 import com.AnunciosLoc.AnunciosLoc.bd.user.User;
 import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
 import com.AnunciosLoc.AnunciosLoc.bd.userProfile.UserProfile;
 import com.AnunciosLoc.AnunciosLoc.bd.userProfile.UserProfileRepository;
 
 import xml.soap.anuncios.AnuncioType;
+import xml.soap.anuncios.CondicaoPerfilType;
 import xml.soap.anuncios.LocalType;
+import xml.soap.anuncios.PoliticaEntregaType;
 import xml.soap.anuncios.UserType;
+import xml.soap.anuncios.PoliticaTipo; // <-- Adicione esta linha
 
 @Component
 public class AnuncioUtil {
@@ -83,6 +87,11 @@ public class AnuncioUtil {
         UserType userType = new UserType();
         userType.setId(user.getId());
         userType.setUsername(user.getUsername());
+        userType.setEmail(user.getEmail());
+        userType.setGenero(user.getGenero());
+        userType.setDatanascimento(user.getDatanascimento());
+        userType.setTelefone(user.getTelefone());
+        
         return userType;
     }
 
@@ -119,5 +128,23 @@ public class AnuncioUtil {
         localType.setLongitude(local.getLongitude());
         return localType;
     }
+
+    public PoliticaEntregaType mapPoliticaToType(PoliticaEntrega politica) {
+    if (politica == null) return null;
+
+    PoliticaEntregaType type = new PoliticaEntregaType();
+    type.setTitulo(PoliticaTipo.valueOf(politica.getTitulo().name()));
+
+    if (politica.getCondicoes() != null) {
+        for (CondicaoPerfil condicao : politica.getCondicoes()) {
+            CondicaoPerfilType condType = new CondicaoPerfilType();
+            condType.getChave().add(condicao.getChave());
+            condType.getValor().add(condicao.getValor());
+            type.getCondicoes().add(condType);
+        }
+    }
+
+    return type;
+}
 
 }

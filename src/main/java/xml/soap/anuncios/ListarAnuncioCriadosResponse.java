@@ -6,7 +6,7 @@
 //
 
 
-package xml.soap.user;
+package xml.soap.anuncios;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,19 +27,21 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
  *         &lt;element name="mensagem" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="profile" maxOccurs="unbounded" minOccurs="0"&gt;
+ *         &lt;element name="estado" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
+ *         &lt;element name="usuario" type="{http://anuncios.soap.xml}UserType" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;element name="anuncios" minOccurs="0"&gt;
  *           &lt;complexType&gt;
  *             &lt;complexContent&gt;
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *                 &lt;sequence&gt;
- *                   &lt;element name="item" type="{http://user.soap.xml}ParChaveValorDTO" maxOccurs="unbounded"/&gt;
+ *                   &lt;element name="anuncio" type="{http://anuncios.soap.xml}AnuncioType" maxOccurs="unbounded" minOccurs="0"/&gt;
  *                 &lt;/sequence&gt;
  *               &lt;/restriction&gt;
  *             &lt;/complexContent&gt;
  *           &lt;/complexType&gt;
  *         &lt;/element&gt;
+ *         &lt;element name="qtdAnuncio" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -50,33 +52,21 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "status",
     "mensagem",
-    "profile"
+    "estado",
+    "usuario",
+    "anuncios",
+    "qtdAnuncio"
 })
-@XmlRootElement(name = "AllUserProfileResponse")
-public class AllUserProfileResponse {
+@XmlRootElement(name = "ListarAnuncioCriadosResponse")
+public class ListarAnuncioCriadosResponse {
 
-    protected boolean status;
     @XmlElement(required = true)
     protected String mensagem;
-    protected List<AllUserProfileResponse.Profile> profile;
-
-    /**
-     * Obtém o valor da propriedade status.
-     * 
-     */
-    public boolean isStatus() {
-        return status;
-    }
-
-    /**
-     * Define o valor da propriedade status.
-     * 
-     */
-    public void setStatus(boolean value) {
-        this.status = value;
-    }
+    protected boolean estado;
+    protected List<UserType> usuario;
+    protected ListarAnuncioCriadosResponse.Anuncios anuncios;
+    protected Long qtdAnuncio;
 
     /**
      * Obtém o valor da propriedade mensagem.
@@ -103,32 +93,96 @@ public class AllUserProfileResponse {
     }
 
     /**
-     * Gets the value of the profile property.
+     * Obtém o valor da propriedade estado.
+     * 
+     */
+    public boolean isEstado() {
+        return estado;
+    }
+
+    /**
+     * Define o valor da propriedade estado.
+     * 
+     */
+    public void setEstado(boolean value) {
+        this.estado = value;
+    }
+
+    /**
+     * Gets the value of the usuario property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the profile property.
+     * This is why there is not a <CODE>set</CODE> method for the usuario property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getProfile().add(newItem);
+     *    getUsuario().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link AllUserProfileResponse.Profile }
+     * {@link UserType }
      * 
      * 
      */
-    public List<AllUserProfileResponse.Profile> getProfile() {
-        if (profile == null) {
-            profile = new ArrayList<AllUserProfileResponse.Profile>();
+    public List<UserType> getUsuario() {
+        if (usuario == null) {
+            usuario = new ArrayList<UserType>();
         }
-        return this.profile;
+        return this.usuario;
+    }
+
+    /**
+     * Obtém o valor da propriedade anuncios.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ListarAnuncioCriadosResponse.Anuncios }
+     *     
+     */
+    public ListarAnuncioCriadosResponse.Anuncios getAnuncios() {
+        return anuncios;
+    }
+
+    /**
+     * Define o valor da propriedade anuncios.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ListarAnuncioCriadosResponse.Anuncios }
+     *     
+     */
+    public void setAnuncios(ListarAnuncioCriadosResponse.Anuncios value) {
+        this.anuncios = value;
+    }
+
+    /**
+     * Obtém o valor da propriedade qtdAnuncio.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Long }
+     *     
+     */
+    public Long getQtdAnuncio() {
+        return qtdAnuncio;
+    }
+
+    /**
+     * Define o valor da propriedade qtdAnuncio.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Long }
+     *     
+     */
+    public void setQtdAnuncio(Long value) {
+        this.qtdAnuncio = value;
     }
 
 
@@ -142,7 +196,7 @@ public class AllUserProfileResponse {
      *   &lt;complexContent&gt;
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
      *       &lt;sequence&gt;
-     *         &lt;element name="item" type="{http://user.soap.xml}ParChaveValorDTO" maxOccurs="unbounded"/&gt;
+     *         &lt;element name="anuncio" type="{http://anuncios.soap.xml}AnuncioType" maxOccurs="unbounded" minOccurs="0"/&gt;
      *       &lt;/sequence&gt;
      *     &lt;/restriction&gt;
      *   &lt;/complexContent&gt;
@@ -153,40 +207,39 @@ public class AllUserProfileResponse {
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "item"
+        "anuncio"
     })
-    public static class Profile {
+    public static class Anuncios {
 
-        @XmlElement(required = true)
-        protected List<ParChaveValorDTO> item;
+        protected List<AnuncioType> anuncio;
 
         /**
-         * Gets the value of the item property.
+         * Gets the value of the anuncio property.
          * 
          * <p>
          * This accessor method returns a reference to the live list,
          * not a snapshot. Therefore any modification you make to the
          * returned list will be present inside the JAXB object.
-         * This is why there is not a <CODE>set</CODE> method for the item property.
+         * This is why there is not a <CODE>set</CODE> method for the anuncio property.
          * 
          * <p>
          * For example, to add a new item, do as follows:
          * <pre>
-         *    getItem().add(newItem);
+         *    getAnuncio().add(newItem);
          * </pre>
          * 
          * 
          * <p>
          * Objects of the following type(s) are allowed in the list
-         * {@link ParChaveValorDTO }
+         * {@link AnuncioType }
          * 
          * 
          */
-        public List<ParChaveValorDTO> getItem() {
-            if (item == null) {
-                item = new ArrayList<ParChaveValorDTO>();
+        public List<AnuncioType> getAnuncio() {
+            if (anuncio == null) {
+                anuncio = new ArrayList<AnuncioType>();
             }
-            return this.item;
+            return this.anuncio;
         }
 
     }

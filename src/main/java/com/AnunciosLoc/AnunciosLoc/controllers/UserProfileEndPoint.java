@@ -42,7 +42,6 @@ public class UserProfileEndPoint {
         return response;
     }
 
-
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "EditUserProfileRequest")
     @ResponsePayload
     public EditUserProfileResponse editProfile(@RequestPayload EditUserProfileRequest request) {
@@ -57,8 +56,8 @@ public class UserProfileEndPoint {
 
     // @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AllUserProfileRequest")
     // @ResponsePayload
-    // public AllUserProfileResponse allUserProfile(@RequestPayload AllUserProfileRequest request) {
-    //     return  userProfileService.allUserProfile(request); // aqui os tipos batem
+    // public AllUserProfileResponse listaPerfil (@RequestPayload AllUserProfileRequest request) {
+    //     return userProfileService.listaPerfil(request); 
     // }
 
 }

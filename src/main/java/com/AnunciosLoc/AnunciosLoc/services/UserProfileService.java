@@ -30,7 +30,7 @@ public class UserProfileService {
 
     @Autowired
     private UserProfileRepository userProfileRepository;
-    
+
     @Autowired
     private UserRepository userRepository;
 
@@ -39,10 +39,9 @@ public class UserProfileService {
         this.userProfileRepository = userProfileRepository;
     }
 
-    
     public void addProfile(String usuarioId, List<InteresseType> interesses) {
         Optional<User> optionalUser = userRepository.findById(Long.valueOf(usuarioId));
-        
+
         if (!optionalUser.isPresent()) {
             throw new RuntimeException("Usuário não encontrado com o ID: " + usuarioId);
         }
@@ -57,8 +56,8 @@ public class UserProfileService {
 
             // Verifica se o interesse já existe
             Optional<UserProfile> interesseExistente = interessesExistentes.stream()
-                .filter(i -> i.getChave().equals("interesse") && i.getValor().equalsIgnoreCase(nomeInteresse))
-                .findFirst();
+                    .filter(i -> i.getChave().equals("interesse") && i.getValor().equalsIgnoreCase(nomeInteresse))
+                    .findFirst();
 
             if (interesse.isSelecionado()) {
                 // Se estiver selecionado e não existir, adicionar
@@ -173,38 +172,34 @@ public class UserProfileService {
         return response;
     }
 
-    // public AllUserProfileResponse allUserProfile(AllUserProfileRequest request) {
-    // AllUserProfileResponse response = new AllUserProfileResponse();
+// public AllUserProfileResponse listaPerfil(AllUserProfileRequest request) {
+//     AllUserProfileResponse response = new AllUserProfileResponse();
 
-    // try {
-    // Optional<User> user = userRepository.findById(request.getBody().getUserId());
+//     try {
+//         Optional<User> user = userRepository.findById(request.getBody().getUserId());
 
-    // if (user.isPresent()) {
-    // List<UserProfile> pares =
-    // userProfileRepository.findByUserId(user.get().getId());
+//         if (user.isPresent()) {
+//             List<UserProfile> pares = userProfileRepository.findByUserId(user.get().getId());
 
-    // for (UserProfile p : pares) {
-    // ParChaveValorDTO dto = new ParChaveValorDTO();
-    // dto.setChave(p.getChave());
-    // dto.setValor(p.getValor());
-    // profileWrapper.getItem().add(dto); // adiciona o item dentro da wrapper
-    // }
+//             for (UserProfile p : pares) {
+//                 InteresseType item = new InteresseType();
+//                 item.setNome(p.getValor());
+//                 item.setSelecionado(true); // ou false, dependendo da lógica
+//                 response.getPerfil().add(item);
+//             }
 
-    // // Adiciona a lista de Profile no response
-    // response.getProfile().add(profileWrapper);
+//             response.setStatus(true);
+//             response.setMensagem("Perfil carregado com sucesso.");
+//         } else {
+//             response.setStatus(false);
+//             response.setMensagem("Usuário não encontrado.");
+//         }
+//     } catch (Exception e) {
+//         response.setStatus(false);
+//         response.setMensagem("Erro ao carregar perfil: " + e.getMessage());
+//     }
 
-    // response.setStatus(true);
-    // response.setMensagem("Perfil carregado com sucesso.");
-    // } else {
-    // response.setStatus(false);
-    // response.setMensagem("Usuário não encontrado.");
-    // }
-    // } catch (Exception e) {
-    // response.setStatus(false);
-    // response.setMensagem("Erro ao carregar perfil: " + e.getMessage());
-    // }
-
-    // return response;
-    // }
+//     return response;
+// }
 
 }

@@ -20,6 +20,8 @@ import com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaEntregaRepository;
 import com.AnunciosLoc.AnunciosLoc.bd.user.User;
 import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
 import com.AnunciosLoc.AnunciosLoc.utils.anuncio.AnuncioUtil;
+import javax.xml.datatype.DatatypeFactory;
+import java.util.GregorianCalendar;
 
 import xml.soap.anuncios.*;
 
@@ -280,7 +282,7 @@ public class AnunciosService {
                 if (politica != null && politica.getCondicoes() != null && !politica.getCondicoes().isEmpty()) {
                     System.out.println("Verificando política de entrega: " + politica.getTitulo());
                     switch (politica.getTitulo()) {
-                        
+
                         case WHITELIST:
                             visivel = anuncioUtil.usuarioPertenceAWhiteList(userId, politica.getCondicoes());
                             break;
@@ -304,12 +306,12 @@ public class AnunciosService {
                     : "Anúncios disponíveis retornados com sucesso.");
             response.getAnuncios().addAll(anunciosDisponiveis);
 
-            if(!anunciosDisponiveis.isEmpty()){
+            if (!anunciosDisponiveis.isEmpty()) {
                 // Adiciona usuário
                 UserType userType = anuncioUtil.mapUserToUserType(user);
                 if (userType != null)
                     response.getUsuario().add(userType);
-    
+
                 // Adiciona local
                 response.getLocalType().add(anuncioUtil.mapLocalToLocalType(localDoUsuario));
             }
@@ -323,8 +325,7 @@ public class AnunciosService {
         return response;
     }
 
-
-     public RemoveAnuncioResponse removeAnuncio(RemoveAnuncioRequest request) {
+    public RemoveAnuncioResponse removeAnuncio(RemoveAnuncioRequest request) {
         RemoveAnuncioResponse response = new RemoveAnuncioResponse();
 
         long anuncioId = request.getBody().getId();
@@ -349,5 +350,89 @@ public class AnunciosService {
         }
 
         return response;
+    }
+
+    public ListarAnuncioCriadosResponse ListarAnuncioCriados(ListarAnuncioCriadosRequest request) {
+        ListarAnuncioCriadosResponse response = new ListarAnuncioCriadosResponse();
+        try {
+            Long userId = request.getBody().getUserId();
+            Optional<User> userOpt = userRepository.findById(userId);
+
+            if (!userOpt.isPresent()) {
+                response.setEstado(false);
+                response.setMensagem("Usuário não encontrado.");
+                return response;
+            }
+
+            User user = userOpt.get();
+
+            List<Anuncio> anuncios = anuncioRepository.findByUserIdWithRelations(userId);
+
+            if (anuncios.isEmpty()) {
+                response.setEstado(true);
+                response.setMensagem("O usuário não criou nenhum anúncio.");
+                response.setQtdAnuncio(0L);
+                return response;
+            }
+
+            // Montar resposta
+            ListarAnuncioCriadosResponse.Anuncios xmlAnuncios = new ListarAnuncioCriadosResponse.Anuncios();
+
+            for (Anuncio anuncio : anuncios) {
+                AnuncioType anuncioType = anuncioUtil.MapAnuncioType(anuncio);
+
+                // Mapear local
+                Local local = anuncio.getLocalizacao();
+                if (local != null) {
+                    LocalType localType = anuncioUtil.mapLocalToLocalType(local);
+                    anuncioType.setLocal(localType);
+                }
+
+                // Mapear política
+                PoliticaEntrega politica = anuncio.getPoliticaEntrega();
+                if (politica != null) {
+                    PoliticaEntregaType politicaType = mapPoliticaToType(politica);
+                    anuncioType.setPoliticaEntrega(politicaType);
+                }
+
+                xmlAnuncios.getAnuncio().add(anuncioType);
+            }
+
+            // Resposta final
+            UserType userType = anuncioUtil.mapUserToUserType(user);
+            if (userType != null) {
+                response.getUsuario().add(userType);
+            }
+
+            response.setAnuncios(xmlAnuncios);
+            response.setQtdAnuncio((long) xmlAnuncios.getAnuncio().size());
+            response.setMensagem("Anúncios carregados com sucesso.");
+            response.setEstado(true);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setEstado(false);
+            response.setMensagem("Erro ao listar anúncios: " + e.getMessage());
+        }
+        return response;
+    }
+
+    private PoliticaEntregaType mapPoliticaToType(PoliticaEntrega politica) {
+        if (politica == null)
+            return null;
+
+        PoliticaEntregaType type = new PoliticaEntregaType();
+        type.setTitulo(PoliticaTipo.valueOf(politica.getTitulo().name()));
+
+        if (politica.getCondicoes() != null) {
+            for (CondicaoPerfil condicao : politica.getCondicoes()) {
+                CondicaoPerfilType condType = new CondicaoPerfilType();
+                condType.getChave().add(condicao.getChave());
+                condType.getValor().add(condicao.getValor());
+                type.getCondicoes().add(condType);
+            }
+        }
+
+        return type;
     }
 }

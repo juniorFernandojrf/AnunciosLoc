@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.06.19 às 01:36:48 PM WAT 
+// Gerado em: 2025.06.20 às 09:56:59 PM WAT 
 //
 
 
@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="dataExpiracao" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="usuario" type="{http://anuncios.soap.xml}UserType" minOccurs="0"/&gt;
  *         &lt;element name="local" type="{http://anuncios.soap.xml}LocalType" minOccurs="0"/&gt;
- *         &lt;element name="anuncioId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/&gt;
+ *         &lt;element name="politicaEntrega" type="{http://anuncios.soap.xml}PoliticaEntregaType" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -49,7 +49,7 @@ import javax.xml.bind.annotation.XmlType;
     "dataExpiracao",
     "usuario",
     "local",
-    "anuncioId"
+    "politicaEntrega"
 })
 public class AnuncioType {
 
@@ -64,7 +64,7 @@ public class AnuncioType {
     protected String dataExpiracao;
     protected UserType usuario;
     protected LocalType local;
-    protected Long anuncioId;
+    protected PoliticaEntregaType politicaEntrega;
 
     /**
      * Obtém o valor da propriedade id.
@@ -227,27 +227,27 @@ public class AnuncioType {
     }
 
     /**
-     * Obtém o valor da propriedade anuncioId.
+     * Obtém o valor da propriedade politicaEntrega.
      * 
      * @return
      *     possible object is
-     *     {@link Long }
+     *     {@link PoliticaEntregaType }
      *     
      */
-    public Long getAnuncioId() {
-        return anuncioId;
+    public PoliticaEntregaType getPoliticaEntrega() {
+        return politicaEntrega;
     }
 
     /**
-     * Define o valor da propriedade anuncioId.
+     * Define o valor da propriedade politicaEntrega.
      * 
      * @param value
      *     allowed object is
-     *     {@link Long }
+     *     {@link PoliticaEntregaType }
      *     
      */
-    public void setAnuncioId(Long value) {
-        this.anuncioId = value;
+    public void setPoliticaEntrega(PoliticaEntregaType value) {
+        this.politicaEntrega = value;
     }
 
 }

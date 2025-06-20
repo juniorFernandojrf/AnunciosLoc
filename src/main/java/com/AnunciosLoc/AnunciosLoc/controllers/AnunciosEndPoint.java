@@ -41,4 +41,10 @@ public class AnunciosEndPoint {
         return this.anunciosService.removeAnuncio(request);
     }
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ListarAnuncioCriadosRequest")
+    @ResponsePayload
+    public ListarAnuncioCriadosResponse ListarAnuncioCriados(@RequestPayload ListarAnuncioCriadosRequest request) {        
+        return this.anunciosService.ListarAnuncioCriados(request);
+    }
+
 }
