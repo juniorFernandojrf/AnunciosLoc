@@ -3,8 +3,9 @@ package com.AnunciosLoc.AnunciosLoc.utils.conta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.AnunciosLoc.AnunciosLoc.bd.user.User;
-import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
+import com.AnunciosLoc.AnunciosLoc.bd.utilizador.Utilizador;
+import com.AnunciosLoc.AnunciosLoc.bd.utilizador.UtilizadorRepository;
+
 import xml.soap.conta.UsuarioConta;
 
 
@@ -12,9 +13,9 @@ import xml.soap.conta.UsuarioConta;
 public class ContaUtil {
     
     @Autowired
-    private UserRepository userRepository;
+    private UtilizadorRepository userRepository;
     
-    public UsuarioConta UsuarioDaConta(User user) {
+    public UsuarioConta UsuarioDaConta(Utilizador user) {
         if (user == null)
             return null;
 

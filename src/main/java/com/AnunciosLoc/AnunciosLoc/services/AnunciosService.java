@@ -12,13 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.AnunciosLoc.AnunciosLoc.bd.anuncio.Anuncio;
 import com.AnunciosLoc.AnunciosLoc.bd.anuncio.AnuncioRepository;
-import com.AnunciosLoc.AnunciosLoc.bd.condicaoPerfil.CondicaoPerfil;
+import com.AnunciosLoc.AnunciosLoc.bd.condicaoDePerfil.CondicaoDePerfil;
 import com.AnunciosLoc.AnunciosLoc.bd.local.Local;
 import com.AnunciosLoc.AnunciosLoc.bd.local.LocalRepository;
-import com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaEntrega;
-import com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaEntregaRepository;
-import com.AnunciosLoc.AnunciosLoc.bd.user.User;
-import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
+import com.AnunciosLoc.AnunciosLoc.bd.politicaDeEntrega.PoliticaDeEntrega;
+import com.AnunciosLoc.AnunciosLoc.bd.politicaDeEntrega.PoliticaDeEntregaRepository;
+import com.AnunciosLoc.AnunciosLoc.bd.utilizador.Utilizador;
+import com.AnunciosLoc.AnunciosLoc.bd.utilizador.UtilizadorRepository;
 import com.AnunciosLoc.AnunciosLoc.utils.anuncio.AnuncioUtil;
 
 import xml.soap.anuncios.*;
@@ -27,9 +27,9 @@ import xml.soap.anuncios.*;
 public class AnunciosService {
 
     private final AnuncioRepository anuncioRepository;
-    private final UserRepository userRepository;
+    private final UtilizadorRepository userRepository;
     private final LocalRepository localizacaoRepository;
-    private final PoliticaEntregaRepository politicaEntregaRepository;
+    private final PoliticaDeEntregaRepository politicaDeEntregaRepository;
 
     @Autowired
     private AnuncioUtil anuncioUtil;
@@ -39,12 +39,12 @@ public class AnunciosService {
 
     public AnunciosService(
             AnuncioRepository anuncioRepository,
-            UserRepository userRepository,
-            PoliticaEntregaRepository politicaEntregaRepository,
+            UtilizadorRepository userRepository,
+            PoliticaDeEntregaRepository politicaDeEntregaRepository,
             LocalRepository localizacaoRepository) {
         this.anuncioRepository = anuncioRepository;
         this.userRepository = userRepository;
-        this.politicaEntregaRepository = politicaEntregaRepository;
+        this.politicaDeEntregaRepository = politicaDeEntregaRepository;
         this.localizacaoRepository = localizacaoRepository;
     }
 
@@ -53,7 +53,7 @@ public class AnunciosService {
 
         try {
             // Validar usuário
-            Optional<User> userOptional = userRepository.findById(request.getBody().getUserId());
+            Optional<Utilizador> userOptional = userRepository.findById(request.getBody().getUserId());
             if (!userOptional.isPresent()) {
                 response.setStatus(false);
                 response.setMensagem("Usuário não encontrado.");
@@ -68,7 +68,7 @@ public class AnunciosService {
                 return response;
             }
 
-            User user = userOptional.get();
+            Utilizador user = userOptional.get();
             Local local = localOptional.get();
             LocalDateTime inicio = LocalDateTime.now();
 
@@ -97,18 +97,18 @@ public class AnunciosService {
 
             // Processar política de entrega
             List<PoliticaEntregaType> politicas = request.getBody().getPoliticaEntrega();
-            PoliticaEntregaType politicaEntregaType = (politicas != null && !politicas.isEmpty()) ? politicas.get(0)
+            PoliticaEntregaType politicaDeEntregaType = (politicas != null && !politicas.isEmpty()) ? politicas.get(0)
                     : null;
 
-            PoliticaEntrega politica = new PoliticaEntrega();
-            List<CondicaoPerfil> condicoes = new ArrayList<>();
+            PoliticaDeEntrega politica = new PoliticaDeEntrega();
+            List<CondicaoDePerfil> condicoes = new ArrayList<>();
             PoliticaTipo tipoPoliticaEnum = PoliticaTipo.WHITELIST; // padrão
 
             boolean temCondicaoValida = false;
 
-            if (politicaEntregaType != null) {
+            if (politicaDeEntregaType != null) {
 
-                String titulo = politicaEntregaType.getTitulo().name();
+                String titulo = politicaDeEntregaType.getTitulo().name();
                 try {
                     tipoPoliticaEnum = PoliticaTipo.valueOf(titulo.toUpperCase());
                 } catch (IllegalArgumentException e) {
@@ -118,10 +118,10 @@ public class AnunciosService {
                 }
 
                 politica.setTitulo(
-                        com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaTipo.valueOf(tipoPoliticaEnum.name()));
+                        com.AnunciosLoc.AnunciosLoc.bd.politicaDeEntrega.TipoDePoliticaEntrega.valueOf(tipoPoliticaEnum.name()));
 
-                if (politicaEntregaType.getCondicoes() != null) {
-                    for (CondicaoPerfilType cond : politicaEntregaType.getCondicoes()) {
+                if (politicaDeEntregaType.getCondicoes() != null) {
+                    for (CondicaoPerfilType cond : politicaDeEntregaType.getCondicoes()) {
                         List<String> chaves = cond.getChave();
                         List<String> valores = cond.getValor();
 
@@ -131,7 +131,7 @@ public class AnunciosService {
                                 !chaves.get(0).trim().isEmpty() &&
                                 !valores.get(0).trim().isEmpty()) {
 
-                            CondicaoPerfil cp = new CondicaoPerfil();
+                            CondicaoDePerfil cp = new CondicaoDePerfil();
                             cp.setChave(chaves.get(0));
                             cp.setValor(valores.get(0));
                             cp.setPoliticaEntrega(politica);
@@ -155,7 +155,7 @@ public class AnunciosService {
             } else {
 
                 tipoPoliticaEnum = PoliticaTipo.WHITELIST;
-                politica.setTitulo(com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaTipo
+                politica.setTitulo(com.AnunciosLoc.AnunciosLoc.bd.politicaDeEntrega.TipoDePoliticaEntrega
                         .valueOf(PoliticaTipo.WHITELIST.name()));
                 condicoes.clear(); // ← NENHUMA CONDIÇÃO
             }
@@ -170,12 +170,12 @@ public class AnunciosService {
             }
 
             politica.setCondicoes(condicoes);
-            politicaEntregaRepository.save(politica);
+            politicaDeEntregaRepository.save(politica);
 
             // Resposta - Política
             PoliticaEntregaType politicaResponse = new PoliticaEntregaType();
             politicaResponse.setTitulo(tipoPoliticaEnum);
-            for (CondicaoPerfil cp : condicoes) {
+            for (CondicaoDePerfil cp : condicoes) {
                 CondicaoPerfilType cpt = new CondicaoPerfilType();
                 if (cp.getChave() != null)
                     cpt.getChave().add(cp.getChave());
@@ -262,7 +262,7 @@ public class AnunciosService {
             Long localId = request.getBody().getLocalId();
 
             // Buscar usuário e local informado
-            Optional<User> optionalUser = userRepository.findById(userId);
+            Optional<Utilizador> optionalUser = userRepository.findById(userId);
             Optional<Local> optionalLocal = localizacaoRepository.findById(localId);
 
             if (!optionalUser.isPresent() || !optionalLocal.isPresent()) {
@@ -271,7 +271,7 @@ public class AnunciosService {
                 return response;
             }
 
-            User user = optionalUser.get();
+            Utilizador user = optionalUser.get();
             Local localDoUsuario = optionalLocal.get();
             LocalDateTime agora = LocalDateTime.now();
 
@@ -289,7 +289,7 @@ public class AnunciosService {
                 }
 
                 // Verifica política de entrega
-                PoliticaEntrega politica = anuncio.getPoliticaEntrega();
+                PoliticaDeEntrega politica = anuncio.getPoliticaEntrega();
                 boolean visivel = true;
 
                 if (politica != null && politica.getCondicoes() != null && !politica.getCondicoes().isEmpty()) {
@@ -370,7 +370,7 @@ public class AnunciosService {
 
         try {
             Long userId = request.getBody().getUserId();
-            Optional<User> userOpt = userRepository.findById(userId);
+            Optional<Utilizador> userOpt = userRepository.findById(userId);
 
             if (!userOpt.isPresent()) {
                 response.setEstado(false);
@@ -378,7 +378,7 @@ public class AnunciosService {
                 return response;
             }
 
-            User user = userOpt.get();
+            Utilizador user = userOpt.get();
 
             List<Anuncio> anuncios = anuncioRepository.findByUserIdWithRelations(userId);
 
@@ -404,7 +404,7 @@ public class AnunciosService {
                 }
 
                 // Mapear política
-                PoliticaEntrega politica = anuncio.getPoliticaEntrega();
+                PoliticaDeEntrega politica = anuncio.getPoliticaEntrega();
                 if (politica != null) {
                     PoliticaEntregaType politicaType = mapPoliticaToType(politica);
                     anuncioType.setPoliticaEntrega(politicaType);
@@ -432,7 +432,7 @@ public class AnunciosService {
         return response;
     }
 
-    private PoliticaEntregaType mapPoliticaToType(PoliticaEntrega politica) {
+    private PoliticaEntregaType mapPoliticaToType(PoliticaDeEntrega politica) {
         if (politica == null)
             return null;
 
@@ -440,7 +440,7 @@ public class AnunciosService {
         type.setTitulo(PoliticaTipo.valueOf(politica.getTitulo().name()));
 
         if (politica.getCondicoes() != null) {
-            for (CondicaoPerfil condicao : politica.getCondicoes()) {
+            for (CondicaoDePerfil condicao : politica.getCondicoes()) {
                 CondicaoPerfilType condType = new CondicaoPerfilType();
                 condType.getChave().add(condicao.getChave());
                 condType.getValor().add(condicao.getValor());

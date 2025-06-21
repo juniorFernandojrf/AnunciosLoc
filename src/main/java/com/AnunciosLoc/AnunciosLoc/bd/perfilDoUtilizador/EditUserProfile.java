@@ -1,4 +1,4 @@
-package com.AnunciosLoc.AnunciosLoc.bd.userProfile;
+package com.AnunciosLoc.AnunciosLoc.bd.perfilDoUtilizador;
 
 import java.io.Serializable;
 

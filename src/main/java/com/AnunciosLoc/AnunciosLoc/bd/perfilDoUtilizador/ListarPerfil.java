@@ -1,4 +1,4 @@
-package com.AnunciosLoc.AnunciosLoc.bd.userProfile;
+package com.AnunciosLoc.AnunciosLoc.bd.perfilDoUtilizador;
 import java.util.List;
 
 import lombok.AllArgsConstructor;

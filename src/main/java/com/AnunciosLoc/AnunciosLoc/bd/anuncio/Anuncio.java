@@ -4,8 +4,8 @@ import javax.persistence.*;
 
 import java.time.LocalDateTime;
 import com.AnunciosLoc.AnunciosLoc.bd.local.Local;
-import com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaEntrega;
-import com.AnunciosLoc.AnunciosLoc.bd.user.User;
+import com.AnunciosLoc.AnunciosLoc.bd.politicaDeEntrega.PoliticaDeEntrega;
+import com.AnunciosLoc.AnunciosLoc.bd.utilizador.Utilizador;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -45,13 +45,13 @@ public class Anuncio implements Serializable {
     @JoinColumn(name = "user_id")
     @JsonIgnore
     @ToString.Exclude
-    private User user;
+    private Utilizador user;
 
     @ManyToOne
     @JoinColumn(name = "local_id")
     private Local localizacao;
 
     @OneToOne(mappedBy = "anuncio", cascade = CascadeType.ALL)
-    private PoliticaEntrega politicaEntrega;
+    private PoliticaDeEntrega politicaEntrega;
 
 }

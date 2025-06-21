@@ -1,7 +1,9 @@
-package com.AnunciosLoc.AnunciosLoc.bd.userProfile;
+package com.AnunciosLoc.AnunciosLoc.bd.perfilDoUtilizador;
 
 import javax.persistence.*;
-import com.AnunciosLoc.AnunciosLoc.bd.user.User;
+
+import com.AnunciosLoc.AnunciosLoc.bd.utilizador.Utilizador;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,5 +33,5 @@ public class UserProfile implements Serializable{
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Utilizador user;
 }

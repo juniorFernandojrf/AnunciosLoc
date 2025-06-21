@@ -1,4 +1,4 @@
-package com.AnunciosLoc.AnunciosLoc.bd.user;
+package com.AnunciosLoc.AnunciosLoc.bd.utilizador;
 
 import javax.persistence.*;
 
@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class User implements Serializable{
+public class Utilizador implements Serializable{
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

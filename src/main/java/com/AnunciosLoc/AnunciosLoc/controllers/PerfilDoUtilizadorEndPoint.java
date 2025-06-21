@@ -7,7 +7,7 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import com.AnunciosLoc.AnunciosLoc.services.UserProfileService;
+import com.AnunciosLoc.AnunciosLoc.services.PerfilDoUtilizadorService;
 import xml.soap.user.ListarPerfilRequest;
 import xml.soap.user.ListarPerfilResponse;
 import xml.soap.user.UserProfileRequest;
@@ -19,14 +19,14 @@ import xml.soap.user.RemoveUserProfileResponse;
 
 @Endpoint
 @Component
-public class UserProfileEndPoint {
+public class PerfilDoUtilizadorEndPoint {
 
     private static final String NAMESPACE_URI = "http://user.soap.xml"; // Confira no WSDL
 
-    private final UserProfileService userProfileService;
+    private final PerfilDoUtilizadorService userProfileService;
 
     @Autowired
-    public UserProfileEndPoint(UserProfileService userProfileService) {
+    public PerfilDoUtilizadorEndPoint(PerfilDoUtilizadorService userProfileService) {
         this.userProfileService = userProfileService;
     }
 

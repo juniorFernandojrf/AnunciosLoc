@@ -2,7 +2,8 @@ package com.AnunciosLoc.AnunciosLoc.bd.session;
 
 import javax.persistence.*;
 
-import com.AnunciosLoc.AnunciosLoc.bd.user.User;
+import com.AnunciosLoc.AnunciosLoc.bd.utilizador.Utilizador;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,6 +27,6 @@ public class Session {
     protected String token;
     @OneToOne
     @JoinColumn(name = "user", unique = true)
-    protected User user;
+    protected Utilizador user;
 
 }

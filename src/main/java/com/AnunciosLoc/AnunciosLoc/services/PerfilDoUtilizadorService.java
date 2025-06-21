@@ -7,10 +7,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.AnunciosLoc.AnunciosLoc.bd.user.User;
-import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
-import com.AnunciosLoc.AnunciosLoc.bd.userProfile.UserProfile;
-import com.AnunciosLoc.AnunciosLoc.bd.userProfile.UserProfileRepository;
+import com.AnunciosLoc.AnunciosLoc.bd.perfilDoUtilizador.UserProfile;
+import com.AnunciosLoc.AnunciosLoc.bd.perfilDoUtilizador.UserProfileRepository;
+import com.AnunciosLoc.AnunciosLoc.bd.utilizador.Utilizador;
+import com.AnunciosLoc.AnunciosLoc.bd.utilizador.UtilizadorRepository;
 import com.AnunciosLoc.AnunciosLoc.utils.PerfilUtil;
 
 import xml.soap.user.EditUserProfileRequest;
@@ -23,27 +23,27 @@ import xml.soap.user.RemoveUserProfileRequest;
 import xml.soap.user.RemoveUserProfileResponse;
 
 @Service
-public class UserProfileService {
+public class PerfilDoUtilizadorService {
 
     @Autowired
     private UserProfileRepository userProfileRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UtilizadorRepository userRepository;
  
-    public UserProfileService(UserRepository userRepository, UserProfileRepository userProfileRepository) {
+    public PerfilDoUtilizadorService(UtilizadorRepository userRepository, UserProfileRepository userProfileRepository) {
         this.userRepository = userRepository;
         this.userProfileRepository = userProfileRepository;
     }
 
     public void addProfile(String usuarioId, List<InteresseType> interesses) {
-        Optional<User> optionalUser = userRepository.findById(Long.valueOf(usuarioId));
+        Optional<Utilizador> optionalUser = userRepository.findById(Long.valueOf(usuarioId));
 
         if (!optionalUser.isPresent()) {
             throw new RuntimeException("Usuário não encontrado com o ID: " + usuarioId);
         }
 
-        User user = optionalUser.get();
+        Utilizador user = optionalUser.get();
 
         // Buscar todos os interesses atuais do usuário
         List<UserProfile> interessesExistentes = userProfileRepository.findByUser(user);
@@ -78,13 +78,13 @@ public class UserProfileService {
 
         try {
             // Busca o usuário
-            Optional<User> userOptional = userRepository.findById(request.getBody().getUserId());
+            Optional<Utilizador> userOptional = userRepository.findById(request.getBody().getUserId());
             if (!userOptional.isPresent()) {
                 response.setMensagem("Usuário não encontrado.");
                 response.setStatus(false);
                 return response;
             }
-            User user = userOptional.get();
+            Utilizador user = userOptional.get();
 
             // Busca o par chave-valor antigo do utilizador
             Optional<UserProfile> perfilOptional = userProfileRepository.findByUserAndChave(user,
@@ -135,7 +135,7 @@ public class UserProfileService {
 
         try {
             // Buscar o usuário
-            Optional<User> userOptional = userRepository.findById(request.getBody().getUserId());
+            Optional<Utilizador> userOptional = userRepository.findById(request.getBody().getUserId());
 
             if (!userOptional.isPresent()) {
                 response.setMensagem("Usuário não encontrado.");
@@ -143,7 +143,7 @@ public class UserProfileService {
                 return response;
             }
 
-            User user = userOptional.get();
+            Utilizador user = userOptional.get();
 
             // Buscar o par chave-valor
             Optional<UserProfile> perfilOptional = userProfileRepository.findByUserAndChave(user,
@@ -174,7 +174,7 @@ public class UserProfileService {
 
         try {
             Long userId = request.getBody().getUserId();
-            Optional<User> userOpt = userRepository.findById(userId);
+            Optional<Utilizador> userOpt = userRepository.findById(userId);
 
             if (!userOpt.isPresent()) {
                 response.setStatus(false);
@@ -182,7 +182,7 @@ public class UserProfileService {
                 return response;
             }
 
-            User user = userOpt.get();
+            Utilizador user = userOpt.get();
             List<UserProfile> perfilList = userProfileRepository.findByUserId(user.getId());
 
             // verificar se perfilList está vazio

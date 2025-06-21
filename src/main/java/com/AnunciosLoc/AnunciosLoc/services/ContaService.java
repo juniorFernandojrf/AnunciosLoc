@@ -2,8 +2,8 @@ package com.AnunciosLoc.AnunciosLoc.services;
 
 import com.AnunciosLoc.AnunciosLoc.bd.conta.Conta;
 import com.AnunciosLoc.AnunciosLoc.bd.conta.ContaRepository;
-import com.AnunciosLoc.AnunciosLoc.bd.user.User;
-import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
+import com.AnunciosLoc.AnunciosLoc.bd.utilizador.Utilizador;
+import com.AnunciosLoc.AnunciosLoc.bd.utilizador.UtilizadorRepository;
 
 import xml.soap.conta.ConsultarSaldoRequest;
 import xml.soap.conta.ConsultarSaldoResponse;
@@ -24,7 +24,7 @@ public class ContaService {
     private ContaRepository contaRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UtilizadorRepository userRepository;
 
     @Autowired
     private ContaUtil contaUtil;
@@ -35,7 +35,7 @@ public class ContaService {
     Long userId = request.getBody().getUserId();
 
     Optional<Conta> contaOpt = contaRepository.findByUserId(userId);
-    Optional<User> userOptional = userRepository.findById(userId);
+    Optional<Utilizador> userOptional = userRepository.findById(userId);
 
     // Verifica se a conta e o usuário existem
     System.out.println("Consultando saldo para o usuário com ID: " + userId);
@@ -44,7 +44,7 @@ public class ContaService {
 
     if (contaOpt.isPresent() && userOptional.isPresent()) {
         Conta conta = contaOpt.get();
-        User user = userOptional.get();
+        Utilizador user = userOptional.get();
 
         response.setStatus(true);
         response.setMensagem("Saldo recuperado com sucesso.");
@@ -61,7 +61,7 @@ public class ContaService {
 }
     // Função para criar uma conta
     public boolean criarConta(Long userId, String titular) {
-        Optional<User> userOpt = userRepository.findById(userId);
+        Optional<Utilizador> userOpt = userRepository.findById(userId);
 
         if (userOpt.isPresent()) {
             Conta contaExistente = contaRepository.findByUserId(userId).orElse(null);

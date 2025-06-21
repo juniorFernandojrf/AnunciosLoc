@@ -7,8 +7,8 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
-import com.AnunciosLoc.AnunciosLoc.services.UserProfileService;
-import com.AnunciosLoc.AnunciosLoc.services.UserService;
+import com.AnunciosLoc.AnunciosLoc.services.PerfilDoUtilizadorService;
+import com.AnunciosLoc.AnunciosLoc.services.UtilizadorService;
 import com.AnunciosLoc.AnunciosLoc.services.ContaService;
 
 import xml.soap.conta.ConsultarSaldoRequest;

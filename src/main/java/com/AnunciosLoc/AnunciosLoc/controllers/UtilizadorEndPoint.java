@@ -7,22 +7,22 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import com.AnunciosLoc.AnunciosLoc.services.UserProfileService;
-import com.AnunciosLoc.AnunciosLoc.services.UserService;
+import com.AnunciosLoc.AnunciosLoc.services.PerfilDoUtilizadorService;
+import com.AnunciosLoc.AnunciosLoc.services.UtilizadorService;
 
 import xml.soap.user.*;
 
 @Endpoint
 @Component
-public class UserEndPoint {
+public class UtilizadorEndPoint {
 
     private static final String NAMESPACE_URI = "http://user.soap.xml";
 
     @Autowired
-    private final UserService userService;
+    private final UtilizadorService userService;
 
 
-    public UserEndPoint(UserService userService, UserProfileService userProfileService) {
+    public UtilizadorEndPoint(UtilizadorService userService, PerfilDoUtilizadorService userProfileService) {
         this.userService = userService;
     }
 

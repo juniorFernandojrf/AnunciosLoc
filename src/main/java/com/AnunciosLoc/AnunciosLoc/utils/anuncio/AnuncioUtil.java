@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.AnunciosLoc.AnunciosLoc.bd.anuncio.Anuncio;
-import com.AnunciosLoc.AnunciosLoc.bd.condicaoPerfil.CondicaoPerfil;
+import com.AnunciosLoc.AnunciosLoc.bd.condicaoDePerfil.CondicaoDePerfil;
 import com.AnunciosLoc.AnunciosLoc.bd.local.Local;
-import com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaEntrega;
-import com.AnunciosLoc.AnunciosLoc.bd.user.User;
-import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
-import com.AnunciosLoc.AnunciosLoc.bd.userProfile.UserProfile;
-import com.AnunciosLoc.AnunciosLoc.bd.userProfile.UserProfileRepository;
+import com.AnunciosLoc.AnunciosLoc.bd.perfilDoUtilizador.UserProfile;
+import com.AnunciosLoc.AnunciosLoc.bd.perfilDoUtilizador.UserProfileRepository;
+import com.AnunciosLoc.AnunciosLoc.bd.politicaDeEntrega.PoliticaDeEntrega;
+import com.AnunciosLoc.AnunciosLoc.bd.utilizador.Utilizador;
+import com.AnunciosLoc.AnunciosLoc.bd.utilizador.UtilizadorRepository;
 
 import xml.soap.anuncios.AnuncioType;
 import xml.soap.anuncios.CondicaoPerfilType;
@@ -26,15 +26,15 @@ import xml.soap.anuncios.PoliticaTipo; // <-- Adicione esta linha
 public class AnuncioUtil {
 
     @Autowired
-    private UserRepository userRepository;
+    private UtilizadorRepository userRepository;
 
     @Autowired
     private UserProfileRepository userProfileRepository;
 
-    public boolean usuarioPertenceAWhiteList(Long userId, List<CondicaoPerfil> condicoes) {
+    public boolean usuarioPertenceAWhiteList(Long userId, List<CondicaoDePerfil> condicoes) {
         List<UserProfile> perfis = userProfileRepository.findByUserId(userId);
 
-        for (CondicaoPerfil cond : condicoes) {
+        for (CondicaoDePerfil cond : condicoes) {
             String valor = cond.getValor();
 
             boolean encontrado = perfis.stream()
@@ -52,8 +52,8 @@ public class AnuncioUtil {
      * blacklist.
      * Retorna TRUE se o usuário deve ser bloqueado.
      */
-    public boolean usuarioEstaNaBlacklist(Long userId, List<CondicaoPerfil> condicoes) {
-        Optional<User> optionalUser = userRepository.findById(userId);
+    public boolean usuarioEstaNaBlacklist(Long userId, List<CondicaoDePerfil> condicoes) {
+        Optional<Utilizador> optionalUser = userRepository.findById(userId);
 
         if (!optionalUser.isPresent()) {
             System.out.println("Usuário com ID " + userId + " não encontrado.");
@@ -67,7 +67,7 @@ public class AnuncioUtil {
             return false; // Sem perfil → não bloqueia
         }
 
-        for (CondicaoPerfil cond : condicoes) {
+        for (CondicaoDePerfil cond : condicoes) {
             String valor = cond.getValor();
 
             boolean encontrado = perfis.stream()
@@ -80,7 +80,7 @@ public class AnuncioUtil {
         return false; // Não achou nenhuma → pode ver
     }
 
-    public UserType mapUserToUserType(User user) {
+    public UserType mapUserToUserType(Utilizador user) {
         if (user == null)
             return null;
 
@@ -129,14 +129,14 @@ public class AnuncioUtil {
         return localType;
     }
 
-    public PoliticaEntregaType mapPoliticaToType(PoliticaEntrega politica) {
+    public PoliticaEntregaType mapPoliticaToType(PoliticaDeEntrega politica) {
     if (politica == null) return null;
 
     PoliticaEntregaType type = new PoliticaEntregaType();
     type.setTitulo(PoliticaTipo.valueOf(politica.getTitulo().name()));
 
     if (politica.getCondicoes() != null) {
-        for (CondicaoPerfil condicao : politica.getCondicoes()) {
+        for (CondicaoDePerfil condicao : politica.getCondicoes()) {
             CondicaoPerfilType condType = new CondicaoPerfilType();
             condType.getChave().add(condicao.getChave());
             condType.getValor().add(condicao.getValor());

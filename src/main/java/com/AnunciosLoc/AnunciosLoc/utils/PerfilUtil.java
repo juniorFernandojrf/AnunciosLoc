@@ -2,9 +2,10 @@ package com.AnunciosLoc.AnunciosLoc.utils;
 
 import org.springframework.stereotype.Component;
 
+import com.AnunciosLoc.AnunciosLoc.bd.perfilDoUtilizador.ParChaveValorDTO;
+
 import xml.soap.user.AllUserProfileResponse;
 import xml.soap.user.ParChaveValorType;
-import com.AnunciosLoc.AnunciosLoc.bd.userProfile.ParChaveValorDTO;
 
 import java.util.List;
 import java.util.ArrayList;

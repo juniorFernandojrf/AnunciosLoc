@@ -1,8 +1,8 @@
-package com.AnunciosLoc.AnunciosLoc.bd.condicaoPerfil;
+package com.AnunciosLoc.AnunciosLoc.bd.condicaoDePerfil;
 
 import javax.persistence.*;
 
-import com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaEntrega;
+import com.AnunciosLoc.AnunciosLoc.bd.politicaDeEntrega.PoliticaDeEntrega;
 
 import lombok.*;
 
@@ -10,10 +10,10 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "condicao_perfil")
+@Table(name = "condicao_de_perfil")
 @NoArgsConstructor
 @AllArgsConstructor
-public class CondicaoPerfil implements Serializable {
+public class CondicaoDePerfil implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,7 +27,7 @@ public class CondicaoPerfil implements Serializable {
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "politica_entrega_id")
-    private PoliticaEntrega politicaEntrega;
+    @JoinColumn(name = "politica_de_entrega_id")
+    private PoliticaDeEntrega politicaEntrega;
 
 }
