@@ -11,7 +11,6 @@ import com.AnunciosLoc.AnunciosLoc.bd.perfilDoUtilizador.UserProfile;
 import com.AnunciosLoc.AnunciosLoc.bd.perfilDoUtilizador.UserProfileRepository;
 import com.AnunciosLoc.AnunciosLoc.bd.utilizador.Utilizador;
 import com.AnunciosLoc.AnunciosLoc.bd.utilizador.UtilizadorRepository;
-import com.AnunciosLoc.AnunciosLoc.utils.PerfilUtil;
 
 import xml.soap.user.EditUserProfileRequest;
 import xml.soap.user.EditUserProfileResponse;
