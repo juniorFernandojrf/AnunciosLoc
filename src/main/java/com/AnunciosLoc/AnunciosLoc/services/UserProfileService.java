@@ -14,12 +14,14 @@ import com.AnunciosLoc.AnunciosLoc.bd.userProfile.AllUserProfileResponse;
 import com.AnunciosLoc.AnunciosLoc.bd.userProfile.ParChaveValorDTO;
 import com.AnunciosLoc.AnunciosLoc.bd.userProfile.UserProfile;
 import com.AnunciosLoc.AnunciosLoc.bd.userProfile.UserProfileRepository;
+import com.AnunciosLoc.AnunciosLoc.utils.PerfilUtil;
 import com.ctc.wstx.ent.IntEntity;
 
 import xml.soap.user.AllUserProfileRequest;
 import xml.soap.user.EditUserProfileRequest;
 import xml.soap.user.EditUserProfileResponse;
 import xml.soap.user.InteresseType;
+import xml.soap.user.ParChaveValorType;
 import xml.soap.user.RemoveUserProfileRequest;
 import xml.soap.user.RemoveUserProfileResponse;
 import xml.soap.user.UserProfileRequest;
@@ -33,6 +35,9 @@ public class UserProfileService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PerfilUtil perfilUtil;
 
     public UserProfileService(UserRepository userRepository, UserProfileRepository userProfileRepository) {
         this.userRepository = userRepository;
@@ -172,33 +177,37 @@ public class UserProfileService {
         return response;
     }
 
-// public AllUserProfileResponse listaPerfil(AllUserProfileRequest request) {
+//    public AllUserProfileResponse listaPerfil(AllUserProfileRequest request) {
 //     AllUserProfileResponse response = new AllUserProfileResponse();
-
 //     try {
-//         Optional<User> user = userRepository.findById(request.getBody().getUserId());
+//         Long userId = request.getBody().getUserId();
+//         Optional<User> userOpt = userRepository.findById(userId);
 
-//         if (user.isPresent()) {
-//             List<UserProfile> pares = userProfileRepository.findByUserId(user.get().getId());
-
-//             for (UserProfile p : pares) {
-//                 InteresseType item = new InteresseType();
-//                 item.setNome(p.getValor());
-//                 item.setSelecionado(true); // ou false, dependendo da lógica
-//                 response.getPerfil().add(item);
-//             }
-
-//             response.setStatus(true);
-//             response.setMensagem("Perfil carregado com sucesso.");
-//         } else {
+//         if (!userOpt.isPresent()) {
 //             response.setStatus(false);
 //             response.setMensagem("Usuário não encontrado.");
+//             return response;
 //         }
+
+//         User user = userOpt.get();
+//         List<UserProfile> perfilList = userProfileRepository.findByUserId(user.getId());
+
+//         // Mapeie os dados do banco para a resposta SOAP diretamente
+//         for (UserProfile p : perfilList) {
+//             ParChaveValorType perfilItem = new ParChaveValorType();
+//             perfilItem.setChave(p.getChave());
+//             perfilItem.setValor(p.getValor());
+//             response.getPerfil().add(perfilItem); // Usa getPerfil() que inicializa automaticamente
+//         }
+
+//         response.setStatus(true);
+//         response.setMensagem("Perfil carregado com sucesso.");
+
 //     } catch (Exception e) {
+//         e.printStackTrace();
 //         response.setStatus(false);
 //         response.setMensagem("Erro ao carregar perfil: " + e.getMessage());
 //     }
-
 //     return response;
 // }
 

@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.06.20 às 09:56:59 PM WAT 
+// Gerado em: 2025.06.21 às 05:12:54 PM WAT 
 //
 
 
@@ -11,17 +11,16 @@ package xml.soap.user;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Classe Java de anonymous complex type.
+ * <p>Classe Java de AllUserProfileRequest complex type.
  * 
  * <p>O seguinte fragmento do esquema especifica o conteúdo esperado contido dentro desta classe.
  * 
  * <pre>
- * &lt;complexType&gt;
+ * &lt;complexType name="AllUserProfileRequest"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
@@ -46,11 +45,10 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
+@XmlType(name = "AllUserProfileRequest", propOrder = {
     "header",
     "body"
 })
-@XmlRootElement(name = "AllUserProfileRequest")
 public class AllUserProfileRequest {
 
     @XmlElement(name = "Header", required = true)

@@ -1,9 +1,6 @@
 package com.AnunciosLoc.AnunciosLoc.bd.userProfile;
 
 import javax.persistence.*;
-import javax.xml.datatype.XMLGregorianCalendar;
-
-import com.AnunciosLoc.AnunciosLoc.bd.local.Local;
 import com.AnunciosLoc.AnunciosLoc.bd.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

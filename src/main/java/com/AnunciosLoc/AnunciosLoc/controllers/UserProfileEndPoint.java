@@ -8,9 +8,7 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.AnunciosLoc.AnunciosLoc.services.UserProfileService;
-
-import xml.soap.user.AllUserProfileRequest;
-import xml.soap.user.AllUserProfileResponse;
+import com.AnunciosLoc.AnunciosLoc.utils.PerfilUtil;
 import xml.soap.user.EditUserProfileRequest;
 import xml.soap.user.EditUserProfileResponse;
 import xml.soap.user.RemoveUserProfileRequest;
@@ -26,6 +24,9 @@ public class UserProfileEndPoint {
 
     @Autowired
     private final UserProfileService userProfileService;
+
+    @Autowired
+    private PerfilUtil userProfileUtil;
 
     public UserProfileEndPoint(UserProfileService userProfileService) {
         this.userProfileService = userProfileService;
@@ -56,7 +57,7 @@ public class UserProfileEndPoint {
 
     // @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AllUserProfileRequest")
     // @ResponsePayload
-    // public AllUserProfileResponse listaPerfil (@RequestPayload AllUserProfileRequest request) {
+    // public AllUserProfileResponse listaPerfil(@RequestPayload AllUserProfileRequest request) {
     //     return userProfileService.listaPerfil(request); 
     // }
 

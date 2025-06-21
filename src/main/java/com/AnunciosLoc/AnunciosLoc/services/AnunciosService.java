@@ -20,8 +20,6 @@ import com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaEntregaRepository;
 import com.AnunciosLoc.AnunciosLoc.bd.user.User;
 import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
 import com.AnunciosLoc.AnunciosLoc.utils.anuncio.AnuncioUtil;
-import javax.xml.datatype.DatatypeFactory;
-import java.util.GregorianCalendar;
 
 import xml.soap.anuncios.*;
 
@@ -35,6 +33,9 @@ public class AnunciosService {
 
     @Autowired
     private AnuncioUtil anuncioUtil;
+
+    @Autowired
+    ContaService contaService;
 
     public AnunciosService(
             AnuncioRepository anuncioRepository,
@@ -159,17 +160,7 @@ public class AnunciosService {
                 condicoes.clear(); // ← NENHUMA CONDIÇÃO
             }
 
-            // Criar anúncio
-            Anuncio anuncio = new Anuncio();
-            anuncio.setTitulo(request.getBody().getTitulo());
-            anuncio.setDescricao(request.getBody().getDescricao());
-            anuncio.setDataInicio(inicio);
-            anuncio.setDataExpiracao(expiracao);
-            anuncio.setUser(user);
-            anuncio.setLocalizacao(local);
-            anuncio = anuncioRepository.save(anuncio);
-
-            politica.setAnuncio(anuncio);
+            
 
             // Verificação da política DEPOIS de extrair os dados
             if (tipoPoliticaEnum == PoliticaTipo.BLACKLIST && !temCondicaoValida) {
@@ -192,7 +183,29 @@ public class AnunciosService {
                     cpt.getValor().add(cp.getValor());
                 politicaResponse.getCondicoes().add(cpt);
             }
+
+            // Criar anúncio
+            Anuncio anuncio = new Anuncio();
+            anuncio.setTitulo(request.getBody().getTitulo());
+            anuncio.setDescricao(request.getBody().getDescricao());
+            anuncio.setDataInicio(inicio);
+            anuncio.setDataExpiracao(expiracao);
+            anuncio.setUser(user);
+            anuncio.setLocalizacao(local);
+            anuncio = anuncioRepository.save(anuncio);
+
+            politica.setAnuncio(anuncio);
             response.setPolitiEntrega(politicaResponse);
+
+            boolean contaCriada = contaService.adicionarSaldo(user.getId(), 2.0); 
+
+            if (!contaCriada) {
+                response.setStatus(false);
+                response.setMensagem("Erro ao adicionar saldo à conta do usuário.");
+                return response;
+            }else {
+                response.setMensagem("Saldo adicionado com sucesso à conta do usuário.");
+            }
 
             // Resposta - Usuário
             UserType userType = new UserType();

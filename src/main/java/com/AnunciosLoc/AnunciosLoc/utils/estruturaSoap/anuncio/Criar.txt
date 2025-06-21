@@ -1,9 +1,6 @@
 http://localhost:8080/ws/anuncios.wsdl
 
 
-
-
-
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
                   xmlns:anuncios="http://anuncios.soap.xml">
    <soapenv:Header/>
@@ -14,14 +11,14 @@ http://localhost:8080/ws/anuncios.wsdl
          </anuncios:Header>
          <anuncios:Body>
             <anuncios:titulo>Anúncio Especial</anuncios:titulo>
-            <anuncios:descricao>Anúncio Whitelist COm condicao </anuncios:descricao>
+            <anuncios:descricao>Anúncio BLACKLIST COm condicao </anuncios:descricao>
             <anuncios:dataExpiracao>2025-09-01T10:00:00</anuncios:dataExpiracao>
             <anuncios:userId>1</anuncios:userId>
             <anuncios:localId>5</anuncios:localId>
 
             <!-- Política de entrega -->
             <anuncios:politicaEntrega>
-               <anuncios:titulo>WHITELIST</anuncios:titulo>
+               <anuncios:titulo>BLACKLIST</anuncios:titulo>
 
                <!-- Lista de condições -->
                <anuncios:condicoes>

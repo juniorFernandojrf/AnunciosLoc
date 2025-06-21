@@ -2,13 +2,16 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.06.20 às 09:56:59 PM WAT 
+// Gerado em: 2025.06.21 às 05:12:54 PM WAT 
 //
 
 
 package xml.soap.user;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
+import javax.xml.namespace.QName;
 
 
 /**
@@ -28,6 +31,7 @@ import javax.xml.bind.annotation.XmlRegistry;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _AllUserProfileResponse_QNAME = new QName("http://user.soap.xml", "AllUserProfileResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: xml.soap.user
@@ -61,27 +65,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AllUserProfileRequest }
-     * 
-     */
-    public AllUserProfileRequest createAllUserProfileRequest() {
-        return new AllUserProfileRequest();
-    }
-
-    /**
-     * Create an instance of {@link AllUserProfileResponse }
-     * 
-     */
-    public AllUserProfileResponse createAllUserProfileResponse() {
-        return new AllUserProfileResponse();
-    }
-
-    /**
      * Create an instance of {@link RemoveUserProfileRequest }
      * 
      */
     public RemoveUserProfileRequest createRemoveUserProfileRequest() {
         return new RemoveUserProfileRequest();
+    }
+
+    /**
+     * Create an instance of {@link AllUserProfileRequest }
+     * 
+     */
+    public AllUserProfileRequest createAllUserProfileRequest() {
+        return new AllUserProfileRequest();
     }
 
     /**
@@ -213,19 +209,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AllUserProfileRequest.Body }
+     * Create an instance of {@link AllUserProfileResponse }
      * 
      */
-    public AllUserProfileRequest.Body createAllUserProfileRequestBody() {
-        return new AllUserProfileRequest.Body();
-    }
-
-    /**
-     * Create an instance of {@link AllUserProfileResponse.Profile }
-     * 
-     */
-    public AllUserProfileResponse.Profile createAllUserProfileResponseProfile() {
-        return new AllUserProfileResponse.Profile();
+    public AllUserProfileResponse createAllUserProfileResponse() {
+        return new AllUserProfileResponse();
     }
 
     /**
@@ -253,11 +241,28 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ParChaveValorDTO }
+     * Create an instance of {@link ParChaveValorType }
      * 
      */
-    public ParChaveValorDTO createParChaveValorDTO() {
-        return new ParChaveValorDTO();
+    public ParChaveValorType createParChaveValorType() {
+        return new ParChaveValorType();
+    }
+
+    /**
+     * Create an instance of {@link AllUserProfileRequest.Body }
+     * 
+     */
+    public AllUserProfileRequest.Body createAllUserProfileRequestBody() {
+        return new AllUserProfileRequest.Body();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AllUserProfileResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://user.soap.xml", name = "AllUserProfileResponse")
+    public JAXBElement<AllUserProfileResponse> createAllUserProfileResponse(AllUserProfileResponse value) {
+        return new JAXBElement<AllUserProfileResponse>(_AllUserProfileResponse_QNAME, AllUserProfileResponse.class, null, value);
     }
 
 }

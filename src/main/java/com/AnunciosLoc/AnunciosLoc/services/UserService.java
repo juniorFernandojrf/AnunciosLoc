@@ -3,16 +3,10 @@ package com.AnunciosLoc.AnunciosLoc.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.ws.server.endpoint.annotation.Endpoint;
-import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
-import org.springframework.ws.server.endpoint.annotation.RequestPayload;
-import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.AnunciosLoc.AnunciosLoc.bd.user.User;
 import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
-// import com.AnunciosLoc.AnunciosLoc.bd.user_profile.UserRepository;
 import com.AnunciosLoc.AnunciosLoc.utils.HashPassword;
 
 import xml.soap.user.*;
@@ -23,6 +17,8 @@ public class UserService {
     @Autowired(required = true)
     private UserRepository userRepository;
 
+    @Autowired
+    ContaService contaService;
     
     public UserResponse addUser(AddUserRequest request) {
         UserResponse response = new UserResponse();
@@ -40,6 +36,19 @@ public class UserService {
             user.setDatanascimento(request.getBody().getDatanascimento());
 
             userRepository.save(user); // Salvar na BD
+
+            // Criar conta para o usuário
+            boolean contaCriada = contaService.criarConta(user.getId(), user.getUsername());
+            
+            // Verificar se a conta foi criada com sucesso
+            if (!contaCriada) {
+                response.setMensagem("Conta já existe para este usuário.");
+                response.setEstado(false);
+                return response;
+            }else {
+                response.setMensagem("Conta criada com sucesso para o usuário: " + user.getUsername());
+            }
+
             response.setMensagem("Usuário cadastrado com sucesso.");
             System.out.println("Usuario Cadastrado com Sucesso" + user);
             response.setEstado(true);
