@@ -367,6 +367,7 @@ public class AnunciosService {
 
     public ListarAnuncioCriadosResponse ListarAnuncioCriados(ListarAnuncioCriadosRequest request) {
         ListarAnuncioCriadosResponse response = new ListarAnuncioCriadosResponse();
+
         try {
             Long userId = request.getBody().getUserId();
             Optional<User> userOpt = userRepository.findById(userId);
@@ -392,6 +393,7 @@ public class AnunciosService {
             ListarAnuncioCriadosResponse.Anuncios xmlAnuncios = new ListarAnuncioCriadosResponse.Anuncios();
 
             for (Anuncio anuncio : anuncios) {
+                
                 AnuncioType anuncioType = anuncioUtil.MapAnuncioType(anuncio);
 
                 // Mapear local

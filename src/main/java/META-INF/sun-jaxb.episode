@@ -5,7 +5,7 @@
 Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-Gerado em: 2025.06.21 às 05:12:54 PM WAT 
+Gerado em: 2025.06.21 às 09:19:46 PM WAT 
 
   -->
   <bindings scd="x-schema::tns" xmlns:tns="http://anuncios.soap.xml">
@@ -185,17 +185,11 @@ Gerado em: 2025.06.21 às 05:12:54 PM WAT
     <bindings scd="tns:EditUserProfileRequest">
       <class ref="xml.soap.user.EditUserProfileRequest"/>
     </bindings>
+    <bindings scd="tns:ListarPerfilRequest">
+      <class ref="xml.soap.user.ListarPerfilRequest"/>
+    </bindings>
     <bindings scd="tns:RemoveUserProfileRequest">
       <class ref="xml.soap.user.RemoveUserProfileRequest"/>
-    </bindings>
-    <bindings scd="~tns:AllUserProfileRequest">
-      <class ref="xml.soap.user.AllUserProfileRequest"/>
-    </bindings>
-    <bindings scd="tns:LogoutRequest">
-      <class ref="xml.soap.user.LogoutRequest"/>
-    </bindings>
-    <bindings scd="tns:LogoutResponse">
-      <class ref="xml.soap.user.LogoutResponse"/>
     </bindings>
     <bindings scd="tns:ValidateTokenRequest">
       <class ref="xml.soap.user.ValidateTokenRequest"/>
@@ -208,6 +202,12 @@ Gerado em: 2025.06.21 às 05:12:54 PM WAT
     </bindings>
     <bindings scd="tns:LoginResponse">
       <class ref="xml.soap.user.LoginResponse"/>
+    </bindings>
+    <bindings scd="tns:LogoutRequest">
+      <class ref="xml.soap.user.LogoutRequest"/>
+    </bindings>
+    <bindings scd="tns:LogoutResponse">
+      <class ref="xml.soap.user.LogoutResponse"/>
     </bindings>
     <bindings scd="tns:UserResponse">
       <class ref="xml.soap.user.UserResponse"/>
@@ -230,17 +230,17 @@ Gerado em: 2025.06.21 às 05:12:54 PM WAT
     <bindings scd="tns:EditUserProfileResponse">
       <class ref="xml.soap.user.EditUserProfileResponse"/>
     </bindings>
-    <bindings scd="~tns:AllUserProfileResponse">
-      <class ref="xml.soap.user.AllUserProfileResponse"/>
-    </bindings>
-    <bindings scd="tns:RemoveUserProfileResponse">
-      <class ref="xml.soap.user.RemoveUserProfileResponse"/>
+    <bindings scd="tns:ListarPerfilResponse">
+      <class ref="xml.soap.user.ListarPerfilResponse"/>
     </bindings>
     <bindings scd="~tns:UserType">
       <class ref="xml.soap.user.UserType"/>
     </bindings>
     <bindings scd="~tns:ParChaveValorType">
       <class ref="xml.soap.user.ParChaveValorType"/>
+    </bindings>
+    <bindings scd="tns:RemoveUserProfileResponse">
+      <class ref="xml.soap.user.RemoveUserProfileResponse"/>
     </bindings>
   </bindings>
   <bindings scd="x-schema::tns" xmlns:tns="http://interesses.soap.xml">

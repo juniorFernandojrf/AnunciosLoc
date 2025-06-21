@@ -32,9 +32,6 @@ import javax.xml.bind.annotation.XmlType;
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *                 &lt;sequence&gt;
  *                   &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
- *                   &lt;element name="chaveAntiga" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *                   &lt;element name="novaChaver" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *                   &lt;element name="novoValor" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *                 &lt;/sequence&gt;
  *               &lt;/restriction&gt;
  *             &lt;/complexContent&gt;
@@ -53,13 +50,13 @@ import javax.xml.bind.annotation.XmlType;
     "header",
     "body"
 })
-@XmlRootElement(name = "EditUserProfileRequest")
-public class EditUserProfileRequest {
+@XmlRootElement(name = "ListarPerfilRequest")
+public class ListarPerfilRequest {
 
     @XmlElement(name = "Header", required = true)
     protected HeaderType header;
     @XmlElement(name = "Body", required = true)
-    protected EditUserProfileRequest.Body body;
+    protected ListarPerfilRequest.Body body;
 
     /**
      * Obtém o valor da propriedade header.
@@ -90,10 +87,10 @@ public class EditUserProfileRequest {
      * 
      * @return
      *     possible object is
-     *     {@link EditUserProfileRequest.Body }
+     *     {@link ListarPerfilRequest.Body }
      *     
      */
-    public EditUserProfileRequest.Body getBody() {
+    public ListarPerfilRequest.Body getBody() {
         return body;
     }
 
@@ -102,10 +99,10 @@ public class EditUserProfileRequest {
      * 
      * @param value
      *     allowed object is
-     *     {@link EditUserProfileRequest.Body }
+     *     {@link ListarPerfilRequest.Body }
      *     
      */
-    public void setBody(EditUserProfileRequest.Body value) {
+    public void setBody(ListarPerfilRequest.Body value) {
         this.body = value;
     }
 
@@ -121,9 +118,6 @@ public class EditUserProfileRequest {
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
      *       &lt;sequence&gt;
      *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}long"/&gt;
-     *         &lt;element name="chaveAntiga" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
-     *         &lt;element name="novaChaver" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
-     *         &lt;element name="novoValor" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
      *       &lt;/sequence&gt;
      *     &lt;/restriction&gt;
      *   &lt;/complexContent&gt;
@@ -134,20 +128,11 @@ public class EditUserProfileRequest {
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "userId",
-        "chaveAntiga",
-        "novaChaver",
-        "novoValor"
+        "userId"
     })
     public static class Body {
 
         protected long userId;
-        @XmlElement(required = true)
-        protected String chaveAntiga;
-        @XmlElement(required = true)
-        protected String novaChaver;
-        @XmlElement(required = true)
-        protected String novoValor;
 
         /**
          * Obtém o valor da propriedade userId.
@@ -163,78 +148,6 @@ public class EditUserProfileRequest {
          */
         public void setUserId(long value) {
             this.userId = value;
-        }
-
-        /**
-         * Obtém o valor da propriedade chaveAntiga.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getChaveAntiga() {
-            return chaveAntiga;
-        }
-
-        /**
-         * Define o valor da propriedade chaveAntiga.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setChaveAntiga(String value) {
-            this.chaveAntiga = value;
-        }
-
-        /**
-         * Obtém o valor da propriedade novaChaver.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getNovaChaver() {
-            return novaChaver;
-        }
-
-        /**
-         * Define o valor da propriedade novaChaver.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setNovaChaver(String value) {
-            this.novaChaver = value;
-        }
-
-        /**
-         * Obtém o valor da propriedade novoValor.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getNovoValor() {
-            return novoValor;
-        }
-
-        /**
-         * Define o valor da propriedade novoValor.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setNovoValor(String value) {
-            this.novoValor = value;
         }
 
     }

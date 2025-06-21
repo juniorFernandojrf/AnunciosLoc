@@ -8,9 +8,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AllUserProfileResponse {
+public class ListarPerfil {
+
     private boolean status;
     private String mensagem;
+
     private List<ParChaveValorDTO> profile;
 
     

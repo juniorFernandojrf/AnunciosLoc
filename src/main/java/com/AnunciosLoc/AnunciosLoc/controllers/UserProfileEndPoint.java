@@ -8,26 +8,24 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.AnunciosLoc.AnunciosLoc.services.UserProfileService;
-import com.AnunciosLoc.AnunciosLoc.utils.PerfilUtil;
+import xml.soap.user.ListarPerfilRequest;
+import xml.soap.user.ListarPerfilResponse;
+import xml.soap.user.UserProfileRequest;
+import xml.soap.user.UserProfileResponse;
 import xml.soap.user.EditUserProfileRequest;
 import xml.soap.user.EditUserProfileResponse;
 import xml.soap.user.RemoveUserProfileRequest;
 import xml.soap.user.RemoveUserProfileResponse;
-import xml.soap.user.UserProfileRequest;
-import xml.soap.user.UserProfileResponse;
 
 @Endpoint
 @Component
 public class UserProfileEndPoint {
 
-    private static final String NAMESPACE_URI = "http://user.soap.xml";
+    private static final String NAMESPACE_URI = "http://user.soap.xml"; // Confira no WSDL
 
-    @Autowired
     private final UserProfileService userProfileService;
 
     @Autowired
-    private PerfilUtil userProfileUtil;
-
     public UserProfileEndPoint(UserProfileService userProfileService) {
         this.userProfileService = userProfileService;
     }
@@ -55,10 +53,10 @@ public class UserProfileEndPoint {
         return this.userProfileService.removeProfile(request);
     }
 
-    // @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AllUserProfileRequest")
-    // @ResponsePayload
-    // public AllUserProfileResponse listaPerfil(@RequestPayload AllUserProfileRequest request) {
-    //     return userProfileService.listaPerfil(request); 
-    // }
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ListarPerfilRequest")
+    @ResponsePayload
+    public ListarPerfilResponse listaPerfil(@RequestPayload ListarPerfilRequest request) {
+        return this.userProfileService.listaPerfil(request); 
+    }
 
 }

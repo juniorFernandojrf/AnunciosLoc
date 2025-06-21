@@ -6,12 +6,13 @@
 //
 
 
-package xml.soap.conta;
+package xml.soap.user;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -26,10 +27,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="mensagem" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
- *         &lt;element name="saldo" type="{http://www.w3.org/2001/XMLSchema}double" minOccurs="0"/&gt;
- *         &lt;element name="usuario" type="{http://conta.soap.xml}UsuarioConta" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;element name="mensagem" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="usuario" type="{http://user.soap.xml}UserType" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;element name="perfil" type="{http://user.soap.xml}ParChaveValorType" maxOccurs="unbounded" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -40,18 +41,35 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "mensagem",
     "status",
-    "saldo",
-    "usuario"
+    "mensagem",
+    "usuario",
+    "perfil"
 })
-@XmlRootElement(name = "ConsultarSaldoResponse")
-public class ConsultarSaldoResponse {
+@XmlRootElement(name = "ListarPerfilResponse")
+public class ListarPerfilResponse {
 
-    protected String mensagem;
     protected boolean status;
-    protected Double saldo;
-    protected List<UsuarioConta> usuario;
+    @XmlElement(required = true)
+    protected String mensagem;
+    protected List<UserType> usuario;
+    protected List<ParChaveValorType> perfil;
+
+    /**
+     * Obtém o valor da propriedade status.
+     * 
+     */
+    public boolean isStatus() {
+        return status;
+    }
+
+    /**
+     * Define o valor da propriedade status.
+     * 
+     */
+    public void setStatus(boolean value) {
+        this.status = value;
+    }
 
     /**
      * Obtém o valor da propriedade mensagem.
@@ -78,46 +96,6 @@ public class ConsultarSaldoResponse {
     }
 
     /**
-     * Obtém o valor da propriedade status.
-     * 
-     */
-    public boolean isStatus() {
-        return status;
-    }
-
-    /**
-     * Define o valor da propriedade status.
-     * 
-     */
-    public void setStatus(boolean value) {
-        this.status = value;
-    }
-
-    /**
-     * Obtém o valor da propriedade saldo.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Double }
-     *     
-     */
-    public Double getSaldo() {
-        return saldo;
-    }
-
-    /**
-     * Define o valor da propriedade saldo.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Double }
-     *     
-     */
-    public void setSaldo(Double value) {
-        this.saldo = value;
-    }
-
-    /**
      * Gets the value of the usuario property.
      * 
      * <p>
@@ -135,15 +113,44 @@ public class ConsultarSaldoResponse {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link UsuarioConta }
+     * {@link UserType }
      * 
      * 
      */
-    public List<UsuarioConta> getUsuario() {
+    public List<UserType> getUsuario() {
         if (usuario == null) {
-            usuario = new ArrayList<UsuarioConta>();
+            usuario = new ArrayList<UserType>();
         }
         return this.usuario;
+    }
+
+    /**
+     * Gets the value of the perfil property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the perfil property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getPerfil().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link ParChaveValorType }
+     * 
+     * 
+     */
+    public List<ParChaveValorType> getPerfil() {
+        if (perfil == null) {
+            perfil = new ArrayList<ParChaveValorType>();
+        }
+        return this.perfil;
     }
 
 }

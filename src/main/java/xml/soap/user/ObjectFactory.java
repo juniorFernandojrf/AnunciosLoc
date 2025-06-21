@@ -2,16 +2,13 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.06.21 às 05:12:54 PM WAT 
+// Gerado em: 2025.06.21 às 09:19:46 PM WAT 
 //
 
 
 package xml.soap.user;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
-import javax.xml.namespace.QName;
 
 
 /**
@@ -31,7 +28,6 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _AllUserProfileResponse_QNAME = new QName("http://user.soap.xml", "AllUserProfileResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: xml.soap.user
@@ -65,35 +61,19 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ListarPerfilRequest }
+     * 
+     */
+    public ListarPerfilRequest createListarPerfilRequest() {
+        return new ListarPerfilRequest();
+    }
+
+    /**
      * Create an instance of {@link RemoveUserProfileRequest }
      * 
      */
     public RemoveUserProfileRequest createRemoveUserProfileRequest() {
         return new RemoveUserProfileRequest();
-    }
-
-    /**
-     * Create an instance of {@link AllUserProfileRequest }
-     * 
-     */
-    public AllUserProfileRequest createAllUserProfileRequest() {
-        return new AllUserProfileRequest();
-    }
-
-    /**
-     * Create an instance of {@link LogoutRequest }
-     * 
-     */
-    public LogoutRequest createLogoutRequest() {
-        return new LogoutRequest();
-    }
-
-    /**
-     * Create an instance of {@link LogoutResponse }
-     * 
-     */
-    public LogoutResponse createLogoutResponse() {
-        return new LogoutResponse();
     }
 
     /**
@@ -126,6 +106,22 @@ public class ObjectFactory {
      */
     public LoginResponse createLoginResponse() {
         return new LoginResponse();
+    }
+
+    /**
+     * Create an instance of {@link LogoutRequest }
+     * 
+     */
+    public LogoutRequest createLogoutRequest() {
+        return new LogoutRequest();
+    }
+
+    /**
+     * Create an instance of {@link LogoutResponse }
+     * 
+     */
+    public LogoutResponse createLogoutResponse() {
+        return new LogoutResponse();
     }
 
     /**
@@ -209,27 +205,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AllUserProfileResponse }
+     * Create an instance of {@link ListarPerfilRequest.Body }
      * 
      */
-    public AllUserProfileResponse createAllUserProfileResponse() {
-        return new AllUserProfileResponse();
+    public ListarPerfilRequest.Body createListarPerfilRequestBody() {
+        return new ListarPerfilRequest.Body();
     }
 
     /**
-     * Create an instance of {@link RemoveUserProfileRequest.Body }
+     * Create an instance of {@link ListarPerfilResponse }
      * 
      */
-    public RemoveUserProfileRequest.Body createRemoveUserProfileRequestBody() {
-        return new RemoveUserProfileRequest.Body();
-    }
-
-    /**
-     * Create an instance of {@link RemoveUserProfileResponse }
-     * 
-     */
-    public RemoveUserProfileResponse createRemoveUserProfileResponse() {
-        return new RemoveUserProfileResponse();
+    public ListarPerfilResponse createListarPerfilResponse() {
+        return new ListarPerfilResponse();
     }
 
     /**
@@ -249,20 +237,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AllUserProfileRequest.Body }
+     * Create an instance of {@link RemoveUserProfileRequest.Body }
      * 
      */
-    public AllUserProfileRequest.Body createAllUserProfileRequestBody() {
-        return new AllUserProfileRequest.Body();
+    public RemoveUserProfileRequest.Body createRemoveUserProfileRequestBody() {
+        return new RemoveUserProfileRequest.Body();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link AllUserProfileResponse }{@code >}}
+     * Create an instance of {@link RemoveUserProfileResponse }
      * 
      */
-    @XmlElementDecl(namespace = "http://user.soap.xml", name = "AllUserProfileResponse")
-    public JAXBElement<AllUserProfileResponse> createAllUserProfileResponse(AllUserProfileResponse value) {
-        return new JAXBElement<AllUserProfileResponse>(_AllUserProfileResponse_QNAME, AllUserProfileResponse.class, null, value);
+    public RemoveUserProfileResponse createRemoveUserProfileResponse() {
+        return new RemoveUserProfileResponse();
     }
 
 }

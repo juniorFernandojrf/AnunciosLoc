@@ -1,31 +1,26 @@
 package com.AnunciosLoc.AnunciosLoc.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.hibernate.type.IntegerType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.AnunciosLoc.AnunciosLoc.bd.user.User;
 import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
-import com.AnunciosLoc.AnunciosLoc.bd.userProfile.AllUserProfileResponse;
-import com.AnunciosLoc.AnunciosLoc.bd.userProfile.ParChaveValorDTO;
 import com.AnunciosLoc.AnunciosLoc.bd.userProfile.UserProfile;
 import com.AnunciosLoc.AnunciosLoc.bd.userProfile.UserProfileRepository;
 import com.AnunciosLoc.AnunciosLoc.utils.PerfilUtil;
-import com.ctc.wstx.ent.IntEntity;
 
-import xml.soap.user.AllUserProfileRequest;
 import xml.soap.user.EditUserProfileRequest;
 import xml.soap.user.EditUserProfileResponse;
 import xml.soap.user.InteresseType;
+import xml.soap.user.ListarPerfilRequest;
+import xml.soap.user.ListarPerfilResponse;
 import xml.soap.user.ParChaveValorType;
 import xml.soap.user.RemoveUserProfileRequest;
 import xml.soap.user.RemoveUserProfileResponse;
-import xml.soap.user.UserProfileRequest;
-import xml.soap.user.UserProfileResponse;
 
 @Service
 public class UserProfileService {
@@ -35,10 +30,7 @@ public class UserProfileService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private PerfilUtil perfilUtil;
-
+ 
     public UserProfileService(UserRepository userRepository, UserProfileRepository userProfileRepository) {
         this.userRepository = userRepository;
         this.userProfileRepository = userProfileRepository;
@@ -177,38 +169,51 @@ public class UserProfileService {
         return response;
     }
 
-//    public AllUserProfileResponse listaPerfil(AllUserProfileRequest request) {
-//     AllUserProfileResponse response = new AllUserProfileResponse();
-//     try {
-//         Long userId = request.getBody().getUserId();
-//         Optional<User> userOpt = userRepository.findById(userId);
+    public ListarPerfilResponse listaPerfil(ListarPerfilRequest request) {
+        ListarPerfilResponse response = new ListarPerfilResponse();
 
-//         if (!userOpt.isPresent()) {
-//             response.setStatus(false);
-//             response.setMensagem("Usuário não encontrado.");
-//             return response;
-//         }
+        try {
+            Long userId = request.getBody().getUserId();
+            Optional<User> userOpt = userRepository.findById(userId);
 
-//         User user = userOpt.get();
-//         List<UserProfile> perfilList = userProfileRepository.findByUserId(user.getId());
+            if (!userOpt.isPresent()) {
+                response.setStatus(false);
+                response.setMensagem("Usuário não encontrado.");
+                return response;
+            }
 
-//         // Mapeie os dados do banco para a resposta SOAP diretamente
-//         for (UserProfile p : perfilList) {
-//             ParChaveValorType perfilItem = new ParChaveValorType();
-//             perfilItem.setChave(p.getChave());
-//             perfilItem.setValor(p.getValor());
-//             response.getPerfil().add(perfilItem); // Usa getPerfil() que inicializa automaticamente
-//         }
+            User user = userOpt.get();
+            List<UserProfile> perfilList = userProfileRepository.findByUserId(user.getId());
 
-//         response.setStatus(true);
-//         response.setMensagem("Perfil carregado com sucesso.");
+            // verificar se perfilList está vazio
+            if(perfilList.isEmpty()) {
+                response.setStatus(false);
+                response.setMensagem("Nenhum perfil encontrado para o usuário.");
+                return response;
+            } 
 
-//     } catch (Exception e) {
-//         e.printStackTrace();
-//         response.setStatus(false);
-//         response.setMensagem("Erro ao carregar perfil: " + e.getMessage());
-//     }
-//     return response;
-// }
+            // Garantir que a lista seja inicializada
+            List<ParChaveValorType> perfis = new ArrayList<>();
+
+            for (UserProfile p : perfilList) {
+                ParChaveValorType perfilItem = new ParChaveValorType();
+                perfilItem.setChave(p.getChave());
+                perfilItem.setValor(p.getValor());
+                perfis.add(perfilItem);
+            }
+
+            // Atribuir a lista preenchida à resposta
+            response.getPerfil().addAll(perfis);
+            response.setStatus(true);
+            response.setMensagem("Perfil carregado com sucesso.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setStatus(false);
+            response.setMensagem("Erro ao carregar perfil: " + e.getMessage());
+        }
+
+        return response;
+    }
 
 }
