@@ -13,13 +13,13 @@ import lombok.ToString;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "user_profiles")
+@Table(name = "perfil_do_utilizador")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class UserProfile implements Serializable{
+public class PerfilDoUtlizador implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

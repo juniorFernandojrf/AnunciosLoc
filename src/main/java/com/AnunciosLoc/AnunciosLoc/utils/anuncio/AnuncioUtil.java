@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import com.AnunciosLoc.AnunciosLoc.bd.anuncio.Anuncio;
 import com.AnunciosLoc.AnunciosLoc.bd.condicaoDePerfil.CondicaoDePerfil;
 import com.AnunciosLoc.AnunciosLoc.bd.local.Local;
-import com.AnunciosLoc.AnunciosLoc.bd.perfilDoUtilizador.UserProfile;
-import com.AnunciosLoc.AnunciosLoc.bd.perfilDoUtilizador.UserProfileRepository;
+import com.AnunciosLoc.AnunciosLoc.bd.perfilDoUtilizador.PerfilDoUtlizador;
+import com.AnunciosLoc.AnunciosLoc.bd.perfilDoUtilizador.PerfilDoUtlizadorRepository;
 import com.AnunciosLoc.AnunciosLoc.bd.politicaDeEntrega.PoliticaDeEntrega;
 import com.AnunciosLoc.AnunciosLoc.bd.utilizador.Utilizador;
 import com.AnunciosLoc.AnunciosLoc.bd.utilizador.UtilizadorRepository;
@@ -29,10 +29,10 @@ public class AnuncioUtil {
     private UtilizadorRepository userRepository;
 
     @Autowired
-    private UserProfileRepository userProfileRepository;
+    private PerfilDoUtlizadorRepository perfilDoUtlizadorRepository;
 
     public boolean usuarioPertenceAWhiteList(Long userId, List<CondicaoDePerfil> condicoes) {
-        List<UserProfile> perfis = userProfileRepository.findByUserId(userId);
+        List<PerfilDoUtlizador> perfis = perfilDoUtlizadorRepository.findByUserId(userId);
 
         for (CondicaoDePerfil cond : condicoes) {
             String valor = cond.getValor();
@@ -60,7 +60,7 @@ public class AnuncioUtil {
             return false;
         }
 
-        List<UserProfile> perfis = userProfileRepository.findByUserId(userId);
+        List<PerfilDoUtlizador> perfis = perfilDoUtlizadorRepository.findByUserId(userId);
 
         if (perfis.isEmpty()) {
             System.out.println("Nenhum perfil encontrado para o usuário com ID: " + userId);

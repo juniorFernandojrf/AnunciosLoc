@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 import com.AnunciosLoc.AnunciosLoc.bd.utilizador.Utilizador;
 
 @Repository
-public interface UserProfileRepository extends JpaRepository<UserProfile, Long> {
-    Optional<UserProfile> findByUserAndChave(Utilizador user, String chave);
-    List    <UserProfile> findByUserId(Long usuer_id);
-    List    <UserProfile> findByUser(Utilizador user);
+public interface PerfilDoUtlizadorRepository extends JpaRepository<PerfilDoUtlizador, Long> {
+    Optional<PerfilDoUtlizador> findByUserAndChave(Utilizador user, String chave);
+    List    <PerfilDoUtlizador> findByUserId(Long usuer_id);
+    List    <PerfilDoUtlizador> findByUser(Utilizador user);
 
 }

@@ -7,8 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.AnunciosLoc.AnunciosLoc.bd.perfilDoUtilizador.UserProfile;
-import com.AnunciosLoc.AnunciosLoc.bd.perfilDoUtilizador.UserProfileRepository;
+import com.AnunciosLoc.AnunciosLoc.bd.perfilDoUtilizador.PerfilDoUtlizador;
+import com.AnunciosLoc.AnunciosLoc.bd.perfilDoUtilizador.PerfilDoUtlizadorRepository;
 import com.AnunciosLoc.AnunciosLoc.bd.utilizador.Utilizador;
 import com.AnunciosLoc.AnunciosLoc.bd.utilizador.UtilizadorRepository;
 
@@ -25,14 +25,14 @@ import xml.soap.user.RemoveUserProfileResponse;
 public class PerfilDoUtilizadorService {
 
     @Autowired
-    private UserProfileRepository userProfileRepository;
+    private PerfilDoUtlizadorRepository perfilDoUtilizadorRepository;
 
     @Autowired
     private UtilizadorRepository userRepository;
  
-    public PerfilDoUtilizadorService(UtilizadorRepository userRepository, UserProfileRepository userProfileRepository) {
+    public PerfilDoUtilizadorService(UtilizadorRepository userRepository, PerfilDoUtlizadorRepository perfilDoUtilizadorRepository) {
         this.userRepository = userRepository;
-        this.userProfileRepository = userProfileRepository;
+        this.perfilDoUtilizadorRepository = perfilDoUtilizadorRepository;
     }
 
     public void addProfile(String usuarioId, List<InteresseType> interesses) {
@@ -45,29 +45,29 @@ public class PerfilDoUtilizadorService {
         Utilizador user = optionalUser.get();
 
         // Buscar todos os interesses atuais do usuário
-        List<UserProfile> interessesExistentes = userProfileRepository.findByUser(user);
+        List<PerfilDoUtlizador> interessesExistentes = perfilDoUtilizadorRepository.findByUser(user);
 
         for (InteresseType interesse : interesses) {
             String nomeInteresse = interesse.getNome();
 
             // Verifica se o interesse já existe
-            Optional<UserProfile> interesseExistente = interessesExistentes.stream()
+            Optional<PerfilDoUtlizador> interesseExistente = interessesExistentes.stream()
                     .filter(i -> i.getChave().equals("interesse") && i.getValor().equalsIgnoreCase(nomeInteresse))
                     .findFirst();
 
             if (interesse.isSelecionado()) {
                 // Se estiver selecionado e não existir, adicionar
                 if (!interesseExistente.isPresent()) {
-                    UserProfile profile = new UserProfile();
+                    PerfilDoUtlizador profile = new PerfilDoUtlizador();
                     profile.setUser(user);
                     profile.setChave("interesse");
                     profile.setValor(nomeInteresse);
-                    userProfileRepository.save(profile);
+                    perfilDoUtilizadorRepository.save(profile);
                 }
                 // Se já existe e está selecionado, não faz nada (já está certo)
             } else {
                 // Se não está selecionado e já existe, apagar
-                interesseExistente.ifPresent(userProfileRepository::delete);
+                interesseExistente.ifPresent(perfilDoUtilizadorRepository::delete);
             }
         }
     }
@@ -86,7 +86,7 @@ public class PerfilDoUtilizadorService {
             Utilizador user = userOptional.get();
 
             // Busca o par chave-valor antigo do utilizador
-            Optional<UserProfile> perfilOptional = userProfileRepository.findByUserAndChave(user,
+            Optional<PerfilDoUtlizador> perfilOptional = perfilDoUtilizadorRepository.findByUserAndChave(user,
                     request.getBody().getChaveAntiga());
 
             if (!perfilOptional.isPresent()) {
@@ -95,7 +95,7 @@ public class PerfilDoUtilizadorService {
                 return response;
             }
 
-            UserProfile perfil = perfilOptional.get();
+            PerfilDoUtlizador perfil = perfilOptional.get();
 
             // Verifica o que deve ser atualizado
             String chaveNova = request.getBody().getNovaChaver() != null ? request.getBody().getNovaChaver()
@@ -105,7 +105,7 @@ public class PerfilDoUtilizadorService {
 
             // Valida duplicação de chave (se a chave foi alterada)
             if (!chaveNova.equals(request.getBody().getChaveAntiga())) {
-                boolean chaveJaExiste = userProfileRepository.findByUserAndChave(user, chaveNova).isPresent();
+                boolean chaveJaExiste = perfilDoUtilizadorRepository.findByUserAndChave(user, chaveNova).isPresent();
                 if (chaveJaExiste) {
                     response.setMensagem("A nova chave já existe no perfil do utilizador.");
                     response.setStatus(false);
@@ -116,7 +116,7 @@ public class PerfilDoUtilizadorService {
             // Atualiza o perfil
             perfil.setChave(chaveNova);
             perfil.setValor(valorNovo);
-            userProfileRepository.save(perfil);
+            perfilDoUtilizadorRepository.save(perfil);
 
             response.setMensagem("Perfil atualizado com sucesso.");
             response.setStatus(true);
@@ -145,7 +145,7 @@ public class PerfilDoUtilizadorService {
             Utilizador user = userOptional.get();
 
             // Buscar o par chave-valor
-            Optional<UserProfile> perfilOptional = userProfileRepository.findByUserAndChave(user,
+            Optional<PerfilDoUtlizador> perfilOptional = perfilDoUtilizadorRepository.findByUserAndChave(user,
                     request.getBody().getChave());
 
             if (!perfilOptional.isPresent()) {
@@ -155,7 +155,7 @@ public class PerfilDoUtilizadorService {
             }
 
             // Remover
-            userProfileRepository.delete(perfilOptional.get());
+            perfilDoUtilizadorRepository.delete(perfilOptional.get());
 
             response.setMensagem("Par chave-valor removido com sucesso.");
             response.setStatus(true);
@@ -182,7 +182,7 @@ public class PerfilDoUtilizadorService {
             }
 
             Utilizador user = userOpt.get();
-            List<UserProfile> perfilList = userProfileRepository.findByUserId(user.getId());
+            List<PerfilDoUtlizador> perfilList = perfilDoUtilizadorRepository.findByUserId(user.getId());
 
             // verificar se perfilList está vazio
             if(perfilList.isEmpty()) {
@@ -194,7 +194,7 @@ public class PerfilDoUtilizadorService {
             // Garantir que a lista seja inicializada
             List<ParChaveValorType> perfis = new ArrayList<>();
 
-            for (UserProfile p : perfilList) {
+            for (PerfilDoUtlizador p : perfilList) {
                 ParChaveValorType perfilItem = new ParChaveValorType();
                 perfilItem.setChave(p.getChave());
                 perfilItem.setValor(p.getValor());

@@ -1,19 +1,15 @@
 package com.AnunciosLoc.AnunciosLoc.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
-import com.AnunciosLoc.AnunciosLoc.services.PerfilDoUtilizadorService;
-import com.AnunciosLoc.AnunciosLoc.services.UtilizadorService;
 import com.AnunciosLoc.AnunciosLoc.services.ContaService;
 
 import xml.soap.conta.ConsultarSaldoRequest;
 import xml.soap.conta.ConsultarSaldoResponse;
-import xml.soap.user.UserResponse;
 
 @Endpoint
 public class ContaEndPoint {       

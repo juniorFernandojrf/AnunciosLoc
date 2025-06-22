@@ -25,7 +25,7 @@ public class PoliticaDeEntrega implements Serializable {
     @Enumerated(EnumType.STRING)
     private TipoDePoliticaEntrega titulo; // WHITELIST ou BLACKLIST
 
-    @OneToMany(mappedBy = "politicaDeEntrega", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "politicaEntrega", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private List<CondicaoDePerfil> condicoes;
 

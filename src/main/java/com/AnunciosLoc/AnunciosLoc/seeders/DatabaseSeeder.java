@@ -14,7 +14,8 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        interesseSeeder.seed();;
+        interesseSeeder.seed();
     }
 }
+
 

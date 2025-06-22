@@ -1,0 +1,16 @@
+http://localhost:8080/ws/user.wsdl
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:user="http://user.soap.xml">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <user:ListarPerfilRequest>
+         <user:Header>
+            <user:AuthToken>abc123xyz-token</user:AuthToken>
+         </user:Header>
+         <user:Body>
+            <user:userId>3</user:userId>
+         </user:Body>
+      </user:ListarPerfilRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

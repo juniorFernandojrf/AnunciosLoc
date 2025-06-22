@@ -1,4 +1,4 @@
-http://localhost:8080/ws/anuncios.wsdl
+http://localhost:8080/ws/conta.wsdl
 
 
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:conta="http://conta.soap.xml">
