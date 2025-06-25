@@ -76,6 +76,44 @@ public class LocalService {
         return response;
     }
 
+    // Pegar Local
+   public GetLocalResponse pegarLocal(GetLocalRequest request) {
+    GetLocalResponse response = new GetLocalResponse();
+
+    try {
+        Long localId = request.getId(); // CORRETO
+
+        Optional<Local> localEncontrado = localRepository.findById(localId);
+
+        if (localEncontrado.isPresent()) {
+            Local local = localEncontrado.get();
+
+            LocalType localType = new LocalType();
+            localType.setId(local.getId());
+            localType.setNome(local.getNome());
+            localType.setLatitude(local.getLatitude());
+            localType.setLongitude(local.getLongitude());
+
+            response.setId(local.getId());
+            response.setNome(local.getNome());
+            response.setLatitude(local.getLatitude());
+            response.setLongitude(local.getLongitude());
+            response.setStatus(true);
+            response.setMensagem("Local encontrado com sucesso.");
+        } else {
+            response.setStatus(false);
+            response.setMensagem("Local com ID " + localId + " não encontrado.");
+        }
+
+    } catch (Exception e) {
+        response.setStatus(false);
+        response.setMensagem("Erro ao buscar local: " + e.getMessage());
+    }
+
+    return response;
+}
+
+
     public RemoveLocalResponse removerLocal(RemoveLocalRequest request) {
         RemoveLocalResponse response = new RemoveLocalResponse();
 

@@ -38,6 +38,13 @@ private final LocalService localService;
         return this.localService.listarTodosOsLocais(request);
     }
 
+    // Pegar um Local
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetLocalRequest")
+    @ResponsePayload
+    public GetLocalResponse pegarLocal(@RequestPayload GetLocalRequest request) {
+        return this.localService.pegarLocal(request);
+    }
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "RemoveLocalRequest")
     @ResponsePayload
     public RemoveLocalResponse removerLocal(@RequestPayload RemoveLocalRequest request) {

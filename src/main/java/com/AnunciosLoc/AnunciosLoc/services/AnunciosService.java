@@ -9,6 +9,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
+import org.springframework.ws.server.endpoint.annotation.RequestPayload;
+import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.AnunciosLoc.AnunciosLoc.bd.anuncio.Anuncio;
 import com.AnunciosLoc.AnunciosLoc.bd.anuncio.AnuncioRepository;
@@ -318,6 +321,67 @@ public class AnunciosService {
             e.printStackTrace();
             response.setEstado(false);
             response.setMensagem("Erro ao buscar anúncios: " + e.getMessage());
+        }
+
+        return response;
+    }
+
+
+    public AllAnuncioResponse getAllAnunciosTodos(@RequestPayload AllAnuncioTodosRequest request) {
+        AllAnuncioResponse response = new AllAnuncioResponse();
+
+        try {
+            List<Anuncio> anuncios = anuncioRepository.findAll();
+
+            if (anuncios.isEmpty()) {
+                response.setMensagem("Nenhum anúncio encontrado.");
+                response.setEstado(false);
+                return response;
+            }
+
+            for (Anuncio anuncio : anuncios) {
+                AnuncioType item = new AnuncioType();
+                item.setId(anuncio.getId().intValue());
+                item.setTitulo(anuncio.getTitulo());
+                item.setDescricao(anuncio.getDescricao());
+                item.setDataExpiracao(anuncio.getDataExpiracao().toString());
+
+                // --- User ---
+                User user = anuncio.getUser();
+                if (user != null) {
+                    UserType userType = new UserType();
+                    userType.setId(user.getId().intValue());
+                    userType.setUsername(user.getUsername());// ou user.getName()
+                    userType.setEmail(user.getEmail());
+                    userType.setGenero(user.getGenero());
+                    userType.setTelefone(user.getTelefone());
+                    // adicione outros campos conforme sua definição do UserType
+
+                    item.setUsuario(userType);
+                }
+
+                // --- Localização ---
+                Local local = anuncio.getLocalizacao();
+                if (local != null) {
+                    LocalType localType = new LocalType();
+                    localType.setId(local.getId().intValue());
+                    localType.setNome(local.getNome()); // ou local.getDescricao()
+                    localType.setLatitude(local.getLatitude());
+                    localType.setLongitude(local.getLongitude());
+                    // adicione outros campos conforme sua definição do LocalType
+
+                    item.setLocal(localType);
+                }
+
+                response.getAnuncios().add(item);
+            }
+
+            response.setMensagem("Anúncios listados com sucesso.");
+            response.setEstado(true);
+
+        } catch (Exception e) {
+            response.setMensagem("Erro ao listar os anúncios: " + e.getMessage());
+            response.setEstado(false);
         }
 
         return response;

@@ -135,6 +135,16 @@
     </xs:complexType>
   </xs:element>
 
+    <!-- Declaração da requisição -->
+  <xs:element name="AllAnuncioTodosRequest">
+      <xs:complexType>
+          <xs:sequence>
+              <xs:element name="Header" type="tns:HeaderType"/>
+          </xs:sequence>
+      </xs:complexType>
+  </xs:element>
+
+
   <!-- Resposta para listar anúncios -->
   <xs:element name="AllAnuncioResponse">
     <xs:complexType>

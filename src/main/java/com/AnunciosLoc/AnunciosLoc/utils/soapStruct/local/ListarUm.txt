@@ -6,9 +6,9 @@ http://localhost:8080/ws/local.wsdl
                   xmlns:local="http://local.soap.xml">
    <soapenv:Header/>
    <soapenv:Body>
-      <local:AllLocalRequest>
-         <local:LocalId>4</local:LocalId>
-      </local:AllLocalRequest>
+      <local:GetLocalRequest>
+         <local:id>100</local:id>
+      </local:GetLocalRequest>
    </soapenv:Body>
 </soapenv:Envelope>
 

@@ -6,10 +6,11 @@
 //
 
 
-package xml.soap;
+package xml.soap.anuncios;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -24,6 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
+ *         &lt;element name="Header" type="{http://anuncios.soap.xml}HeaderType"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -33,9 +35,37 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "")
-@XmlRootElement(name = "GetStationRequest")
-public class GetStationRequest {
+@XmlType(name = "", propOrder = {
+    "header"
+})
+@XmlRootElement(name = "AllAnuncioTodosRequest")
+public class AllAnuncioTodosRequest {
 
+    @XmlElement(name = "Header", required = true)
+    protected HeaderType header;
+
+    /**
+     * Gets the value of the header property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link HeaderType }
+     *     
+     */
+    public HeaderType getHeader() {
+        return header;
+    }
+
+    /**
+     * Sets the value of the header property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link HeaderType }
+     *     
+     */
+    public void setHeader(HeaderType value) {
+        this.header = value;
+    }
 
 }
