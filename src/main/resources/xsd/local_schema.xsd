@@ -71,6 +71,28 @@
   </xs:element>
 
 
+  <!-- Declaração da requisição -->
+  <xs:element name="GetLocalRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="id" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+    <xs:element name="GetLocalResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="mensagem" type="xs:string" />
+        <xs:element name="status"   type="xs:boolean" />
+        <xs:element name="id"        type="xs:long" />
+        <xs:element name="nome"      type="xs:string" />
+        <xs:element name="latitude"  type="xs:double" />
+        <xs:element name="longitude" type="xs:double" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="AllLocalResponse">
     <xs:complexType>
       <xs:sequence>

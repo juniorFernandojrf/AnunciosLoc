@@ -34,16 +34,22 @@ public class AnunciosEndPoint {
         return this.anunciosService.getAllAnuncios(request);
     }
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AllAnuncioTodosRequest")
+    @ResponsePayload
+    public AllAnuncioResponse getAllAnunciosTodos(@RequestPayload AllAnuncioTodosRequest request) {
+        return this.anunciosService.getAllAnunciosTodos(request);
+    }
+
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "RemoveAnuncioRequest")
     @ResponsePayload
     public RemoveAnuncioResponse removeAnuncio(@RequestPayload RemoveAnuncioRequest request) {
-        
+
         return this.anunciosService.removeAnuncio(request);
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "ListarAnuncioCriadosRequest")
     @ResponsePayload
-    public ListarAnuncioCriadosResponse ListarAnuncioCriados(@RequestPayload ListarAnuncioCriadosRequest request) {        
+    public ListarAnuncioCriadosResponse ListarAnuncioCriados(@RequestPayload ListarAnuncioCriadosRequest request) {
         return this.anunciosService.ListarAnuncioCriados(request);
     }
 

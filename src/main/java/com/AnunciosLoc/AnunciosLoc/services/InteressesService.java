@@ -57,17 +57,4 @@ public class InteressesService {
 
         return response;
     }
-
-    public void adicionarInteresse(Interesses interesse) {
-        try {
-            // Verifica se o interesse já existe
-            if (interessesRepository.existsById(interesse.getId())) {
-                throw new IllegalArgumentException("Interesse já existe com o ID: " + interesse.getId());
-            }
-            // Salva o novo interesse no banco
-            interessesRepository.save(interesse);
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao adicionar interesse: " + e.getMessage(), e);
-        }
-    } 
 }

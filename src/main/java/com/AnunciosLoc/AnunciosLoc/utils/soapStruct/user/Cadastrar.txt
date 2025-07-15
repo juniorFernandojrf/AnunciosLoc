@@ -1,0 +1,21 @@
+http://localhost:8080/ws/ee.wsdl
+
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:user="http://user.soap.xml">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <user:AddUserRequest>
+         <user:Header/>
+         <user:Body>
+              <user:email>${emailController.text}</user:email>
+              <user:password>${passwordController.text}</user:password>
+              <user:username>${nomeController.text}</user:username>
+              <user:genero>${_generoSelecionado}</user:genero>
+              <user:foto>https:</user:foto>
+              <user:tipo>2</user:tipo>
+              <user:telefone>${telefoneController.text}</user:telefone>
+              <user:datanascimento>${datanascimentoController.text}</user:datanascimento>
+         </user:Body>
+      </user:AddUserRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

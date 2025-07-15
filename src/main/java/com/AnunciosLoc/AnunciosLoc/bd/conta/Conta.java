@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.AnunciosLoc.AnunciosLoc.bd.utilizador.Utilizador;
+import com.AnunciosLoc.AnunciosLoc.bd.user.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -48,6 +48,6 @@ public class Conta implements Serializable{
     @JoinColumn(name = "user_id")
     @JsonIgnore
     @ToString.Exclude
-    private Utilizador user;
+    private User user;
 
 }

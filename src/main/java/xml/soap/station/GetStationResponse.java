@@ -8,6 +8,8 @@
 
 package xml.soap.station;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -198,6 +200,11 @@ public class GetStationResponse {
      */
     public void setLongitude(float value) {
         this.longitude = value;
+    }
+
+    public List<String> getDockItem() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getDockItem'");
     }
 
 }

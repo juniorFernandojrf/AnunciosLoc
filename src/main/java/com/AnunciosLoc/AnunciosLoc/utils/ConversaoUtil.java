@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.AnunciosLoc.AnunciosLoc.bd.interesses.Interesses;
 import com.AnunciosLoc.AnunciosLoc.bd.local.Local;
-import com.AnunciosLoc.AnunciosLoc.bd.utilizador.Utilizador;
+import com.AnunciosLoc.AnunciosLoc.bd.user.User;
 
 import xml.soap.anuncios.LocalType; // Só um LocalType pode ser importado diretamente
 import xml.soap.anuncios.UserType; // Só um UserType pode ser importado diretamente
@@ -48,7 +48,7 @@ public class ConversaoUtil {
     }
 
     // Conversão para xml.soap.anuncios.UserType
-    public static UserType toAnunciosUserType(Utilizador user) {
+    public static UserType toAnunciosUserType(User user) {
         if (user == null)
             return null;
         UserType userType = new UserType();
@@ -62,7 +62,7 @@ public class ConversaoUtil {
     }
 
     // Conversão para xml.soap.user.UserType
-    public static xml.soap.user.UserType toUserUserType(Utilizador user) {
+    public static xml.soap.user.UserType toUserUserType(User user) {
         if (user == null)
             return null;
         xml.soap.user.UserType userType = new xml.soap.user.UserType();

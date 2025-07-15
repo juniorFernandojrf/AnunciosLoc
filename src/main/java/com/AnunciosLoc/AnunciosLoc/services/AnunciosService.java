@@ -9,16 +9,19 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
+import org.springframework.ws.server.endpoint.annotation.RequestPayload;
+import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.AnunciosLoc.AnunciosLoc.bd.anuncio.Anuncio;
 import com.AnunciosLoc.AnunciosLoc.bd.anuncio.AnuncioRepository;
-import com.AnunciosLoc.AnunciosLoc.bd.condicaoDePerfil.CondicaoDePerfil;
+import com.AnunciosLoc.AnunciosLoc.bd.condicaoPerfil.CondicaoPerfil;
 import com.AnunciosLoc.AnunciosLoc.bd.local.Local;
 import com.AnunciosLoc.AnunciosLoc.bd.local.LocalRepository;
-import com.AnunciosLoc.AnunciosLoc.bd.politicaDeEntrega.PoliticaDeEntrega;
-import com.AnunciosLoc.AnunciosLoc.bd.politicaDeEntrega.PoliticaDeEntregaRepository;
-import com.AnunciosLoc.AnunciosLoc.bd.utilizador.Utilizador;
-import com.AnunciosLoc.AnunciosLoc.bd.utilizador.UtilizadorRepository;
+import com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaEntrega;
+import com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaEntregaRepository;
+import com.AnunciosLoc.AnunciosLoc.bd.user.User;
+import com.AnunciosLoc.AnunciosLoc.bd.user.UserRepository;
 import com.AnunciosLoc.AnunciosLoc.utils.anuncio.AnuncioUtil;
 
 import xml.soap.anuncios.*;
@@ -27,24 +30,24 @@ import xml.soap.anuncios.*;
 public class AnunciosService {
 
     private final AnuncioRepository anuncioRepository;
-    private final UtilizadorRepository userRepository;
+    private final UserRepository userRepository;
     private final LocalRepository localizacaoRepository;
-    private final PoliticaDeEntregaRepository politicaDeEntregaRepository;
+    private final PoliticaEntregaRepository politicaEntregaRepository;
 
     @Autowired
     private AnuncioUtil anuncioUtil;
 
     @Autowired
-    ContaService contaService;
+    private ContaService contaService;
 
     public AnunciosService(
             AnuncioRepository anuncioRepository,
-            UtilizadorRepository userRepository,
-            PoliticaDeEntregaRepository politicaDeEntregaRepository,
+            UserRepository userRepository,
+            PoliticaEntregaRepository politicaEntregaRepository,
             LocalRepository localizacaoRepository) {
         this.anuncioRepository = anuncioRepository;
         this.userRepository = userRepository;
-        this.politicaDeEntregaRepository = politicaDeEntregaRepository;
+        this.politicaEntregaRepository = politicaEntregaRepository;
         this.localizacaoRepository = localizacaoRepository;
     }
 
@@ -53,7 +56,7 @@ public class AnunciosService {
 
         try {
             // Validar usuário
-            Optional<Utilizador> userOptional = userRepository.findById(request.getBody().getUserId());
+            Optional<User> userOptional = userRepository.findById(request.getBody().getUserId());
             if (!userOptional.isPresent()) {
                 response.setStatus(false);
                 response.setMensagem("Usuário não encontrado.");
@@ -68,7 +71,7 @@ public class AnunciosService {
                 return response;
             }
 
-            Utilizador user = userOptional.get();
+            User   user = userOptional.get();
             Local local = localOptional.get();
             LocalDateTime inicio = LocalDateTime.now();
 
@@ -100,14 +103,15 @@ public class AnunciosService {
             PoliticaEntregaType politicaDeEntregaType = (politicas != null && !politicas.isEmpty()) ? politicas.get(0)
                     : null;
 
-            PoliticaDeEntrega politica = new PoliticaDeEntrega();
-            List<CondicaoDePerfil> condicoes = new ArrayList<>();
+            PoliticaEntrega politica = new PoliticaEntrega();
+            List<CondicaoPerfil> condicoes = new ArrayList<>();
             PoliticaTipo tipoPoliticaEnum = PoliticaTipo.WHITELIST; // padrão
 
             boolean temCondicaoValida = false;
 
             if (politicaDeEntregaType != null) {
-
+                System.out
+                        .println("Processando política de entrega&%&%&%%: " + politicaDeEntregaType.getTitulo().name());
                 String titulo = politicaDeEntregaType.getTitulo().name();
                 try {
                     tipoPoliticaEnum = PoliticaTipo.valueOf(titulo.toUpperCase());
@@ -118,7 +122,7 @@ public class AnunciosService {
                 }
 
                 politica.setTitulo(
-                        com.AnunciosLoc.AnunciosLoc.bd.politicaDeEntrega.TipoDePoliticaEntrega.valueOf(tipoPoliticaEnum.name()));
+                        com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaTipo.valueOf(tipoPoliticaEnum.name()));
 
                 if (politicaDeEntregaType.getCondicoes() != null) {
                     for (CondicaoPerfilType cond : politicaDeEntregaType.getCondicoes()) {
@@ -131,7 +135,7 @@ public class AnunciosService {
                                 !chaves.get(0).trim().isEmpty() &&
                                 !valores.get(0).trim().isEmpty()) {
 
-                            CondicaoDePerfil cp = new CondicaoDePerfil();
+                            CondicaoPerfil cp = new CondicaoPerfil();
                             cp.setChave(chaves.get(0));
                             cp.setValor(valores.get(0));
                             cp.setPoliticaEntrega(politica);
@@ -155,12 +159,10 @@ public class AnunciosService {
             } else {
 
                 tipoPoliticaEnum = PoliticaTipo.WHITELIST;
-                politica.setTitulo(com.AnunciosLoc.AnunciosLoc.bd.politicaDeEntrega.TipoDePoliticaEntrega
+                politica.setTitulo(com.AnunciosLoc.AnunciosLoc.bd.politicaEntrega.PoliticaTipo
                         .valueOf(PoliticaTipo.WHITELIST.name()));
                 condicoes.clear(); // ← NENHUMA CONDIÇÃO
             }
-
-            
 
             // Verificação da política DEPOIS de extrair os dados
             if (tipoPoliticaEnum == PoliticaTipo.BLACKLIST && !temCondicaoValida) {
@@ -170,12 +172,11 @@ public class AnunciosService {
             }
 
             politica.setCondicoes(condicoes);
-            politicaDeEntregaRepository.save(politica);
 
             // Resposta - Política
             PoliticaEntregaType politicaResponse = new PoliticaEntregaType();
             politicaResponse.setTitulo(tipoPoliticaEnum);
-            for (CondicaoDePerfil cp : condicoes) {
+            for (CondicaoPerfil cp : condicoes) {
                 CondicaoPerfilType cpt = new CondicaoPerfilType();
                 if (cp.getChave() != null)
                     cpt.getChave().add(cp.getChave());
@@ -193,17 +194,21 @@ public class AnunciosService {
             anuncio.setUser(user);
             anuncio.setLocalizacao(local);
             anuncio = anuncioRepository.save(anuncio);
+            
+            System.out.println("Anúncio criado: " + anuncio.getId());
 
             politica.setAnuncio(anuncio);
-            response.setPolitiEntrega(politicaResponse);
+            politicaEntregaRepository.save(politica);
+            response.setPoliticaEntrega(politicaResponse);
 
-            boolean contaCriada = contaService.adicionarSaldo(user.getId(), 2.0); 
+            boolean contaCriada = contaService.adicionarSaldo(user.getId(), 2.0);
+            System.out.println("Conta criada: " + contaCriada);
 
             if (!contaCriada) {
                 response.setStatus(false);
                 response.setMensagem("Erro ao adicionar saldo à conta do usuário.");
                 return response;
-            }else {
+            } else {
                 response.setMensagem("Saldo adicionado com sucesso à conta do usuário.");
             }
 
@@ -258,11 +263,11 @@ public class AnunciosService {
         List<AnuncioType> anunciosDisponiveis = new ArrayList<>();
 
         try {
-            Long userId = request.getBody().getUserId();
+            Long userId  = request.getBody().getUserId();
             Long localId = request.getBody().getLocalId();
 
             // Buscar usuário e local informado
-            Optional<Utilizador> optionalUser = userRepository.findById(userId);
+            Optional<User> optionalUser = userRepository.findById(userId);
             Optional<Local> optionalLocal = localizacaoRepository.findById(localId);
 
             if (!optionalUser.isPresent() || !optionalLocal.isPresent()) {
@@ -271,7 +276,7 @@ public class AnunciosService {
                 return response;
             }
 
-            Utilizador user = optionalUser.get();
+            User user = optionalUser.get();
             Local localDoUsuario = optionalLocal.get();
             LocalDateTime agora = LocalDateTime.now();
 
@@ -289,7 +294,7 @@ public class AnunciosService {
                 }
 
                 // Verifica política de entrega
-                PoliticaDeEntrega politica = anuncio.getPoliticaEntrega();
+                PoliticaEntrega politica = anuncio.getPoliticaEntrega();
                 boolean visivel = true;
 
                 if (politica != null && politica.getCondicoes() != null && !politica.getCondicoes().isEmpty()) {
@@ -338,28 +343,61 @@ public class AnunciosService {
         return response;
     }
 
-    public RemoveAnuncioResponse removeAnuncio(RemoveAnuncioRequest request) {
-        RemoveAnuncioResponse response = new RemoveAnuncioResponse();
+    public AllAnuncioResponse getAllAnunciosTodos(@RequestPayload AllAnuncioTodosRequest request) {
+        AllAnuncioResponse response = new AllAnuncioResponse();
 
-        long anuncioId = request.getBody().getId();
-        long userId = request.getBody().getUserId();
+        try {
+            List<Anuncio> anuncios = anuncioRepository.findAll();
 
-        Optional<Anuncio> anuncioOptional = anuncioRepository.findById(anuncioId);
-
-        if (anuncioOptional.isPresent()) {
-            Anuncio anuncio = anuncioOptional.get();
-
-            if (anuncio.getUser().getId() == userId) {
-                anuncioRepository.delete(anuncio);
-                response.setMensagem("Anúncio removido com sucesso!");
-                response.setStatus(true);
-            } else {
-                response.setMensagem("Você não tem permissão para remover este anúncio.");
-                response.setStatus(false);
+            if (anuncios.isEmpty()) {
+                response.setMensagem("Nenhum anúncio encontrado.");
+                response.setEstado(false);
+                return response;
             }
-        } else {
-            response.setMensagem("Anúncio não encontrado.");
-            response.setStatus(false);
+
+            for (Anuncio anuncio : anuncios) {
+                AnuncioType item = new AnuncioType();
+                item.setId(anuncio.getId().intValue());
+                item.setTitulo(anuncio.getTitulo());
+                item.setDescricao(anuncio.getDescricao());
+                item.setDataExpiracao(anuncio.getDataExpiracao().toString());
+
+                // --- User ---
+                User user = anuncio.getUser();
+                if (user != null) {
+                    UserType userType = new UserType();
+                    userType.setId(user.getId().intValue());
+                    userType.setUsername(user.getUsername());// ou user.getName()
+                    userType.setEmail(user.getEmail());
+                    userType.setGenero(user.getGenero());
+                    userType.setTelefone(user.getTelefone());
+                    // adicione outros campos conforme sua definição do UserType
+
+                    item.setUsuario(userType);
+                }
+
+                // --- Localização ---
+                Local local = anuncio.getLocalizacao();
+                if (local != null) {
+                    LocalType localType = new LocalType();
+                    localType.setId(local.getId().intValue());
+                    localType.setNome(local.getNome()); // ou local.getDescricao()
+                    localType.setLatitude(local.getLatitude());
+                    localType.setLongitude(local.getLongitude());
+                    // adicione outros campos conforme sua definição do LocalType
+
+                    item.setLocal(localType);
+                }
+
+                response.getAnuncios().add(item);
+            }
+
+            response.setMensagem("Anúncios listados com sucesso.");
+            response.setEstado(true);
+
+        } catch (Exception e) {
+            response.setMensagem("Erro ao listar os anúncios: " + e.getMessage());
+            response.setEstado(false);
         }
 
         return response;
@@ -370,7 +408,7 @@ public class AnunciosService {
 
         try {
             Long userId = request.getBody().getUserId();
-            Optional<Utilizador> userOpt = userRepository.findById(userId);
+            Optional<User> userOpt = userRepository.findById(userId);
 
             if (!userOpt.isPresent()) {
                 response.setEstado(false);
@@ -378,7 +416,7 @@ public class AnunciosService {
                 return response;
             }
 
-            Utilizador user = userOpt.get();
+            User user = userOpt.get();
 
             List<Anuncio> anuncios = anuncioRepository.findByUserIdWithRelations(userId);
 
@@ -393,7 +431,7 @@ public class AnunciosService {
             ListarAnuncioCriadosResponse.Anuncios xmlAnuncios = new ListarAnuncioCriadosResponse.Anuncios();
 
             for (Anuncio anuncio : anuncios) {
-                
+
                 AnuncioType anuncioType = anuncioUtil.MapAnuncioType(anuncio);
 
                 // Mapear local
@@ -404,7 +442,7 @@ public class AnunciosService {
                 }
 
                 // Mapear política
-                PoliticaDeEntrega politica = anuncio.getPoliticaEntrega();
+                PoliticaEntrega politica = anuncio.getPoliticaEntrega();
                 if (politica != null) {
                     PoliticaEntregaType politicaType = mapPoliticaToType(politica);
                     anuncioType.setPoliticaEntrega(politicaType);
@@ -432,7 +470,34 @@ public class AnunciosService {
         return response;
     }
 
-    private PoliticaEntregaType mapPoliticaToType(PoliticaDeEntrega politica) {
+    public RemoveAnuncioResponse removeAnuncio(RemoveAnuncioRequest request) {
+        RemoveAnuncioResponse response = new RemoveAnuncioResponse();
+
+        long anuncioId = request.getBody().getId();
+        long userId = request.getBody().getUserId();
+
+        Optional<Anuncio> anuncioOptional = anuncioRepository.findById(anuncioId);
+
+        if (anuncioOptional.isPresent()) {
+            Anuncio anuncio = anuncioOptional.get();
+
+            if (anuncio.getUser().getId() == userId) {
+                anuncioRepository.delete(anuncio);
+                response.setMensagem("Anúncio removido com sucesso!");
+                response.setStatus(true);
+            } else {
+                response.setMensagem("Você não tem permissão para remover este anúncio.");
+                response.setStatus(false);
+            }
+        } else {
+            response.setMensagem("Anúncio não encontrado.");
+            response.setStatus(false);
+        }
+
+        return response;
+    }
+
+    private PoliticaEntregaType mapPoliticaToType(PoliticaEntrega politica) {
         if (politica == null)
             return null;
 
@@ -440,7 +505,7 @@ public class AnunciosService {
         type.setTitulo(PoliticaTipo.valueOf(politica.getTitulo().name()));
 
         if (politica.getCondicoes() != null) {
-            for (CondicaoDePerfil condicao : politica.getCondicoes()) {
+            for (CondicaoPerfil condicao : politica.getCondicoes()) {
                 CondicaoPerfilType condType = new CondicaoPerfilType();
                 condType.getChave().add(condicao.getChave());
                 condType.getValor().add(condicao.getValor());
@@ -450,4 +515,5 @@ public class AnunciosService {
 
         return type;
     }
+
 }

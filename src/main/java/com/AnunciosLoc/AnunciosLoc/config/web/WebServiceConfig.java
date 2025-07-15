@@ -16,7 +16,7 @@ import org.springframework.xml.xsd.XsdSchema;
 @Configuration
 public class WebServiceConfig extends WsConfigurerAdapter {
 
-    @Bean
+   @Bean
     ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(ApplicationContext contexto) {
         MessageDispatcherServlet servlet = new MessageDispatcherServlet();
         servlet.setApplicationContext(contexto);
@@ -24,8 +24,8 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return new ServletRegistrationBean<MessageDispatcherServlet>(servlet, "/ws/*");
     }
 
-    @Bean(name = "user")
-    DefaultWsdl11Definition userWsdlDefinition(XsdSchema userSchema) {
+  @Bean(name = "user")
+    DefaultWsdl11Definition userWsdlDefinition ( XsdSchema  userSchema ) {
         DefaultWsdl11Definition wsdl11def = new DefaultWsdl11Definition();
 
         wsdl11def.setPortTypeName("/apiSoapHttpBikeSharedUser");
@@ -37,29 +37,12 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     }
 
     @Bean
-    XsdSchema userSchema() {
-        return new SimpleXsdSchema(new ClassPathResource("xsd/user_schema.xsd"));
-    }
-
-    @Bean(name = "conta")
-    DefaultWsdl11Definition contaWsdlDefinition(XsdSchema contaSchema) {
-        DefaultWsdl11Definition wsdl11def = new DefaultWsdl11Definition();
-
-        wsdl11def.setPortTypeName("/apiSoapHttpBikeSharedconta");
-        wsdl11def.setLocationUri("/ws");
-        wsdl11def.setTargetNamespace("http://conta.soap.xml");
-        wsdl11def.setSchema(contaSchema);
-
-        return wsdl11def;
-    }
-
-    @Bean
-    XsdSchema contaSchema() {
-        return new SimpleXsdSchema(new ClassPathResource("xsd/conta_schema.xsd"));
+    XsdSchema userSchema () {
+        return new SimpleXsdSchema(new ClassPathResource("xsd/user_schema.xsd") );
     }
 
     @Bean(name = "anuncios")
-    DefaultWsdl11Definition anuncioWsdlDefinition(XsdSchema anunciosSchema) {
+    DefaultWsdl11Definition anuncioWsdlDefinition ( XsdSchema  anunciosSchema ) {
         DefaultWsdl11Definition wsdl11def = new DefaultWsdl11Definition();
 
         wsdl11def.setPortTypeName("/apiSoapHttpBikeSharedAnuncio");
@@ -70,9 +53,9 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return wsdl11def;
     }
 
-    @Bean
-    XsdSchema anunciosSchema() {
-        return new SimpleXsdSchema(new ClassPathResource("xsd/anuncios_schema.xsd"));
+   @Bean
+    XsdSchema anunciosSchema () {
+        return new SimpleXsdSchema(new ClassPathResource("xsd/anuncios_schema.xsd") );
     }
 
     // --- Local ---
@@ -91,7 +74,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return new SimpleXsdSchema(new ClassPathResource("xsd/local_schema.xsd"));
     }
 
-    // --- interesses ---
+        // --- interesses ---
     @Bean(name = "interesses")
     DefaultWsdl11Definition interessesWsdlDefinition(XsdSchema interessesSchema) {
         DefaultWsdl11Definition wsdl = new DefaultWsdl11Definition();
@@ -109,7 +92,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 
     // --- Station ---
     @Bean(name = "station")
-    DefaultWsdl11Definition estacaoWsdlDefinition(XsdSchema stationSchema) {
+    DefaultWsdl11Definition estacaoWsdlDefinition (XsdSchema stationSchema) {
         DefaultWsdl11Definition wsdl11def = new DefaultWsdl11Definition();
 
         wsdl11def.setPortTypeName("/apiSoapHttpBikeSharedEstacao");
@@ -126,7 +109,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     }
 
     @Bean(name = "replication")
-    DefaultWsdl11Definition replicationWsdlDefinition(XsdSchema replicationSchema) {
+    DefaultWsdl11Definition replicationWsdlDefinition (XsdSchema replicationSchema) {
         DefaultWsdl11Definition wsdl11def = new DefaultWsdl11Definition();
 
         wsdl11def.setPortTypeName("/apiSoapHttpBikeSharedReplication");
@@ -143,3 +126,11 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     }
 
 }
+
+
+
+
+
+
+
+

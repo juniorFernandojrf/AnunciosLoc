@@ -11,6 +11,7 @@ import com.AnunciosLoc.AnunciosLoc.services.ContaService;
 import xml.soap.conta.ConsultarSaldoRequest;
 import xml.soap.conta.ConsultarSaldoResponse;
 
+
 @Endpoint
 public class ContaEndPoint {       
 

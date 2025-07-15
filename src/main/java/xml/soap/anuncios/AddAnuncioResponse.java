@@ -2,7 +2,7 @@
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementação de Referência (JAXB) de Bind XML, v2.2.11 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modificações neste arquivo serão perdidas após a recompilação do esquema de origem. 
-// Gerado em: 2025.06.22 às 12:23:56 AM WAT 
+// Gerado em: 2025.06.27 às 05:55:00 AM WAT 
 //
 
 
@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
  *         &lt;element name="mensagem" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="status" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
- *         &lt;element name="politiEntrega" type="{http://anuncios.soap.xml}PoliticaEntregaType" minOccurs="0"/&gt;
+ *         &lt;element name="politicaEntrega" type="{http://anuncios.soap.xml}PoliticaEntregaType" minOccurs="0"/&gt;
  *         &lt;element name="usuario" type="{http://anuncios.soap.xml}UserType" maxOccurs="unbounded" minOccurs="0"/&gt;
  *         &lt;element name="LocalType" type="{http://anuncios.soap.xml}LocalType" maxOccurs="unbounded" minOccurs="0"/&gt;
  *         &lt;element name="anuncioId" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/&gt;
@@ -59,7 +59,7 @@ import javax.xml.bind.annotation.XmlType;
     "id",
     "mensagem",
     "status",
-    "politiEntrega",
+    "politicaEntrega",
     "usuario",
     "localType",
     "anuncioId",
@@ -83,7 +83,7 @@ public class AddAnuncioResponse {
     @XmlElement(required = true)
     protected String mensagem;
     protected boolean status;
-    protected PoliticaEntregaType politiEntrega;
+    protected PoliticaEntregaType politicaEntrega;
     protected List<UserType> usuario;
     @XmlElement(name = "LocalType")
     protected List<LocalType> localType;
@@ -268,27 +268,27 @@ public class AddAnuncioResponse {
     }
 
     /**
-     * Obtém o valor da propriedade politiEntrega.
+     * Obtém o valor da propriedade politicaEntrega.
      * 
      * @return
      *     possible object is
      *     {@link PoliticaEntregaType }
      *     
      */
-    public PoliticaEntregaType getPolitiEntrega() {
-        return politiEntrega;
+    public PoliticaEntregaType getPoliticaEntrega() {
+        return politicaEntrega;
     }
 
     /**
-     * Define o valor da propriedade politiEntrega.
+     * Define o valor da propriedade politicaEntrega.
      * 
      * @param value
      *     allowed object is
      *     {@link PoliticaEntregaType }
      *     
      */
-    public void setPolitiEntrega(PoliticaEntregaType value) {
-        this.politiEntrega = value;
+    public void setPoliticaEntrega(PoliticaEntregaType value) {
+        this.politicaEntrega = value;
     }
 
     /**
